@@ -15,6 +15,12 @@
 void checkUsage(int argc);
 
 /**
+ * @brief Exit the program if the filename is invalid.
+ * @param fileName The name of the file to be checked.
+*/
+void checkFileName(const char *fileName);
+
+/**
  * @brief Determine whether the waveform matches the name of the sine wave.
  * @param waveform String of waveform to be checked.
  * @returns 1 if the string matches, otherwise 0.

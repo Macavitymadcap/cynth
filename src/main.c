@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
     checkUsage(argc);
 
     const char *fileName = argv[1];
+    checkFileName(fileName);
 
     const char *waveformName = argv[2];
     checkWaveformName(waveformName);

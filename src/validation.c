@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <regex.h>
 
 #include "validation.h"
 #include "waveforms.h"
@@ -11,6 +12,36 @@ void checkUsage(int argc)
     if (argc != 5)
     {
         fprintf(stderr, "Usage: ./cynth output waveform note seconds\n");
+        exit(EXIT_FAILURE);
+    }
+}
+
+void checkFileName(const char *fileName)
+{
+    regex_t regex;
+    int ret;
+
+    const char *pattern = "^[a-zA-Z0-9_]+\\.wav$";
+
+    if (regcomp(&regex, pattern, REG_EXTENDED) != 0)
+    {
+        fprintf(stderr, "Error compiling regular expression\n");
+        exit(EXIT_FAILURE);
+    }
+
+    ret = regexec(&regex, fileName, 0, NULL, 0);
+
+    regfree(&regex);
+
+    if (ret == REG_NOMATCH)
+    {
+        fprintf(stderr, "Invald file name: '%s'\n", fileName);
+        exit(EXIT_FAILURE);
+    }
+
+    if (ret != 0)
+    {
+        fprintf(stderr, "Error executing regular expression\n");
         exit(EXIT_FAILURE);
     }
 }
