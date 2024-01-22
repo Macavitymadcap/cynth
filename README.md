@@ -3,7 +3,7 @@
 A program for synthesising sound implemented in C, drawing inspiration from the works of [kaizen](https://kaizen.place/music-tails/writing-wav-files-in-c-659462b3cc1c84922166019e) and Harvard's [CS50 course](https://www.edx.org/cs50), in particular week 4 on memory in C.
 
 ## Usage
-To compile the program, run `make`, then to generate a sound run:
+The program is made for linux using the gcc compiler. To compile the program, run `make`, then to generate a sound run:
 
 ```
 ./cynth <FILENAME> <WAVEFORM> <NOTE> <SECONDS>
