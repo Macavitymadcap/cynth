@@ -68,8 +68,6 @@ int main(int argc, char *argv[])
         }
     }
 
-    setDataAndFileLength(header, bufferSize, headerSize);
-
     fwrite(header, 1, headerSize, output);
     fwrite(buffer, sizeof(short int), bufferSize, output);
 
