@@ -13,7 +13,7 @@ const int volume = 3000;
 
 int main(int argc, char *argv[])
 {
-    checkUsage(argc);
+    checkUsage(argc, argv[0]);
 
     const char *fileName = argv[1];
     checkFileName(fileName);
@@ -25,9 +25,10 @@ int main(int argc, char *argv[])
     checkNoteName(noteName);
     const float note = getNoteFromName(noteName);
 
-    const int durationSeconds = atoi(argv[4]);
+    const int seconds = atoi(argv[4]);
+    checkSeconds(seconds);
     
-    size_t bufferSize = sampleRate * durationSeconds;
+    size_t bufferSize = sampleRate * seconds;
     size_t headerSize = sizeof(WavHeader);
     
     WavHeader *header = malloc(sizeof(WavHeader));

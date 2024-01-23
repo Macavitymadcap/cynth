@@ -10,9 +10,11 @@
 #include "wav.h"
 
 /**
- * @brief Exit the program if the number of command line arguments is wrong.
+ * @brief Exit the program if wrong number of args provided and print usage.
+ * @param argc Number of arguments passed to the program.
+ * @param programName The name of the program.
 */
-void checkUsage(int argc);
+void checkUsage(int argc, const char *programName);
 
 /**
  * @brief Exit the program if the filename is invalid.
@@ -91,6 +93,12 @@ int isValidPitch(int pitch);
  * @param noteName The name of the note to be checked.
 */
 void checkNoteName(const char *noteName);
+
+/**
+ * @brief Exit program if seonds are out of range.
+ * @param seconds Integer representing length of waveform in seconds.
+*/
+void checkSeconds(int seconds);
 
 /**
  * @brief Print error message about memory allocation.

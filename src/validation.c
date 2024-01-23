@@ -7,11 +7,16 @@
 #include "waveforms.h"
 #include "wav.h"
 
-void checkUsage(int argc)
+void checkUsage(int argc, const char *programName)
 {
     if (argc != 5)
     {
-        fprintf(stderr, "Usage: ./cynth output waveform note seconds\n");
+        fprintf(stderr, "Usage: %s outfile waveform note seconds\n", programName);
+        printf("    outfile:  Name of file to be written, must be .wav.\n");
+        printf("    waveform: Type of waveform to generate, one of;\n");
+        printf("              pulse; sawtooth; sine; square; or triangle.\n");
+        printf("    note:     Note in lowercase, from c0 to b8, use 'b' for flats\n");
+        printf("    seconds:  Length of generated waveform, from 1 - 60\n");
         exit(EXIT_FAILURE);
     }
 }
@@ -147,6 +152,15 @@ void checkNoteName(const char *noteName)
             fprintf(stderr, "%s '%s'. Pitch must be in range 0-8.\n", invalidNote, noteName);
             exit(EXIT_FAILURE);
         }
+    }
+}
+
+void checkSeconds(int seconds)
+{
+    if (seconds > 60 || seconds < 1)
+    {
+        fprintf(stderr, "Invalid seconds: %i. Must be number in range 1 -60.\n", seconds);
+        exit(EXIT_FAILURE);
     }
 }
 
