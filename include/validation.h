@@ -14,7 +14,7 @@
  * @param argc Number of arguments passed to the program.
  * @param programName The name of the program.
 */
-void checkUsage(int argc, const char *programName);
+void checkGetWaveUsage(int argc, const char *programName);
 
 /**
  * @brief Exit the program if the filename is invalid.
@@ -99,18 +99,6 @@ void checkNoteName(const char *noteName);
  * @param seconds Integer representing length of waveform in seconds.
 */
 void checkSeconds(int seconds);
-
-/**
- * @brief Print error message about memory allocation.
- * @param item The item for which memory allocation has failed.
-*/
-void printAllocationError(const char *item);
-
-/**
- * @brief Exit program if the wavHeader is NULL.
- * @param wavHeader The WavHeader to be checked.
-*/
-void checkWavHeaderAllocation(WavHeader *wavHeader);
 
 /**
  * @brief Exit the program if the buffer is NULL. 

@@ -6,14 +6,14 @@
 #include "notes.h"
 #include "waveforms.h"
 #include "validation.h"
-#include "play.h"
+#include "audio_buffer.h"
 
 const int sampleRate = 8000;
 const int volume = 3000;
 
 int main(int argc, char *argv[])
 {
-    checkUsage(argc, argv[0]);
+    checkGetWaveUsage(argc, argv[0]);
 
     const char *fileName = argv[1];
     checkFileName(fileName);
@@ -23,24 +23,19 @@ int main(int argc, char *argv[])
 
     const char *noteName = argv[3];
     checkNoteName(noteName);
-    const float note = getNoteFromName(noteName);
+
+    const float note = getFrequencyFromName(noteName);
 
     const int seconds = atoi(argv[4]);
     checkSeconds(seconds);
     
     size_t bufferSize = sampleRate * seconds;
-    size_t headerSize = sizeof(WavHeader);
     
-    WavHeader *header = malloc(sizeof(WavHeader));
-    checkWavHeaderAllocation(header);
-    memset(header, 0, sizeof(WavHeader));
-    setupHeader(header, STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate);
+    WavHeader *header = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate);
 
-    short int *buffer = malloc(bufferSize * sizeof(short int));
-    checkBufferAllocation(buffer);
-    memset(buffer, 0, bufferSize * sizeof(short int));
+    short int *buffer = createBuffer(bufferSize);
 
-    setDataAndFileLength(header, bufferSize, headerSize);
+    setDataAndFileLength(header, bufferSize, WAVE_HEADER_SIZE);
 
     FILE *output = fopen(fileName, "wb");
     checkFileOpening(output, fileName);
@@ -70,7 +65,7 @@ int main(int argc, char *argv[])
         }
     }
 
-    fwrite(header, headerSize, 1, output);
+    fwrite(header, WAVE_HEADER_SIZE, 1, output);
     fwrite(buffer, bufferSize, 1, output);
 
     fclose(output);

@@ -5,7 +5,7 @@ INCLUDE = -Iinclude
 SRC = src
 BUILD = build
 
-GET_WAVE_SRC = $(filter-out $(SRC)/play.c $(SRC)/duration.c $(SRC)/four_chords.c, $(wildcard $(SRC)/*.c))
+GET_WAVE_SRC = $(filter-out $(SRC)/play.c $(SRC)/duration.c $(SRC)/four_chords.c $(SRC)/song.c, $(wildcard $(SRC)/*.c))
 GET_WAVE_OBJ = $(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(GET_WAVE_SRC))
 
 FOUR_CHORDS_SRC = $(filter-out $(SRC)/get_wave.c, $(wildcard $(SRC)/*.c))

@@ -117,10 +117,28 @@ extern const float Bb8;
 extern const float B8;
 
 /**
+ * @struct Note
+ * @brief Encapsulates information about an individual note
+*/
+typedef struct 
+{
+    float frequency;    /** The pitch of the note. */ 
+    float value;        /** The duration in beats of the note. */
+} __attribute__((__packed__)) Note;
+
+/**
+ * @brief Create a new note, exiting the program if memory cannot be allocated.
+ * @param frequency The pitch of the note.
+ * @param value The duration in beats of the note.
+ * @returns note Pointer to a Note struct.
+*/
+Note *createNote(float frequency, float value);
+
+/**
  * @brief Return the note corresponding with the passed string.
  * @param noteName A string representation of the note.
  * @returns The float that corresponds with the noteName.
 */
-float getNoteFromName(const char *noteName);
+float getFrequencyFromName(const char *noteName);
 
 #endif // NOTES_H

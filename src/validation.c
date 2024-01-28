@@ -7,7 +7,7 @@
 #include "waveforms.h"
 #include "wav.h"
 
-void checkUsage(int argc, const char *programName)
+void checkGetWaveUsage(int argc, const char *programName)
 {
     if (argc != 5)
     {
@@ -160,29 +160,6 @@ void checkSeconds(int seconds)
     if (seconds > 60 || seconds < 1)
     {
         fprintf(stderr, "Invalid seconds: %i. Must be number in range 1 -60.\n", seconds);
-        exit(EXIT_FAILURE);
-    }
-}
-
-void printAllocationError(const char *allocatee)
-{
-    fprintf(stderr, "Error allocating %s\n", allocatee);
-}
-
-void checkWavHeaderAllocation(WavHeader *wavHeader)
-{
-    if (wavHeader == NULL)
-    {
-        printAllocationError("wavHeader");
-        exit(EXIT_FAILURE);
-    }
-}
-
-void checkBufferAllocation(short int *buffer)
-{
-    if (buffer == NULL)
-    {
-        printAllocationError("buffer");
         exit(EXIT_FAILURE);
     }
 }

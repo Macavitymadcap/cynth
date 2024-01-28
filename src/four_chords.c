@@ -9,75 +9,88 @@
 #include "waveforms.h"
 #include "validation.h"
 #include "duration.h"
+#include "audio_buffer.h"
+#include "song.h"
 
 int main(void)
 {
   const int sampleRate = 16000;
 
-  Tempo *tempo = malloc(sizeof(Tempo));
-  memset(tempo, 0, sizeof(Tempo));
-  setupTempo(tempo, 16, sampleRate, FOUR_FOUR, 120);
+  Song *song = createSong(16, sampleRate, FOUR_FOUR, 120, 3000);
 
-  const int bufferSize = tempo->totalBars * tempo->timeSignature * tempo->samplesPerBeat;
-  short int *buffer = malloc(bufferSize * sizeof(short int));
-  checkBufferAllocation(buffer);
-  memset(buffer, 0, bufferSize * sizeof(short int));
+  const int bufferSize = song->totalBars * song->timeSignature * song->samplesPerBeat;
+  short int *buffer = createBuffer(bufferSize);
 
-  size_t headerSize = sizeof(WavHeader); 
-  WavHeader *wavHeader = malloc(headerSize);
-  checkWavHeaderAllocation(wavHeader);
-  memset(wavHeader, 0, headerSize);
-  setupHeader(wavHeader, STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate);
+  WavHeader *wavHeader = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate);
+
+  Note *dLowBass = createNote(D2, SEMIBREVE);
+  Note *dHighBass = createNote(D3, SEMIBREVE);
+  Note *aBassLow = createNote(A2, SEMIBREVE);
+  Note *aBassHigh = createNote(A3, SEMIBREVE);
+  Note *bBassLow = createNote(B2, SEMIBREVE);
+  Note *bBassHigh = createNote(B3, SEMIBREVE);
+  Note *gBassLow = createNote(G2, SEMIBREVE);
+  Note *gBassHigh = createNote(G3, SEMIBREVE);
 
   int measure = 0;
-  while (measure < tempo->totalBars)
+  while (measure < song->totalBars)
   {
 
-    writeNoteToBuffer(D2, SEMIBREVE, measure, 0, tempo, buffer);
-    writeNoteToBuffer(D3, SEMIBREVE, measure, 0, tempo, buffer);
-    DM(CROTCHET, measure, 0, tempo, buffer);
-    DM(CROTCHET, measure, 1, tempo, buffer);
-    DM(CROTCHET, measure, 2, tempo, buffer);
-    DM(CROTCHET, measure, 3, tempo, buffer);
+    writeNoteToBuffer(dLowBass, measure, 0, song, buffer);
+    writeNoteToBuffer(dHighBass, measure, 0, song, buffer);
+    DM(CROTCHET, measure, 0, song, buffer);
+    DM(CROTCHET, measure, 1, song, buffer);
+    DM(CROTCHET, measure, 2, song, buffer);
+    DM(CROTCHET, measure, 3, song, buffer);
 
     measure++;
 
-    writeNoteToBuffer(A3, SEMIBREVE, measure, 0, tempo, buffer);
-    writeNoteToBuffer(A2, SEMIBREVE, measure, 0, tempo, buffer);
-    AM1st(CROTCHET, measure, 0, tempo, buffer);
-    AM1st(CROTCHET, measure, 1, tempo, buffer);
-    AM1st(CROTCHET, measure, 2, tempo, buffer);
-    AM1st(CROTCHET, measure, 3, tempo, buffer);
+    writeNoteToBuffer(aBassLow, measure, 0, song, buffer);
+    writeNoteToBuffer(aBassHigh, measure, 0, song, buffer);
+    AM1st(CROTCHET, measure, 0, song, buffer);
+    AM1st(CROTCHET, measure, 1, song, buffer);
+    AM1st(CROTCHET, measure, 2, song, buffer);
+    AM1st(CROTCHET, measure, 3, song, buffer);
 
     measure++;
 
-    writeNoteToBuffer(B2, SEMIBREVE, measure, 0, tempo, buffer);
-    writeNoteToBuffer(B3, SEMIBREVE, measure, 0, tempo, buffer);
-    Bm1st(CROTCHET, measure, 0, tempo, buffer);
-    Bm1st(CROTCHET, measure, 1, tempo, buffer);
-    Bm1st(CROTCHET, measure, 2, tempo, buffer);
-    Bm1st(CROTCHET, measure, 3, tempo, buffer);
+    writeNoteToBuffer(bBassLow, measure, 0, song, buffer);
+    writeNoteToBuffer(bBassHigh, measure, 0, song, buffer);
+    Bm1st(CROTCHET, measure, 0, song, buffer);
+    Bm1st(CROTCHET, measure, 1, song, buffer);
+    Bm1st(CROTCHET, measure, 2, song, buffer);
+    Bm1st(CROTCHET, measure, 3, song, buffer);
 
     measure++;
 
-    writeNoteToBuffer(G2, SEMIBREVE, measure, 0, tempo, buffer);
-    writeNoteToBuffer(G3, SEMIBREVE, measure, 0, tempo, buffer);
-    GM2nd(CROTCHET, measure, 0, tempo, buffer);
-    GM2nd(CROTCHET, measure, 1, tempo, buffer);
-    GM2nd(CROTCHET, measure, 2, tempo, buffer);
-    GM2nd(CROTCHET, measure, 3, tempo, buffer);
+    writeNoteToBuffer(gBassLow, measure, 0, song, buffer);
+    writeNoteToBuffer(bBassHigh, measure, 0, song, buffer);
+    GM2nd(CROTCHET, measure, 0, song, buffer);
+    GM2nd(CROTCHET, measure, 1, song, buffer);
+    GM2nd(CROTCHET, measure, 2, song, buffer);
+    GM2nd(CROTCHET, measure, 3, song, buffer);
 
     measure++;
   }
 
-  setDataAndFileLength(wavHeader, bufferSize, headerSize);
+  setDataAndFileLength(wavHeader, bufferSize, WAVE_HEADER_SIZE);
 
   FILE *fp = fopen("four_chords.wav", "wb");
-  fwrite(wavHeader, headerSize, 1, fp);
+  fwrite(wavHeader, WAVE_HEADER_SIZE, 1, fp);
   fwrite(buffer, bufferSize, 1, fp);
 
   fclose(fp);
+  free(song);
   free(wavHeader);
   free(buffer);
-  free(tempo);
+  free(dLowBass);
+  free(dHighBass);
+  free(aBassLow);
+  free(aBassHigh);
+  free(bBassLow);
+  free(bBassHigh);
+  free(gBassLow);
+  free(gBassHigh);
+  
+  exit(EXIT_SUCCESS);
 }

@@ -1,5 +1,7 @@
 #include <math.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 #include "duration.h"
 
@@ -15,25 +17,3 @@ const float QUASIHEMIDEMISEMIQUAVER = 0.0078125;
 
 const float FOUR_FOUR = 4.0;
 const float THREE_FOUR = 3.0;
-
-int getMillisecondsPerBeat(int bpm)
-{
-    int minuteInMilliseconds = 60000;
-
-    return round(minuteInMilliseconds / bpm);
-}
-
-int getSamplesBerBeat(int sampleRate, int millisecondsPerBeat)
-{
-    return (int)(sampleRate * millisecondsPerBeat) / 1000;
-}
-
-void setupTempo(Tempo *tempo, int totalBars, int sampleRate, float timeSignature, int beatsPerMinute)
-{
-    tempo->totalBars = totalBars;
-    tempo->sampleRate = sampleRate;
-    tempo->timeSignature = timeSignature;
-    tempo->beatsPerMinute = beatsPerMinute;
-    tempo->millisecondsPerBeat = getMillisecondsPerBeat(beatsPerMinute);
-    tempo->samplesPerBeat = getSamplesBerBeat(sampleRate, tempo->millisecondsPerBeat);
-}
