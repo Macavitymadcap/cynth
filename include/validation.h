@@ -108,17 +108,28 @@ int isValidPitch(int pitch);
 */
 void checkNoteName(const char *noteName);
 
+
 /**
- * @brief Exit program if seonds are out of range.
+ * @brief Determine whether a value is outside of a given range
+ * @param value Number to be checked.
+ * @param min Lower bound of range.
+ * @param max Upper bound of range.
+ * @return 1 if out of range, otherwise 0.
+ * 
+*/
+int outOfBounds(int value, int min, int max);
+
+/**
+ * @brief Exit program if seconds are out of valid range.
  * @param seconds Integer representing length of waveform in seconds.
 */
 void checkSeconds(int seconds);
 
 /**
- * @brief Exit the program if the buffer is NULL. 
- * @param buffer The buffer to be checked. 
+ * @brief Exit program if volume is out of valid range.
+ * @param volume Integer to be checked. 
 */
-void checkBufferAllocation(short int *buffer);
+void checkVolume(int volume);
 
 /**
  * @brief Close file and exit program if the file opened is NULL.
@@ -126,5 +137,11 @@ void checkBufferAllocation(short int *buffer);
  * @param fileName String representing the strings name.
 */
 void checkFileOpening(FILE *output, const char *fileName);
+
+/**
+ * @brief Exit program if bpm is outside valid range.
+ * @param bpm Integer to be checked.
+*/
+void checkBpm(int bpm);
 
 #endif // VALIDATION_H

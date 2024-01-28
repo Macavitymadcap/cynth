@@ -20,9 +20,15 @@ int main(int argc, const char *argv[])
     const char *waveformName = argv[1];
     checkWaveformName(waveformName);
 
+    int bpm = atoi(argv[2]);
+    checkBpm(bpm);
+
+    int volume = atoi(argv[3]);
+    checkVolume(volume);
+
     const int sampleRate = 16000;
 
-    Song *song = createSong(4, sampleRate, FOUR_FOUR, 100, 3000);
+    Song *song = createSong(4, sampleRate, FOUR_FOUR, bpm, volume * 500);
 
     size_t bufferSize = song->totalMeasures * song->timeSignature * song->samplesPerBeat;
     int16_t *buffer = createBuffer(bufferSize);
@@ -45,14 +51,12 @@ int main(int argc, const char *argv[])
         writeNoteToBuffer(waveformName, ray, meausreIndex, 1, song, buffer);
         writeNoteToBuffer(waveformName, mi, meausreIndex, 2, song, buffer);
         writeNoteToBuffer(waveformName, fah, meausreIndex, 3, song, buffer);
-
         meausreIndex++;
 
         writeNoteToBuffer(waveformName, so, meausreIndex, 0, song, buffer);
         writeNoteToBuffer(waveformName, la, meausreIndex, 1, song, buffer);
         writeNoteToBuffer(waveformName, ti, meausreIndex, 2, song, buffer);
         writeNoteToBuffer(waveformName, highDoh, meausreIndex, 3, song, buffer);
-
         meausreIndex++;
     }
 

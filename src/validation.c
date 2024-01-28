@@ -9,32 +9,33 @@
 
 void checkGetWaveUsage(int argc, const char *programName)
 {
-    if (argc != 5)
+    if (argc != 6)
     {
-        fprintf(stderr, "Usage: %s outfile waveform note seconds\n", programName);
+        fprintf(stderr, "Usage: %s outfile waveform note seconds volume\n", programName);
         printf("    outfile:  Name of file to be written, must be .wav.\n");
         printf("    waveform: Type of waveform to generate, one of;\n");
         printf("              pulse; sawtooth; sine; square; or triangle.\n");
         printf("    note:     Note in lowercase, from c0 to b8, use 'b' for flats\n");
-        printf("    seconds:  Length of generated waveform, from 1 - 60\n");
+        printf("    seconds:  Length of generated waveform, from 1-60\n");
+        printf("    volume:   Loudness of generated waveform, from 1-11\n");
         exit(EXIT_FAILURE);
     }
 }
 
 void checkFourChordsUsage(int argc, const char *programName)
 {
-    if (argc != 2)
+    if (argc != 4)
     {
-        fprintf(stderr, "Usage: %s waveform\n", programName);
+        fprintf(stderr, "Usage: %s waveform bpm volume\n", programName);
         exit(EXIT_FAILURE);
     }
 }
 
 void checkGetScaleUsage(int argc, const char *programName)
 {
-    if (argc != 2)
+    if (argc != 4)
     {
-        fprintf(stderr, "Usage: %s waveform\n", programName);
+        fprintf(stderr, "Usage: %s waveform bpm volume\n", programName);
         exit(EXIT_FAILURE);
     }
 }
@@ -173,11 +174,16 @@ void checkNoteName(const char *noteName)
     }
 }
 
+int outOfBounds(int value, int min, int max)
+{
+    return value < min || value > max; 
+}
+
 void checkSeconds(int seconds)
 {
-    if (seconds > 60 || seconds < 1)
+    if (outOfBounds(seconds, 1, 60))
     {
-        fprintf(stderr, "Invalid seconds: %i. Must be number in range 1 -60.\n", seconds);
+        fprintf(stderr, "Invalid seconds: %i. Must be number in range 1-60.\n", seconds);
         exit(EXIT_FAILURE);
     }
 }
@@ -188,6 +194,24 @@ void checkFileOpening(FILE *output, const char *fileName)
     {
         fprintf(stderr, "Unable to open file %s\n", fileName);
         fclose(output);
+        exit(EXIT_FAILURE);
+    }
+}
+
+void checkVolume(int volume)
+{
+    if (outOfBounds(volume, 1, 11))
+    {
+        fprintf(stderr, "Invalid volume: %i. Must be number in range 1-11\n", volume);
+        exit(EXIT_FAILURE);
+    }
+}
+
+void checkBpm(int bpm)
+{
+    if(outOfBounds(bpm, 1, 300))
+    {
+        fprintf(stderr, "Invalid bpm: %i. Must be number in range 1-300\n", bpm);
         exit(EXIT_FAILURE);
     }
 }

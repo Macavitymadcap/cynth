@@ -20,9 +20,15 @@ int main(int argc, char *argv[])
   const char *waveformName = argv[1];
   checkWaveformName(waveformName);
 
+  int bpm = atoi(argv[2]);
+  checkBpm(bpm);
+
+  int volume = atoi(argv[3]);
+  checkVolume(volume);
+
   const int sampleRate = 16000;
 
-  Song *song = createSong(16, sampleRate, FOUR_FOUR, 120, 3000);
+  Song *song = createSong(16, sampleRate, FOUR_FOUR, bpm, volume * 500);
 
   size_t bufferSize = song->totalMeasures * song->timeSignature * song->samplesPerBeat;
   int16_t *buffer = createBuffer(bufferSize);

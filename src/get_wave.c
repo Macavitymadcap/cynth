@@ -10,7 +10,6 @@
 #include "audio_buffer.h"
 
 const int sampleRate = 8000;
-const int volume = 3000;
 
 int main(int argc, char *argv[])
 {
@@ -30,6 +29,9 @@ int main(int argc, char *argv[])
     const int seconds = atoi(argv[4]);
     checkSeconds(seconds);
 
+    int volume = atoi(argv[3]);
+    checkVolume(volume);
+
     size_t bufferSize = sampleRate * seconds;
     int16_t *buffer = createBuffer(bufferSize);
 
@@ -40,7 +42,7 @@ int main(int argc, char *argv[])
 
     for (int i = 0; i < (int)bufferSize; i++)
     {
-        buffer[i] = getWaveform(waveformName, note, i, sampleRate, volume);
+        buffer[i] = getWaveform(waveformName, note, i, sampleRate, volume * 500);
     }
 
     fwrite(header, WAVE_HEADER_SIZE, 1, output);
