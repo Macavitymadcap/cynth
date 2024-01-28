@@ -32,6 +32,8 @@ int main(int argc, char *argv[])
     size_t headerSize = sizeof(WavHeader);
     
     WavHeader *header = malloc(sizeof(WavHeader));
+    checkWavHeaderAllocation(header);
+    memset(header, 0, sizeof(WavHeader));
     setupHeader(header, STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate);
 
     short int *buffer = malloc(bufferSize * sizeof(short int));
@@ -68,8 +70,8 @@ int main(int argc, char *argv[])
         }
     }
 
-    fwrite(header, 1, headerSize, output);
-    fwrite(buffer, sizeof(short int), bufferSize, output);
+    fwrite(header, headerSize, 1, output);
+    fwrite(buffer, bufferSize, 1, output);
 
     fclose(output);
     free(buffer);

@@ -69,13 +69,14 @@ int main(void)
 
   WavHeader *wavHeader = malloc(sizeof(WavHeader));
   checkWavHeaderAllocation(wavHeader);
+  memset(wavHeader, 0, sizeof(WavHeader));
 
   setFormatFields(wavHeader);
-  wavHeader->chunkSize = 16;
-  wavHeader->audioFormat = 1;
-  wavHeader->numChannels = 1;
+  wavHeader->chunkSize = STANDARD_CHUNK_SIZE;
+  wavHeader->audioFormat = PCM;
+  wavHeader->numChannels = MONO;
   wavHeader->sampleRate = sampleRate;
-  wavHeader->bitsPerSample = 16;
+  wavHeader->bitsPerSample = STANDARD_CHUNK_SIZE;
 
   int measure = 0;
   while (measure < measuresToPlay)
