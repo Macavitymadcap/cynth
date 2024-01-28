@@ -1,12 +1,15 @@
 CC = gcc
 LDLIBS = -lm
 CFLAGS = -Wall -Wextra -Werror -std=c17 -g
+INCLUDE = -Iinclude
+SRC = src
+BUILD = build
 
-GET_WAVE_SRC = src/get_wave.c src/waveforms.c src/wav.c src/validation.c src/notes.c
-GET_WAVE_OBJ = $(GET_WAVE_SRC:.c=.o)
+GET_WAVE_SRC = $(filter-out $(SRC)/play.c $(SRC)/duration.c $(SRC)/four_chords.c, $(wildcard $(SRC)/*.c))
+GET_WAVE_OBJ = $(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(GET_WAVE_SRC))
 
-FOUR_CHORDS_SRC = src/four_chords.c src/waveforms.c src/wav.c src/validation.c src/play.c src/notes.c
-FOUR_CHORDS_OBJ = $(FOUR_CHORDS_SRC:.c=.o)
+FOUR_CHORDS_SRC = $(filter-out $(SRC)/duration.c $(SRC)/get_wave.c, $(wildcard $(SRC)/*.c))
+FOUR_CHORDS_OBJ = $(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(FOUR_CHORDS_SRC))
 
 all: get_wave four_chords
 
@@ -16,11 +19,10 @@ get_wave: $(GET_WAVE_OBJ)
 four_chords: $(FOUR_CHORDS_OBJ)
 	$(CC) $(CFLAGS) -o four_chords $(FOUR_CHORDS_OBJ) $(LDLIBS)
 
-# Rule for compiling source files
-%.o: %.c
-	$(CC) $(CFLAGS) -Iinclude -c -o $@ $<
+$(BUILD)/%.o: $(SRC)/%.c
+	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $<
 
 .PHONY: clean
 
 clean:
-	rm -f src/*.o $(objects) get_wave four_chords *.wav
+	rm -f $(BUILD)/*.o get_wave four_chords *.wav
