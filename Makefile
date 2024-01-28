@@ -8,7 +8,7 @@ BUILD = build
 GET_WAVE_SRC = $(filter-out $(SRC)/play.c $(SRC)/duration.c $(SRC)/four_chords.c, $(wildcard $(SRC)/*.c))
 GET_WAVE_OBJ = $(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(GET_WAVE_SRC))
 
-FOUR_CHORDS_SRC = $(filter-out $(SRC)/duration.c $(SRC)/get_wave.c, $(wildcard $(SRC)/*.c))
+FOUR_CHORDS_SRC = $(filter-out $(SRC)/get_wave.c, $(wildcard $(SRC)/*.c))
 FOUR_CHORDS_OBJ = $(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(FOUR_CHORDS_SRC))
 
 all: get_wave four_chords

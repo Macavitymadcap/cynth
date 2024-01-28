@@ -6,6 +6,8 @@
 #ifndef PLAY_H
 #define PLAY_H
 
+#include "duration.h"
+
 /**
  * @brief Calculate amplitude multiplier based on the position in a musical note.
  *
@@ -29,62 +31,52 @@ float getAmplitudeMultiplier(int bufferIndex, int beatStartIndex, int beatEndInd
 /**
  * @brief Write the given note to the buffer based on arguments.
  * @param freq Frequency of the note to be written.
- * @param duration Length in beats of note.
+ * @param noteValue Length in beats of note.
  * @param measure The current measure in which the note is written.
  * @param beat The index of the current beat in the measure.
- * @param beatsPerMeasure Number of beats in the current measure.
- * @param samplesPerBeat Number of sample per beat.
- * @param sampleRate The sample rate to use.
+ * @param tempo Pointer to structure containg the song's time information. 
  * @param buffer The buffer into which the note will be written.
 */
-void writeNoteToBuffer(float freq, float duration, int measure, float beat, int beatsPerMeasure, int samplesPerBeat, int sampleRate, short int *buffer);
+void writeNoteToBuffer(float freq, float noteValue, int measure, float beat, Tempo *tempo, short int *buffer);
 
 /**
  * @brief Write a D major chord to the buffer based on arguments.
- * @param duration Length in beats of note.
+ * @param noteValue Length in beats of note.
  * @param measure The current measure in which the note is written.
  * @param beat The index of the current beat in the measure.
- * @param beatsPerMeasure Number of beats in the current measure.
- * @param samplesPerBeat Number of sample per beat.
- * @param sampleRate The sample rate to use.
+ * @param tempo Pointer to structure containg the song's time information. 
  * @param buffer The buffer into which the note will be written.
 */
-void DM(float duration, int measure, float beat, int beatsPerMeasure, int samplesPerBeat, int sampleRate, short int *buffer);
+void DM(float noteValue, int measure, float beat, Tempo *tempo, short int *buffer);
 
 /**
  * @brief Write an A major 1st inversion chord to the buffer based on arguments.
- * @param duration Length in beats of note.
+ * @param noteValue Length in beats of note.
  * @param measure The current measure in which the note is written.
  * @param beat The index of the current beat in the measure.
- * @param beatsPerMeasure Number of beats in the current measure.
- * @param samplesPerBeat Number of sample per beat.
- * @param sampleRate The sample rate to use.
+ * @param tempo Pointer to structure containg the song's time information. 
  * @param buffer The buffer into which the note will be written.
 */
-void AM1st(float duration, int measure, float beat, int beatsPerMeasure, int samplesPerBeat, int sampleRate, short int *buffer);
+void AM1st(float noteValue, int measure, float beat, Tempo *tempo, short int *buffer);
 
 
 /**
  * @brief Write a B minor 1st inversion to the buffer based on arguments.
- * @param duration Length in beats of note.
+ * @param noteValue Length in beats of note.
  * @param measure The current measure in which the note is written.
  * @param beat The index of the current beat in the measure.
- * @param beatsPerMeasure Number of beats in the current measure.
- * @param samplesPerBeat Number of sample per beat.
- * @param sampleRate The sample rate to use.
+ * @param tempo Pointer to structure containg the song's time information. 
  * @param buffer The buffer into which the note will be written.
 */
-void Bm1st(float duration, int measure, float beat, int beatsPerMeasure, int samplesPerBeat, int sampleRate, short int *buffer);
+void Bm1st(float noteValue, int measure, float beat, Tempo *tempo, short int *buffer);
 
 /**
  * @brief Write a G major 2nd inversion to the buffer based on arguments.
- * @param duration Length in beats of note.
+ * @param noteValue Length in beats of note.
  * @param measure The current measure in which the note is written.
  * @param beat The index of the current beat in the measure.
- * @param beatsPerMeasure Number of beats in the current measure.
- * @param samplesPerBeat Number of sample per beat.
- * @param sampleRate The sample rate to use.
+ * @param tempo Pointer to structure containg the song's time information. 
  * @param buffer The buffer into which the note will be written.
 */
-void GM2nd(float duration, int measure, float beat, int beatsPerMeasure, int samplesPerBeat, int sampleRate, short int *buffer);
+void GM2nd(float noteValue, int measure, float beat, Tempo *tempo, short int *buffer);
 #endif // PLAY_H

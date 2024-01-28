@@ -8,16 +8,17 @@
 #include "play.h"
 #include "waveforms.h"
 #include "validation.h"
+#include "duration.h"
 
 int main(void)
 {
-  const int measuresToPlay = 4 * 4;
   const int sampleRate = 16000;
-  const int beatsPerMeasure = 4;
-  const int millisecondsPerBeat = 500;
-  const int samplesPerBeat = (sampleRate * millisecondsPerBeat) / 1000;
 
-  const int bufferSize = measuresToPlay * beatsPerMeasure * samplesPerBeat;
+  Tempo *tempo = malloc(sizeof(Tempo));
+  memset(tempo, 0, sizeof(Tempo));
+  setupTempo(tempo, 16, sampleRate, FOUR_FOUR, 120);
+
+  const int bufferSize = tempo->totalBars * tempo->timeSignature * tempo->samplesPerBeat;
   short int *buffer = malloc(bufferSize * sizeof(short int));
   checkBufferAllocation(buffer);
   memset(buffer, 0, bufferSize * sizeof(short int));
@@ -29,42 +30,42 @@ int main(void)
   setupHeader(wavHeader, STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate);
 
   int measure = 0;
-  while (measure < measuresToPlay)
+  while (measure < tempo->totalBars)
   {
 
-    writeNoteToBuffer(D2, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    writeNoteToBuffer(D3, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    DM(1, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    DM(1, measure, 1, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    DM(1, measure, 2, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    DM(1, measure, 3, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
+    writeNoteToBuffer(D2, SEMIBREVE, measure, 0, tempo, buffer);
+    writeNoteToBuffer(D3, SEMIBREVE, measure, 0, tempo, buffer);
+    DM(CROTCHET, measure, 0, tempo, buffer);
+    DM(CROTCHET, measure, 1, tempo, buffer);
+    DM(CROTCHET, measure, 2, tempo, buffer);
+    DM(CROTCHET, measure, 3, tempo, buffer);
 
     measure++;
 
-    writeNoteToBuffer(A3, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    writeNoteToBuffer(A2, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    AM1st(1, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    AM1st(1, measure, 1, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    AM1st(1, measure, 2, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    AM1st(1, measure, 3, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
+    writeNoteToBuffer(A3, SEMIBREVE, measure, 0, tempo, buffer);
+    writeNoteToBuffer(A2, SEMIBREVE, measure, 0, tempo, buffer);
+    AM1st(CROTCHET, measure, 0, tempo, buffer);
+    AM1st(CROTCHET, measure, 1, tempo, buffer);
+    AM1st(CROTCHET, measure, 2, tempo, buffer);
+    AM1st(CROTCHET, measure, 3, tempo, buffer);
 
     measure++;
 
-    writeNoteToBuffer(B2, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    writeNoteToBuffer(B3, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    Bm1st(1, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    Bm1st(1, measure, 1, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    Bm1st(1, measure, 2, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    Bm1st(1, measure, 3, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
+    writeNoteToBuffer(B2, SEMIBREVE, measure, 0, tempo, buffer);
+    writeNoteToBuffer(B3, SEMIBREVE, measure, 0, tempo, buffer);
+    Bm1st(CROTCHET, measure, 0, tempo, buffer);
+    Bm1st(CROTCHET, measure, 1, tempo, buffer);
+    Bm1st(CROTCHET, measure, 2, tempo, buffer);
+    Bm1st(CROTCHET, measure, 3, tempo, buffer);
 
     measure++;
 
-    writeNoteToBuffer(G2, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    writeNoteToBuffer(G3, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    GM2nd(1, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    GM2nd(1, measure, 1, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    GM2nd(1, measure, 2, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    GM2nd(1, measure, 3, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
+    writeNoteToBuffer(G2, SEMIBREVE, measure, 0, tempo, buffer);
+    writeNoteToBuffer(G3, SEMIBREVE, measure, 0, tempo, buffer);
+    GM2nd(CROTCHET, measure, 0, tempo, buffer);
+    GM2nd(CROTCHET, measure, 1, tempo, buffer);
+    GM2nd(CROTCHET, measure, 2, tempo, buffer);
+    GM2nd(CROTCHET, measure, 3, tempo, buffer);
 
     measure++;
   }
@@ -72,10 +73,11 @@ int main(void)
   setDataAndFileLength(wavHeader, bufferSize, headerSize);
 
   FILE *fp = fopen("four_chords.wav", "wb");
-  fwrite(wavHeader, 1, sizeof(WavHeader), fp);
-  fwrite(buffer, sizeof(short int), bufferSize, fp);
+  fwrite(wavHeader, headerSize, 1, fp);
+  fwrite(buffer, bufferSize, 1, fp);
 
   fclose(fp);
   free(wavHeader);
   free(buffer);
+  free(tempo);
 }

@@ -22,3 +22,18 @@ int getMillisecondsPerBeat(int bpm)
 
     return round(minuteInMilliseconds / bpm);
 }
+
+int getSamplesBerBeat(int sampleRate, int millisecondsPerBeat)
+{
+    return (int)(sampleRate * millisecondsPerBeat) / 1000;
+}
+
+void setupTempo(Tempo *tempo, int totalBars, int sampleRate, float timeSignature, int beatsPerMinute)
+{
+    tempo->totalBars = totalBars;
+    tempo->sampleRate = sampleRate;
+    tempo->timeSignature = timeSignature;
+    tempo->beatsPerMinute = beatsPerMinute;
+    tempo->millisecondsPerBeat = getMillisecondsPerBeat(beatsPerMinute);
+    tempo->samplesPerBeat = getSamplesBerBeat(sampleRate, tempo->millisecondsPerBeat);
+}
