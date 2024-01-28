@@ -29,41 +29,18 @@ int main(int argc, char *argv[])
 
     const int seconds = atoi(argv[4]);
     checkSeconds(seconds);
-    
-    size_t bufferSize = sampleRate * seconds;
-    
-    WavHeader *header = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate);
 
+    size_t bufferSize = sampleRate * seconds;
     int16_t *buffer = createBuffer(bufferSize);
 
-    setDataAndFileLength(header, bufferSize, WAVE_HEADER_SIZE);
+    WavHeader *header = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate, bufferSize);
 
     FILE *output = fopen(fileName, "wb");
     checkFileOpening(output, fileName);
 
     for (int i = 0; i < (int)bufferSize; i++)
     {
-        if (isSine(waveformName))
-        {
-            buffer[i] = getSineWave(note, i, sampleRate, volume);
-        }
-        else if (isSquare(waveformName))
-        {
-            buffer[i] = getSquareWave(note, i, sampleRate, volume);
-        }
-        else if (isSawtooth(waveformName))
-        {
-            buffer[i] = getSawtoothWave(note, i, sampleRate, volume);
-        }
-        else if (isTriangle(waveformName))
-        {
-            buffer[i] = getTriangleWave(note, i, sampleRate, volume);
-        }
-        else if (isPulse(waveformName))
-        {
-            float dutyCycle = (i + 1) % 2 == 0 ? 0.25 : 0.5;
-            buffer[i] = getPulseWave(note, i, sampleRate, volume, dutyCycle);
-        }
+        buffer[i] = getWaveform(waveformName, note, i, sampleRate, volume);
     }
 
     fwrite(header, WAVE_HEADER_SIZE, 1, output);

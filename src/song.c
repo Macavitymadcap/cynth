@@ -17,7 +17,7 @@ int getSamplesBerBeat(int sampleRate, int millisecondsPerBeat)
     return (int)(sampleRate * millisecondsPerBeat) / 1000;
 }
 
-Song *createSong(int totalBars, int sampleRate, float timeSignature, int beatsPerMinute, int volume)
+Song *createSong(int totalMeasures, int sampleRate, float timeSignature, int beatsPerMinute, int volume)
 {
     size_t songSize = sizeof(Song);
     Song *song = malloc(songSize);
@@ -28,7 +28,7 @@ Song *createSong(int totalBars, int sampleRate, float timeSignature, int beatsPe
     }
 
     memset(song, 0, songSize);
-    song->totalBars = totalBars;
+    song->totalMeasures = totalMeasures;
     song->sampleRate = sampleRate;
     song->timeSignature = timeSignature;
     song->beatsPerMinute = beatsPerMinute;

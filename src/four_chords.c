@@ -13,16 +13,21 @@
 #include "audio_buffer.h"
 #include "song.h"
 
-int main(void)
+int main(int argc, char *argv[])
 {
+  checkFourChordsUsage(argc, argv[0]);
+
+  const char *waveformName = argv[1];
+  checkWaveformName(waveformName);
+
   const int sampleRate = 16000;
 
   Song *song = createSong(16, sampleRate, FOUR_FOUR, 120, 3000);
 
-  const int bufferSize = song->totalBars * song->timeSignature * song->samplesPerBeat;
+  size_t bufferSize = song->totalMeasures * song->timeSignature * song->samplesPerBeat;
   int16_t *buffer = createBuffer(bufferSize);
 
-  WavHeader *wavHeader = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate);
+  WavHeader *wavHeader = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate, bufferSize);
 
   Note *dLowBass = createNote(D2, SEMIBREVE);
   Note *dHighBass = createNote(D3, SEMIBREVE);
@@ -33,54 +38,54 @@ int main(void)
   Note *gBassLow = createNote(G2, SEMIBREVE);
   Note *gBassHigh = createNote(G3, SEMIBREVE);
 
-  int measure = 0;
-  while (measure < song->totalBars)
+  int measureIndex = 0;
+  while (measureIndex < song->totalMeasures)
   {
 
-    writeNoteToBuffer(dLowBass, measure, 0, song, buffer);
-    writeNoteToBuffer(dHighBass, measure, 0, song, buffer);
-    DM(CROTCHET, measure, 0, song, buffer);
-    DM(CROTCHET, measure, 1, song, buffer);
-    DM(CROTCHET, measure, 2, song, buffer);
-    DM(CROTCHET, measure, 3, song, buffer);
+    writeNoteToBuffer(waveformName, dLowBass, measureIndex, 0, song, buffer);
+    writeNoteToBuffer(waveformName, dHighBass, measureIndex, 0, song, buffer);
+    DM(waveformName, CROTCHET, measureIndex, 0, song, buffer);
+    DM(waveformName, CROTCHET, measureIndex, 1, song, buffer);
+    DM(waveformName, CROTCHET, measureIndex, 2, song, buffer);
+    DM(waveformName, CROTCHET, measureIndex, 3, song, buffer);
 
-    measure++;
+    measureIndex++;
 
-    writeNoteToBuffer(aBassLow, measure, 0, song, buffer);
-    writeNoteToBuffer(aBassHigh, measure, 0, song, buffer);
-    AM1st(CROTCHET, measure, 0, song, buffer);
-    AM1st(CROTCHET, measure, 1, song, buffer);
-    AM1st(CROTCHET, measure, 2, song, buffer);
-    AM1st(CROTCHET, measure, 3, song, buffer);
+    writeNoteToBuffer(waveformName, aBassLow, measureIndex, 0, song, buffer);
+    writeNoteToBuffer(waveformName, aBassHigh, measureIndex, 0, song, buffer);
+    AM1st(waveformName, CROTCHET, measureIndex, 0, song, buffer);
+    AM1st(waveformName, CROTCHET, measureIndex, 1, song, buffer);
+    AM1st(waveformName, CROTCHET, measureIndex, 2, song, buffer);
+    AM1st(waveformName, CROTCHET, measureIndex, 3, song, buffer);
 
-    measure++;
+    measureIndex++;
 
-    writeNoteToBuffer(bBassLow, measure, 0, song, buffer);
-    writeNoteToBuffer(bBassHigh, measure, 0, song, buffer);
-    Bm1st(CROTCHET, measure, 0, song, buffer);
-    Bm1st(CROTCHET, measure, 1, song, buffer);
-    Bm1st(CROTCHET, measure, 2, song, buffer);
-    Bm1st(CROTCHET, measure, 3, song, buffer);
+    writeNoteToBuffer(waveformName, bBassLow, measureIndex, 0, song, buffer);
+    writeNoteToBuffer(waveformName, bBassHigh, measureIndex, 0, song, buffer);
+    Bm1st(waveformName, CROTCHET, measureIndex, 0, song, buffer);
+    Bm1st(waveformName, CROTCHET, measureIndex, 1, song, buffer);
+    Bm1st(waveformName, CROTCHET, measureIndex, 2, song, buffer);
+    Bm1st(waveformName, CROTCHET, measureIndex, 3, song, buffer);
 
-    measure++;
+    measureIndex++;
 
-    writeNoteToBuffer(gBassLow, measure, 0, song, buffer);
-    writeNoteToBuffer(bBassHigh, measure, 0, song, buffer);
-    GM2nd(CROTCHET, measure, 0, song, buffer);
-    GM2nd(CROTCHET, measure, 1, song, buffer);
-    GM2nd(CROTCHET, measure, 2, song, buffer);
-    GM2nd(CROTCHET, measure, 3, song, buffer);
+    writeNoteToBuffer(waveformName, gBassLow, measureIndex, 0, song, buffer);
+    writeNoteToBuffer(waveformName, bBassHigh, measureIndex, 0, song, buffer);
+    GM2nd(waveformName, CROTCHET, measureIndex, 0, song, buffer);
+    GM2nd(waveformName, CROTCHET, measureIndex, 1, song, buffer);
+    GM2nd(waveformName, CROTCHET, measureIndex, 2, song, buffer);
+    GM2nd(waveformName, CROTCHET, measureIndex, 3, song, buffer);
 
-    measure++;
+    measureIndex++;
   }
 
-  setDataAndFileLength(wavHeader, bufferSize, WAVE_HEADER_SIZE);
+  const char *fileName = "four_chords.wav";
+  FILE *outfile = fopen(fileName, "wb");
+  checkFileOpening(outfile, fileName);
+  fwrite(wavHeader, WAVE_HEADER_SIZE, 1, outfile);
+  fwrite(buffer, bufferSize, 1, outfile);
 
-  FILE *fp = fopen("four_chords.wav", "wb");
-  fwrite(wavHeader, WAVE_HEADER_SIZE, 1, fp);
-  fwrite(buffer, bufferSize, 1, fp);
-
-  fclose(fp);
+  fclose(outfile);
   free(song);
   free(wavHeader);
   free(buffer);
@@ -92,6 +97,6 @@ int main(void)
   free(bBassHigh);
   free(gBassLow);
   free(gBassHigh);
-  
+
   exit(EXIT_SUCCESS);
 }

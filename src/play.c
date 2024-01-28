@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdint.h>
 
 #include "play.h"
 #include "notes.h"
@@ -29,74 +30,74 @@ float getAmplitudeMultiplier(int bufferIndex, int beatStartIndex, int beatEndInd
   return amplitudeMultiplier;
 }
 
-void writeNoteToBuffer(Note *note, int measure, float beat, Song *tempo, short int *buffer)
+void writeNoteToBuffer(const char * waveformName, Note *note, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
 {
-  float duration = note->value * tempo->timeSignature;
-  float current_beat = tempo->timeSignature * measure + beat;
-  int start_index = current_beat * tempo->samplesPerBeat;
-  int end_index = start_index + duration * tempo->samplesPerBeat;
+  float duration = note->value * song->timeSignature;
+  float current_beat = song->timeSignature * measureIndex + beatIndex;
+  int start_index = current_beat * song->samplesPerBeat;
+  int end_index = start_index + duration * song->samplesPerBeat;
 
   for (int i = start_index; i < end_index; i++)
   {
     float amplitudeMultiplier = getAmplitudeMultiplier(i, start_index, end_index);
-    buffer[i] += (short int)(getSineWave(note->frequency, i, tempo->sampleRate, tempo->volume) * amplitudeMultiplier);
+    buffer[i] += (int16_t)(getWaveform(waveformName, note->frequency, i, song->sampleRate, song->volume) * amplitudeMultiplier);
   }
 }
 
-void DM(float noteValue, int measure, float beat, Song *tempo, short int *buffer)
+void DM(const char *waveformName, float noteValue, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
 {
   Note *d = createNote(D4, noteValue);
   Note *gb = createNote(Gb4, noteValue);
   Note *a = createNote(A4, noteValue);
 
-  writeNoteToBuffer(d, measure, beat, tempo, buffer);
-  writeNoteToBuffer(gb, measure, beat, tempo, buffer);
-  writeNoteToBuffer(a, measure, beat, tempo, buffer);
+  writeNoteToBuffer(waveformName, d, measureIndex, beatIndex, song, buffer);
+  writeNoteToBuffer(waveformName, gb, measureIndex, beatIndex, song, buffer);
+  writeNoteToBuffer(waveformName, a, measureIndex, beatIndex, song, buffer);
 
   free(d);
   free(gb);
   free(a);
 }
 
-void AM1st(float noteValue, int measure, float beat, Song *tempo, short int *buffer)
+void AM1st(const char*waveformName, float noteValue, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
 {
   Note *db = createNote(Db4, noteValue);
   Note *e = createNote(E4, noteValue);
   Note *a = createNote(A4, noteValue);
 
-  writeNoteToBuffer(db, measure, beat, tempo, buffer);
-  writeNoteToBuffer(e, measure, beat, tempo, buffer);
-  writeNoteToBuffer(a, measure, beat, tempo, buffer);
+  writeNoteToBuffer(waveformName, db, measureIndex, beatIndex, song, buffer);
+  writeNoteToBuffer(waveformName, e, measureIndex, beatIndex, song, buffer);
+  writeNoteToBuffer(waveformName, a, measureIndex, beatIndex, song, buffer);
 
   free(db);
   free(e);
   free(a);
 }
 
-void Bm1st(float noteValue, int measure, float beat, Song *tempo, short int *buffer)
+void Bm1st(const char*waveformName, float noteValue, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
 {
   Note *d = createNote(D4, noteValue);
   Note *gb = createNote(Gb4, noteValue);
   Note *b = createNote(B4, noteValue);
 
-  writeNoteToBuffer(d, measure, beat, tempo, buffer);
-  writeNoteToBuffer(gb, measure, beat, tempo, buffer);
-  writeNoteToBuffer(b, measure, beat, tempo, buffer);
+  writeNoteToBuffer(waveformName, d, measureIndex, beatIndex, song, buffer);
+  writeNoteToBuffer(waveformName, gb, measureIndex, beatIndex, song, buffer);
+  writeNoteToBuffer(waveformName, b, measureIndex, beatIndex, song, buffer);
 
   free(d);
   free(gb);
   free(b);
 }
 
-void GM2nd(float noteValue, int measure, float beat, Song *tempo, short int *buffer)
+void GM2nd(const char *waveformName, float noteValue, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
 {
   Note *d = createNote(D4, noteValue);
   Note *g = createNote(G4, noteValue);
   Note *b = createNote(B4, noteValue);
 
-  writeNoteToBuffer(d, measure, beat, tempo, buffer);
-  writeNoteToBuffer(g, measure, beat, tempo, buffer);
-  writeNoteToBuffer(b, measure, beat, tempo, buffer);
+  writeNoteToBuffer(waveformName, d, measureIndex, beatIndex, song, buffer);
+  writeNoteToBuffer(waveformName, g, measureIndex, beatIndex, song, buffer);
+  writeNoteToBuffer(waveformName, b, measureIndex, beatIndex, song, buffer);
 
   free(d);
   free(g);

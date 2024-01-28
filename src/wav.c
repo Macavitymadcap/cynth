@@ -34,7 +34,7 @@ int getBitsPerSample(WavHeader *header)
     return 8 * sizeof(short int) * header->numChannels;
 }
 
-WavHeader *createWavHeader(uint32_t fileLength, uint16_t audioFormat, uint16_t numChannels, uint32_t sampleRate)
+WavHeader *createWavHeader(uint32_t fileLength, uint16_t audioFormat, uint16_t numChannels, uint32_t sampleRate, size_t bufferSize)
 {
     WavHeader *header = malloc(WAVE_HEADER_SIZE);
     if (header == NULL)
@@ -55,12 +55,8 @@ WavHeader *createWavHeader(uint32_t fileLength, uint16_t audioFormat, uint16_t n
     header->bitsPerSample = getBitsPerSample(header);
     header->bytesPerSample = getBytesPerSample(header);
     header->bytesPerSecond = getBytesPerSecond(header);
+    header->dataLength = bufferSize * header->bytesPerSample;
+    header->fileLength = header->dataLength + WAVE_HEADER_SIZE;
     
     return header;
-}
-
-void setDataAndFileLength(WavHeader *header, size_t bufferSize, size_t headerSize)
-{
-    header->dataLength = bufferSize * header->bytesPerSample;
-    header->fileLength = header->dataLength + headerSize;
 }

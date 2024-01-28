@@ -21,6 +21,24 @@ void checkGetWaveUsage(int argc, const char *programName)
     }
 }
 
+void checkFourChordsUsage(int argc, const char *programName)
+{
+    if (argc != 2)
+    {
+        fprintf(stderr, "Usage: %s waveform\n", programName);
+        exit(EXIT_FAILURE);
+    }
+}
+
+void checkGetScaleUsage(int argc, const char *programName)
+{
+    if (argc != 2)
+    {
+        fprintf(stderr, "Usage: %s waveform\n", programName);
+        exit(EXIT_FAILURE);
+    }
+}
+
 void checkFileName(const char *fileName)
 {
     regex_t regex;

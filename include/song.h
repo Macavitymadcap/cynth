@@ -12,7 +12,7 @@
 */
 typedef struct
 {
-    int totalBars;              /** Number of bars in the song. */
+    int totalMeasures;          /** Number of measures in the song. */
     int sampleRate;             /** Rate at which notes will be sampled. */
     float timeSignature;        /** Number of beats in each bar. */
     int beatsPerMinute;         /** The overall tempo of the song. */
@@ -47,13 +47,13 @@ int getSamplesBerBeat(int sampleRate, int millisecondsPerBeat);
 
 /**
  * @brief Create a Song struct, exiting the program if memory allocation fails.
- * @param totalBars Number of bars in the song.
+ * @param totalMeasures Number of bars in the song.
  * @param sampleRate Rate at which notes will be sampled.
  * @param timeSignature Number of beats in each bar.
  * @param beatsPerMinute The overall tempo of the song.
  * @param volume The average volume of notes in the song.
  * @returns Pointer to the new Song struct.
 */
-Song *createSong(int totalBars, int sampleRate, float timeSignature, int beatsPerMinute, int volume);
+Song *createSong(int totalMeasures, int sampleRate, float timeSignature, int beatsPerMinute, int volume);
 
 #endif

@@ -6,6 +6,8 @@
 #ifndef PLAY_H
 #define PLAY_H
 
+#include <stdint.h>
+
 #include "duration.h"
 #include "notes.h"
 #include "song.h"
@@ -31,52 +33,57 @@ float getAmplitudeMultiplier(int bufferIndex, int beatStartIndex, int beatEndInd
 
 /**
  * @brief Write the given note to the buffer based on arguments.
+ * @param waveformName String of waveform to write.
  * @param note Pointer to a Note struct.
- * @param measure The current measure in which the note is written.
- * @param beat The index of the current beat in the measure.
- * @param tempo Pointer to structure containg the song's time information. 
+ * @param meaureIndex The current measure in which the note is written.
+ * @param beatIndex The index of the current beat in the measure.
+ * @param song Pointer to structure containg the song's time information. 
  * @param buffer The buffer into which the note will be written.
 */
-void writeNoteToBuffer(Note *note, int measure, float beat, Song *tempo, short int *buffer);
+void writeNoteToBuffer(const char *waveformName, Note *note, int meaureIndex, float beatIndex, Song *song, int16_t *buffer);
 
 /**
  * @brief Write a D major chord to the buffer based on arguments.
+ * @param waveformName String of waveform to write.
  * @param noteValue Length in beats of note.
- * @param measure The current measure in which the note is written.
- * @param beat The index of the current beat in the measure.
- * @param tempo Pointer to structure containg the song's time information. 
+ * @param meaureIndex The current measure in which the note is written.
+ * @param beatIndex The index of the current beat in the measure.
+ * @param song Pointer to structure containg the song's time information. 
  * @param buffer The buffer into which the note will be written.
 */
-void DM(float noteValue, int measure, float beat, Song *tempo, short int *buffer);
+void DM(const char *waveformName, float noteValue, int meaureIndex, float beatIndex, Song *song, int16_t *buffer);
 
 /**
  * @brief Write an A major 1st inversion chord to the buffer based on arguments.
+ * @param waveformName String of waveform to write.
  * @param noteValue Length in beats of note.
- * @param measure The current measure in which the note is written.
- * @param beat The index of the current beat in the measure.
- * @param tempo Pointer to structure containg the song's time information. 
+ * @param meaureIndex The current measure in which the note is written.
+ * @param beatIndex The index of the current beat in the measure.
+ * @param song Pointer to structure containg the song's time information. 
  * @param buffer The buffer into which the note will be written.
 */
-void AM1st(float noteValue, int measure, float beat, Song *tempo, short int *buffer);
+void AM1st(const char *waveformName, float noteValue, int meaureIndex, float beatIndex, Song *song, int16_t *buffer);
 
 
 /**
  * @brief Write a B minor 1st inversion to the buffer based on arguments.
+ * @param waveformName String of waveform to write.
  * @param noteValue Length in beats of note.
- * @param measure The current measure in which the note is written.
- * @param beat The index of the current beat in the measure.
- * @param tempo Pointer to structure containg the song's time information. 
+ * @param meaureIndex The current measure in which the note is written.
+ * @param beatIndex The index of the current beat in the measure.
+ * @param song Pointer to structure containg the song's time information. 
  * @param buffer The buffer into which the note will be written.
 */
-void Bm1st(float noteValue, int measure, float beat, Song *tempo, short int *buffer);
+void Bm1st(const char *waveformName, float noteValue, int meaureIndex, float beatIndex, Song *song, int16_t *buffer);
 
 /**
  * @brief Write a G major 2nd inversion to the buffer based on arguments.
+ * @param waveformName String of waveform to write.
  * @param noteValue Length in beats of note.
- * @param measure The current measure in which the note is written.
- * @param beat The index of the current beat in the measure.
- * @param tempo Pointer to structure containg the song's time information. 
+ * @param meaureIndex The current measure in which the note is written.
+ * @param beatIndex The index of the current beat in the measure.
+ * @param song Pointer to structure containg the song's time information. 
  * @param buffer The buffer into which the note will be written.
 */
-void GM2nd(float noteValue, int measure, float beat, Song *tempo, short int *buffer);
+void GM2nd(const char *waveformName, float noteValue, int meaureIndex, float beatIndex, Song *song, int16_t *buffer);
 #endif // PLAY_H
