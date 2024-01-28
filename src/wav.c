@@ -44,9 +44,9 @@ void setupHeader(WavHeader *header, uint32_t fileLength, uint16_t audioFormat, u
     header->audioFormat = audioFormat;
     header->numChannels = numChannels;
     header->sampleRate = sampleRate;
+    header->bitsPerSample = getBitsPerSample(header);
     header->bytesPerSample = getBytesPerSample(header);
     header->bytesPerSecond = getBytesPerSecond(header);
-    header->bitsPerSample = getBitsPerSample(header);
 }
 
 void setDataAndFileLength(WavHeader *header, size_t bufferSize, size_t headerSize)

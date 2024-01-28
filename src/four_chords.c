@@ -22,9 +22,10 @@ int main(void)
   checkBufferAllocation(buffer);
   memset(buffer, 0, bufferSize * sizeof(short int));
 
-  WavHeader *wavHeader = malloc(sizeof(WavHeader));
+  size_t headerSize = sizeof(WavHeader); 
+  WavHeader *wavHeader = malloc(headerSize);
   checkWavHeaderAllocation(wavHeader);
-  memset(wavHeader, 0, sizeof(WavHeader));
+  memset(wavHeader, 0, headerSize);
   setupHeader(wavHeader, STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate);
 
   int measure = 0;
@@ -68,9 +69,7 @@ int main(void)
     measure++;
   }
 
-  wavHeader->fileLength = bufferSize + 44;
-  const int num_bytes = 2;
-  wavHeader->dataLength = bufferSize * num_bytes;
+  setDataAndFileLength(wavHeader, bufferSize, headerSize);
 
   FILE *fp = fopen("four_chords.wav", "wb");
   fwrite(wavHeader, 1, sizeof(WavHeader), fp);
