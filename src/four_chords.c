@@ -54,7 +54,6 @@ int main(int argc, char *argv[])
     DM(waveformName, CROTCHET, measureIndex, 1, song, buffer);
     DM(waveformName, CROTCHET, measureIndex, 2, song, buffer);
     DM(waveformName, CROTCHET, measureIndex, 3, song, buffer);
-
     measureIndex++;
 
     writeNoteToBuffer(waveformName, aBassLow, measureIndex, 0, song, buffer);
@@ -63,7 +62,6 @@ int main(int argc, char *argv[])
     AM1st(waveformName, CROTCHET, measureIndex, 1, song, buffer);
     AM1st(waveformName, CROTCHET, measureIndex, 2, song, buffer);
     AM1st(waveformName, CROTCHET, measureIndex, 3, song, buffer);
-
     measureIndex++;
 
     writeNoteToBuffer(waveformName, bBassLow, measureIndex, 0, song, buffer);
@@ -72,7 +70,6 @@ int main(int argc, char *argv[])
     Bm1st(waveformName, CROTCHET, measureIndex, 1, song, buffer);
     Bm1st(waveformName, CROTCHET, measureIndex, 2, song, buffer);
     Bm1st(waveformName, CROTCHET, measureIndex, 3, song, buffer);
-
     measureIndex++;
 
     writeNoteToBuffer(waveformName, gBassLow, measureIndex, 0, song, buffer);
@@ -81,7 +78,6 @@ int main(int argc, char *argv[])
     GM2nd(waveformName, CROTCHET, measureIndex, 1, song, buffer);
     GM2nd(waveformName, CROTCHET, measureIndex, 2, song, buffer);
     GM2nd(waveformName, CROTCHET, measureIndex, 3, song, buffer);
-
     measureIndex++;
   }
 

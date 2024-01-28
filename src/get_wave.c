@@ -9,8 +9,6 @@
 #include "validation.h"
 #include "audio_buffer.h"
 
-const int sampleRate = 8000;
-
 int main(int argc, char *argv[])
 {
     checkGetWaveUsage(argc, argv[0]);
@@ -31,6 +29,8 @@ int main(int argc, char *argv[])
 
     int volume = atoi(argv[3]);
     checkVolume(volume);
+
+    const int sampleRate = 8000;
 
     size_t bufferSize = sampleRate * seconds;
     int16_t *buffer = createBuffer(bufferSize);
