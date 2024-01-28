@@ -52,7 +52,7 @@ int getSamplesBerBeat(int sampleRate, int millisecondsPerBeat);
  * @param timeSignature Number of beats in each bar.
  * @param beatsPerMinute The overall tempo of the song.
  * @param volume The average volume of notes in the song.
- * @returns Pointer to the new Song structre.
+ * @returns Pointer to the new Song struct.
 */
 Song *createSong(int totalBars, int sampleRate, float timeSignature, int beatsPerMinute, int volume);
 

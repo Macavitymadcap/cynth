@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 #include "wav.h"
 #include "notes.h"
@@ -19,7 +20,7 @@ int main(void)
   Song *song = createSong(16, sampleRate, FOUR_FOUR, 120, 3000);
 
   const int bufferSize = song->totalBars * song->timeSignature * song->samplesPerBeat;
-  short int *buffer = createBuffer(bufferSize);
+  int16_t *buffer = createBuffer(bufferSize);
 
   WavHeader *wavHeader = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate);
 

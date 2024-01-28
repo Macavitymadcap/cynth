@@ -1,6 +1,6 @@
 /**
  * @file notes.h
- * @brief Definitions of frequencies corresponding to notes.
+ * @brief Functions and constants pertaining to musical notes.
  * @see https://pages.mtu.edu/~suits/notefreqs.html
 */
 
@@ -117,6 +117,13 @@ extern const float Bb8;
 extern const float B8;
 
 /**
+ * @brief Return the note corresponding with the passed string.
+ * @param noteName A string representation of the note.
+ * @returns The float that corresponds with the noteName.
+*/
+float getFrequencyFromName(const char *noteName);
+
+/**
  * @struct Note
  * @brief Encapsulates information about an individual note
 */
@@ -133,12 +140,5 @@ typedef struct
  * @returns note Pointer to a Note struct.
 */
 Note *createNote(float frequency, float value);
-
-/**
- * @brief Return the note corresponding with the passed string.
- * @param noteName A string representation of the note.
- * @returns The float that corresponds with the noteName.
-*/
-float getFrequencyFromName(const char *noteName);
 
 #endif // NOTES_H

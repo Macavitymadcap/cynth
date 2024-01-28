@@ -1,6 +1,6 @@
 /**
  * @file wav.h
- * @brief WAV File Header Structure and functions for reading/writing them
+ * @brief Struct, consts and function for creating WavHeaders.
  *
  */
 
@@ -134,7 +134,6 @@ int getBitsPerSample(WavHeader *header);
  * for calculating the dataLength.
  */
 void setDataAndFileLength(WavHeader *header, size_t bufferSize, size_t headerSize);
-
 
 /**
  * @brief Create a WavHeader struct, exiting the program if allocation fails.

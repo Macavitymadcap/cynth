@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 
 #include "wav.h"
 #include "notes.h"
@@ -33,7 +34,7 @@ int main(int argc, char *argv[])
     
     WavHeader *header = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate);
 
-    short int *buffer = createBuffer(bufferSize);
+    int16_t *buffer = createBuffer(bufferSize);
 
     setDataAndFileLength(header, bufferSize, WAVE_HEADER_SIZE);
 

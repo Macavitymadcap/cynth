@@ -1,19 +1,22 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdint.h>
 
 #include "audio_buffer.h"
 
-short int *createBuffer(int size)
+int16_t *createBuffer(int size)
 {
-    short int *buffer = malloc(size * sizeof(short int));
+    size_t dataSize = sizeof(int16_t);
+
+    int16_t*buffer = malloc(size * dataSize);
     if (buffer == NULL)
     {
         fprintf(stderr, "Error allocating audio buffer\n");
         exit(EXIT_FAILURE);
     }
 
-    memset(buffer, 0, size * sizeof(short int));
+    memset(buffer, 0, size * dataSize);
 
     return buffer;
 }
