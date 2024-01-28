@@ -9,51 +9,6 @@
 #include "waveforms.h"
 #include "validation.h"
 
-void play(float freq, float duration, int measure, float beat, int beatsPerMeasure, int samplesPerBeat, int sampleRate, short int *buffer)
-{
-  float current_beat = beatsPerMeasure * measure + beat;
-  int start_index = current_beat * samplesPerBeat;
-  int end_index = start_index + duration * samplesPerBeat;
-
-  for (int i = start_index; i < end_index; i++)
-  {
-    float amplitudeMultiplier = getAmplitudeMultiplier(i, start_index, end_index);
-    buffer[i] += (short int)((cos((2 * M_PI * freq * i) / sampleRate) * 3000) * amplitudeMultiplier);
-  }
-}
-
-// DMajor
-void DM(float duration, int measure, float beat, int beatsPerMeasure, int samplesPerBeat, int sampleRate, short int *buffer)
-{
-  play(D4, duration, measure, beat, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-  play(Gb4, duration, measure, beat, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-  play(A4, duration, measure, beat, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-}
-
-// A Major 1st Inversion
-void AM1st(float duration, int measure, float beat, int beatsPerMeasure, int samplesPerBeat, int sampleRate, short int *buffer)
-{
-  play(Db4, duration, measure, beat, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-  play(E4, duration, measure, beat, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-  play(A4, duration, measure, beat, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-}
-
-// B Minor 1st Inversion
-void Bm1st(float duration, int measure, float beat, int beatsPerMeasure, int samplesPerBeat, int sampleRate, short int *buffer)
-{
-  play(D4, duration, measure, beat, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-  play(Gb4, duration, measure, beat, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-  play(B4, duration, measure, beat, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-}
-
-// G Major 2nd Inversion
-void GM2nd(float duration, int measure, float beat, int beatsPerMeasure, int samplesPerBeat, int sampleRate, short int *buffer)
-{
-  play(D4, duration, measure, beat, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-  play(G4, duration, measure, beat, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-  play(B4, duration, measure, beat, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-}
-
 int main(void)
 {
   const int measuresToPlay = 4 * 4;
@@ -70,20 +25,14 @@ int main(void)
   WavHeader *wavHeader = malloc(sizeof(WavHeader));
   checkWavHeaderAllocation(wavHeader);
   memset(wavHeader, 0, sizeof(WavHeader));
-
-  setFormatFields(wavHeader);
-  wavHeader->chunkSize = STANDARD_CHUNK_SIZE;
-  wavHeader->audioFormat = PCM;
-  wavHeader->numChannels = MONO;
-  wavHeader->sampleRate = sampleRate;
-  wavHeader->bitsPerSample = STANDARD_CHUNK_SIZE;
+  setupHeader(wavHeader, STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate);
 
   int measure = 0;
   while (measure < measuresToPlay)
   {
 
-    play(D2, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    play(D3, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
+    writeNoteToBuffer(D2, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
+    writeNoteToBuffer(D3, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
     DM(1, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
     DM(1, measure, 1, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
     DM(1, measure, 2, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
@@ -91,8 +40,8 @@ int main(void)
 
     measure++;
 
-    play(A3, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    play(A2, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
+    writeNoteToBuffer(A3, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
+    writeNoteToBuffer(A2, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
     AM1st(1, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
     AM1st(1, measure, 1, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
     AM1st(1, measure, 2, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
@@ -100,8 +49,8 @@ int main(void)
 
     measure++;
 
-    play(B2, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    play(B3, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
+    writeNoteToBuffer(B2, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
+    writeNoteToBuffer(B3, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
     Bm1st(1, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
     Bm1st(1, measure, 1, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
     Bm1st(1, measure, 2, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
@@ -109,8 +58,8 @@ int main(void)
 
     measure++;
 
-    play(G2, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
-    play(G3, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
+    writeNoteToBuffer(G2, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
+    writeNoteToBuffer(G3, 4, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
     GM2nd(1, measure, 0, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
     GM2nd(1, measure, 1, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
     GM2nd(1, measure, 2, beatsPerMeasure, samplesPerBeat, sampleRate, buffer);
