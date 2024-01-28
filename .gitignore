@@ -1,3 +1,6 @@
 *.o
 *.wav
 .vscode
+build/
+four_chords
+get_wave

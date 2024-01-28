@@ -1,22 +1,28 @@
 CC = gcc
 LDLIBS = -lm
 CFLAGS = -Wall -Wextra -Werror -std=c17 -g
+INCLUDE = -Iinclude
+SRC = src
+BUILD = build
 
-# List of source files
-GET_WAVE_SRC = src/get_wave.c src/waveforms.c src/wav.c src/validation.c src/notes.c
+GET_WAVE_SRC = $(filter-out $(SRC)/play.c $(SRC)/duration.c $(SRC)/four_chords.c $(SRC)/song.c, $(wildcard $(SRC)/*.c))
+GET_WAVE_OBJ = $(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(GET_WAVE_SRC))
 
-# List of object files
-GET_WAVE_OBJ = $(GET_WAVE_SRC:.c=.o)
+FOUR_CHORDS_SRC = $(filter-out $(SRC)/get_wave.c, $(wildcard $(SRC)/*.c))
+FOUR_CHORDS_OBJ = $(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(FOUR_CHORDS_SRC))
 
-# The main target
+all: get_wave four_chords
+
 get_wave: $(GET_WAVE_OBJ)
 	$(CC) $(CFLAGS) -o get_wave $(GET_WAVE_OBJ) $(LDLIBS)
 
-# Rule for compiling source files
-%.o: %.c
-	$(CC) $(CFLAGS) -Iinclude -c -o $@ $<
+four_chords: $(FOUR_CHORDS_OBJ)
+	$(CC) $(CFLAGS) -o four_chords $(FOUR_CHORDS_OBJ) $(LDLIBS)
+
+$(BUILD)/%.o: $(SRC)/%.c
+	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $<
 
 .PHONY: clean
 
 clean:
-	rm -f src/*.o $(objects) cynth *.wav
+	rm -f $(BUILD)/*.o get_wave four_chords *.wav

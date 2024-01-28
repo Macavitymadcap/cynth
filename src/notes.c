@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 #include "notes.h"
 
@@ -112,7 +113,7 @@ const float A8 = 7040.00;
 const float Bb8 = 7458.62;
 const float B8 = 7902.13;
 
-float getNoteFromName(const char *noteName)
+float getFrequencyFromName(const char *noteName)
 {
     if (strcmp(noteName, "c0") == 0)
         return C0;
@@ -312,6 +313,23 @@ float getNoteFromName(const char *noteName)
         return A8;
     else if (strcmp(noteName, "bb8") == 0)
         return Bb8;
-    
+
     return 0.0;
+}
+
+Note *createNote(float frequency, float value)
+{
+    const size_t noteSize = sizeof(Note);
+    Note *newNote = malloc(noteSize);
+    if (newNote == NULL)
+    {
+        fprintf(stderr, "Error allocating Note. Frequency: %f Value: %f\n", frequency, value);
+        exit(EXIT_FAILURE);
+    }
+
+    memset(newNote, 0, noteSize);
+    newNote->frequency = frequency;
+    newNote->value = value;
+
+    return newNote;
 }

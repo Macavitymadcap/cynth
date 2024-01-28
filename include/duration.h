@@ -1,6 +1,6 @@
 /**
  * @file duration.h
- * @brief Functions and constants for musical duration.
+ * @brief Constants for musical duration.
 */
 
 #ifndef DURATION_H
@@ -60,21 +60,5 @@ extern const float FOUR_FOUR;
  * @brief A float representing the beats per measure in waltz (3/4) time.
 */
 extern const float THREE_FOUR;
-
-/**
- * @brief Calculate milliseconds per beat based on beats per minute (BPM).
- *
- * This function calculates the duration of a beat in milliseconds given the
- * beats per minute (BPM). It uses the formula: milliseconds per beat = 60000 / BPM.
- * The result is rounded to the nearest integer before being returned.
- *
- * @param bpm Beats per minute (BPM) indicating the tempo of the music.
- * @return The calculated milliseconds per beat.
- *
- * @note The function relies on the standard C library function 'round' to round
- *       the result to the nearest integer. Ensure that the 'math.h' header is included
- *       if compiling with GCC or a compatible compiler.
- */
-int getMillisecondsPerBeat(int bpm);
 
 #endif // DURATION_H

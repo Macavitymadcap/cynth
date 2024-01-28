@@ -1,6 +1,6 @@
 /**
  * @file notes.h
- * @brief Definitions of frequencies corresponding to notes.
+ * @brief Functions and constants pertaining to musical notes.
  * @see https://pages.mtu.edu/~suits/notefreqs.html
 */
 
@@ -121,6 +121,24 @@ extern const float B8;
  * @param noteName A string representation of the note.
  * @returns The float that corresponds with the noteName.
 */
-float getNoteFromName(const char *noteName);
+float getFrequencyFromName(const char *noteName);
+
+/**
+ * @struct Note
+ * @brief Encapsulates information about an individual note
+*/
+typedef struct 
+{
+    float frequency;    /** The pitch of the note. */ 
+    float value;        /** The duration in beats of the note. */
+} __attribute__((__packed__)) Note;
+
+/**
+ * @brief Create a new note, exiting the program if memory cannot be allocated.
+ * @param frequency The pitch of the note.
+ * @param value The duration in beats of the note.
+ * @returns note Pointer to a Note struct.
+*/
+Note *createNote(float frequency, float value);
 
 #endif // NOTES_H

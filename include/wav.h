@@ -1,6 +1,6 @@
 /**
  * @file wav.h
- * @brief WAV File Header Structure and functions for reading/writing them
+ * @brief Struct, consts and function for creating WavHeaders.
  *
  */
 
@@ -55,6 +55,11 @@ extern const uint16_t SIXTEEN_BIT_MONO;
 extern const uint16_t SIXTEEN_BIT_STEREO;
 
 /**
+ * @brief Size of the WavHeader struct.
+*/
+extern const size_t WAVE_HEADER_SIZE;
+
+/**
  * @struct WavHeader
  * @brief Structure representing the header of a WAV file.
  *
@@ -78,20 +83,6 @@ typedef struct
     uint8_t data[4];         /** Four bytes that identify the data subchunk (data). */
     uint32_t dataLength;     /** Size of the data subchunk. */
 } __attribute__((__packed__)) WavHeader;
-
-/**
- * @brief Initialize a WAV header with default values.
- *
- * This function writes predefined byte sequences to specific fields
- * of a WavHeader structure, initialising the following fields:
- * - riff: 'RIFF'
- * - wave: 'WAVE'
- * - fmt: 'fmt '
- * - data:'data'
- *
- * @param header Pointer to the WAV header structure.
- */
-void setFormatFields(WavHeader *header);
 
 /**
  * @brief Calculate the byte rate for a WAV header.
@@ -128,21 +119,6 @@ int getBytesPerSample(WavHeader *header);
 int getBitsPerSample(WavHeader *header);
 
 /**
- * @brief Set up the WAV header with specified parameters.
- *
- * This function sets up the WAV header with the provided parameters. It updates
- * various fields in the WavHeader structure, such as chunkSize, audioFormat,
- * numChannels, sampleRate, bytesPerSample, bytesPerSecond, and bitsPerSample.
- *
- * @param header Pointer to the WavHeader structure to be initialized.
- * @param fileLength Size of the audio subchunk1 in bytes.
- * @param audioFormat Audio format (e.g., PCM, IEEE floating point, etc.).
- * @param numChannels Number of audio channels (e.g., mono, stereo).
- * @param sampleRate The sample rate of the audio data.
- */
-void setupHeader(WavHeader *header, uint32_t fileLength, uint16_t audioFormat, uint16_t numChannels, uint32_t sampleRate);
-
-/**
  * @brief Write data information to the WAV header.
  *
  * This function updates the WAV header with data-related information based on
@@ -158,5 +134,17 @@ void setupHeader(WavHeader *header, uint32_t fileLength, uint16_t audioFormat, u
  * for calculating the dataLength.
  */
 void setDataAndFileLength(WavHeader *header, size_t bufferSize, size_t headerSize);
+
+/**
+ * @brief Create a WavHeader struct, exiting the program if allocation fails.
+ *
+ * @param header Pointer to the WavHeader structure to be initialized.
+ * @param fileLength Size of the audio subchunk1 in bytes.
+ * @param audioFormat Audio format (e.g., PCM, IEEE floating point, etc.).
+ * @param numChannels Number of audio channels (e.g., mono, stereo).
+ * @param sampleRate The sample rate of the audio data.
+ * @returns Pointer to the create WavHeader.
+ */
+WavHeader *createWavHeader(uint32_t fileLength, uint16_t audioFormat, uint16_t numChannels, uint32_t sampleRate);
 
 #endif // WAV_H
