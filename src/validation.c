@@ -7,35 +7,53 @@
 #include "waveforms.h"
 #include "wav.h"
 
+void printFile(const char* filePath)
+{
+    FILE *filePointer;
+    char character;
+
+    filePointer = fopen(filePath, "r");
+    if (filePointer == NULL)
+    {
+        fprintf(stderr, "Unable to open file: %s.\n", filePath);
+        exit(EXIT_FAILURE);
+    }
+
+    while((character = fgetc(filePointer)) != EOF)
+    {
+        putchar(character);
+    }
+    putchar('\n');
+
+    fclose(filePointer);
+}
+
 void checkGetWaveUsage(int argc, const char *programName)
 {
     if (argc != 6)
     {
         fprintf(stderr, "Usage: %s outfile waveform note seconds volume\n", programName);
-        printf("    outfile:  Name of file to be written, must be .wav.\n");
-        printf("    waveform: Type of waveform to generate, one of;\n");
-        printf("              pulse; sawtooth; sine; square; or triangle.\n");
-        printf("    note:     Note in lowercase, from c0 to b8, use 'b' for flats\n");
-        printf("    seconds:  Length of generated waveform, from 1-60\n");
-        printf("    volume:   Loudness of generated waveform, from 1-11\n");
+        printFile("docs/get_wave.txt");
         exit(EXIT_FAILURE);
     }
 }
 
 void checkFourChordsUsage(int argc, const char *programName)
 {
-    if (argc != 4)
+    if (argc != 5)
     {
-        fprintf(stderr, "Usage: %s waveform bpm volume\n", programName);
+        fprintf(stderr, "Usage: %s outfile waveform bpm volume\n", programName);
+        printFile("docs/four_chords.txt");
         exit(EXIT_FAILURE);
     }
 }
 
 void checkGetScaleUsage(int argc, const char *programName)
 {
-    if (argc != 4)
+    if (argc != 5)
     {
-        fprintf(stderr, "Usage: %s waveform bpm volume\n", programName);
+        fprintf(stderr, "Usage: %s outfile waveform bpm volume\n", programName);
+        printFile("docs/get_scale.txt");
         exit(EXIT_FAILURE);
     }
 }

@@ -10,6 +10,12 @@
 #include "wav.h"
 
 /**
+ * @brief Print the contents of a text file to the console.
+ * @param filePath The relative path of the file to be printed.
+*/
+void printFile(const char* filePath);
+
+/**
  * @brief Exit the program if wrong number of args provided and print usage.
  * @param argc Number of arguments passed to the program.
  * @param programName The name of the program.

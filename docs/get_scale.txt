@@ -1,0 +1,9 @@
+
+Generate a wav file that plays an ascending and descending scale.
+
+Arguments:
+  outfile:  Name of file to be written, must be .wav.
+  waveform: Type of waveform to generate, one of
+            pulse; sawtooth; sine; square; or triangle.
+  bpm:      Desired tempo in beats per minute, in range 1-300.
+  volume:   Loudness of generated waveform, from 1-11.

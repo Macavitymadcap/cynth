@@ -17,13 +17,16 @@ int main(int argc, char *argv[])
 {
   checkFourChordsUsage(argc, argv[0]);
 
-  const char *waveformName = argv[1];
+  const char *fileName = argv[1];
+  checkFileName(fileName);
+
+  const char *waveformName = argv[2];
   checkWaveformName(waveformName);
 
-  int bpm = atoi(argv[2]);
+  int bpm = atoi(argv[3]);
   checkBpm(bpm);
 
-  int volume = atoi(argv[3]);
+  int volume = atoi(argv[4]);
   checkVolume(volume);
 
   const int sampleRate = 16000;
@@ -81,7 +84,6 @@ int main(int argc, char *argv[])
     measureIndex++;
   }
 
-  const char *fileName = "four_chords.wav";
   FILE *outfile = fopen(fileName, "wb");
   checkFileOpening(outfile, fileName);
   fwrite(wavHeader, WAVE_HEADER_SIZE, 1, outfile);
