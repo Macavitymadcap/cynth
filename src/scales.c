@@ -8,7 +8,9 @@
 #include "duration.h"
 
 const int MAJOR_SCALE_INTERVALS[] = {0, 2, 4, 5, 7, 9, 11, 12};
-const int MAJOR_SCALE_LENGTH = 8;
+const int MAJOR_MINOR_SCALE_LENGTH = 8;
+
+const int NATURAL_MINOR_SCALE_INTERVALS[] = {0, 2, 3, 5, 7, 8, 10, 12};
 
 Note *createScaleArray(float tonic, const int *intervals, const int scaleLength)
 {

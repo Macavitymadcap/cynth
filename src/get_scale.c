@@ -38,7 +38,7 @@ int main(int argc, const char *argv[])
 
     WavHeader *wavHeader = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate, bufferSize);
 
-    Note *scale = createScaleArray(C4, MAJOR_SCALE_INTERVALS, MAJOR_SCALE_LENGTH);
+    Note *scale = createScaleArray(C4, NATURAL_MINOR_SCALE_INTERVALS, MAJOR_MINOR_SCALE_LENGTH);
 
     int measureIndex = 0;
     while (measureIndex < song->totalMeasures)

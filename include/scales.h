@@ -14,9 +14,14 @@
 extern const int MAJOR_SCALE_INTERVALS[];
 
 /**
- * @brief The number of notes in the major scale (including octave).
+ * @brief The intervals of the natural minor scale in semitones.
 */
-extern const int MAJOR_SCALE_LENGTH;
+extern const int NATURAL_MINOR_SCALE_INTERVALS[];
+
+/**
+ * @brief The number of notes in the major and natural minor scales (including octave).
+*/
+extern const int MAJOR_MINOR_SCALE_LENGTH;
 
 
 /**
