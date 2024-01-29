@@ -6,12 +6,12 @@
 
 #include "wav.h"
 #include "notes.h"
-#include "play.h"
 #include "waveforms.h"
 #include "validation.h"
 #include "duration.h"
 #include "audio_buffer.h"
 #include "song.h"
+#include "scales.h"
 
 int main(int argc, const char *argv[])
 {
@@ -38,40 +38,32 @@ int main(int argc, const char *argv[])
 
     WavHeader *wavHeader = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate, bufferSize);
 
-    Note *doh = createNote(C4, CROTCHET);
-    Note *ray = createNote(D4, CROTCHET);
-    Note *mi = createNote(E4, CROTCHET);
-    Note *fah = createNote(F4, CROTCHET);
-    Note *so = createNote(G4, CROTCHET);
-    Note *la = createNote(A4, CROTCHET);
-    Note *ti = createNote(B4, CROTCHET);
-    Note *highDoh = createNote(C5, CROTCHET);
+    Note *scale = createScaleArray(C4, MAJOR_SCALE_INTERVALS, MAJOR_SCALE_LENGTH);
 
-    int meausreIndex = 0;
-    while (meausreIndex < song->totalMeasures)
+    int measureIndex = 0;
+    while (measureIndex < song->totalMeasures)
     {
-        writeNoteToBuffer(waveformName, doh, meausreIndex, 0, song, buffer);
-        writeNoteToBuffer(waveformName, ray, meausreIndex, 1, song, buffer);
-        writeNoteToBuffer(waveformName, mi, meausreIndex, 2, song, buffer);
-        writeNoteToBuffer(waveformName, fah, meausreIndex, 3, song, buffer);
-        meausreIndex++;
+        writeNoteToBuffer(waveformName, &scale[0], measureIndex, 0, song, buffer);
+        writeNoteToBuffer(waveformName, &scale[1], measureIndex, 1, song, buffer);
+        writeNoteToBuffer(waveformName, &scale[2], measureIndex, 2, song, buffer);
+        writeNoteToBuffer(waveformName, &scale[4], measureIndex, 3, song, buffer);
+        measureIndex++;
 
-        writeNoteToBuffer(waveformName, so, meausreIndex, 0, song, buffer);
-        writeNoteToBuffer(waveformName, la, meausreIndex, 1, song, buffer);
-        writeNoteToBuffer(waveformName, ti, meausreIndex, 2, song, buffer);
-        writeNoteToBuffer(waveformName, highDoh, meausreIndex, 3, song, buffer);
-        meausreIndex++;
+        writeNoteToBuffer(waveformName, &scale[5], measureIndex, 0, song, buffer);
+        writeNoteToBuffer(waveformName, &scale[6], measureIndex, 1, song, buffer);
+        writeNoteToBuffer(waveformName, &scale[7], measureIndex, 2, song, buffer);
+        writeNoteToBuffer(waveformName, &scale[6], measureIndex, 3, song, buffer);
+        measureIndex++;
 
-        writeNoteToBuffer(waveformName, ti, meausreIndex, 0, song, buffer);
-        writeNoteToBuffer(waveformName, la, meausreIndex, 1, song, buffer);
-        writeNoteToBuffer(waveformName, so, meausreIndex, 2, song, buffer);
-        writeNoteToBuffer(waveformName, fah, meausreIndex, 3, song, buffer);
-        meausreIndex++;
+        writeNoteToBuffer(waveformName, &scale[5], measureIndex, 0, song, buffer);
+        writeNoteToBuffer(waveformName, &scale[4], measureIndex, 1, song, buffer);
+        writeNoteToBuffer(waveformName, &scale[3], measureIndex, 2, song, buffer);
+        writeNoteToBuffer(waveformName, &scale[2], measureIndex, 3, song, buffer);
+        measureIndex++;
 
-        writeNoteToBuffer(waveformName, mi, meausreIndex, 0, song, buffer);
-        writeNoteToBuffer(waveformName, ray, meausreIndex, 1, song, buffer);
-        writeNoteToBuffer(waveformName, doh, meausreIndex, 2, song, buffer);
-        meausreIndex++;
+        writeNoteToBuffer(waveformName, &scale[1], measureIndex, 0, song, buffer);
+        writeNoteToBuffer(waveformName, &scale[0], measureIndex, 1, song, buffer);
+        measureIndex++;
     }
 
     FILE *outfile = fopen(fileName, "wb");
@@ -83,14 +75,7 @@ int main(int argc, const char *argv[])
     free(song);
     free(wavHeader);
     free(buffer);
-    free(doh);
-    free(ray);
-    free(mi);
-    free(fah);
-    free(so);
-    free(la);
-    free(ti);
-    free(highDoh);
+    free(scale);
 
     exit(EXIT_SUCCESS);
 }

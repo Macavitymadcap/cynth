@@ -134,6 +134,11 @@ typedef struct
 } __attribute__((__packed__)) Note;
 
 /**
+ * @brief The szie of a Note struct.
+*/
+extern const size_t NOTE_SIZE;
+
+/**
  * @brief Create a new note, exiting the program if memory cannot be allocated.
  * @param frequency The pitch of the note.
  * @param value The duration in beats of the note.

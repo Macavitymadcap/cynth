@@ -317,17 +317,18 @@ float getFrequencyFromName(const char *noteName)
     return 0.0;
 }
 
+const size_t NOTE_SIZE = sizeof(Note);
+
 Note *createNote(float frequency, float value)
 {
-    const size_t noteSize = sizeof(Note);
-    Note *newNote = malloc(noteSize);
+    Note *newNote = malloc(NOTE_SIZE);
     if (newNote == NULL)
     {
         fprintf(stderr, "Error allocating Note. Frequency: %f Value: %f\n", frequency, value);
         exit(EXIT_FAILURE);
     }
 
-    memset(newNote, 0, noteSize);
+    memset(newNote, 0, NOTE_SIZE);
     newNote->frequency = frequency;
     newNote->value = value;
 

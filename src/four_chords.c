@@ -6,7 +6,7 @@
 
 #include "wav.h"
 #include "notes.h"
-#include "play.h"
+#include "audio_buffer.h"
 #include "waveforms.h"
 #include "validation.h"
 #include "duration.h"
