@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     const int seconds = atoi(argv[4]);
     checkSeconds(seconds);
 
-    int volume = atoi(argv[3]);
+    int volume = atoi(argv[5]);
     checkVolume(volume);
 
     const int sampleRate = 8000;
