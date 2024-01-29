@@ -18,6 +18,8 @@ FOUR_CHORDS_OBJ = $(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(FOUR_CHORDS_SRC))
 GET_SCALE_SRC = $(filter-out $(SRC)/$(FOUR_CHORDS).c $(SRC)/$(GET_WAVE).c, $(wildcard $(SRC)/*.c))
 GET_SCALE_OBJ = $(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(GET_SCALE_SRC))
 
+$(shell mkdir -p $(BUILD))
+
 all: $(GET_WAVE) $(FOUR_CHORDS) $(GET_SCALE)
 
 $(GET_WAVE): $(GET_WAVE_OBJ)
