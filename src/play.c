@@ -30,7 +30,7 @@ float getAmplitudeMultiplier(int bufferIndex, int beatStartIndex, int beatEndInd
   return amplitudeMultiplier;
 }
 
-void writeNoteToBuffer(const char * waveformName, Note *note, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
+void writeNoteToBuffer(const char *waveformName, Note *note, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
 {
   float duration = note->value * song->timeSignature;
   float current_beat = song->timeSignature * measureIndex + beatIndex;

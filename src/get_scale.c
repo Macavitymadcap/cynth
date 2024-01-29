@@ -28,7 +28,7 @@ int main(int argc, const char *argv[])
 
     const int sampleRate = 16000;
 
-    Song *song = createSong(4, sampleRate, FOUR_FOUR, bpm, volume * 500);
+    Song *song = createSong(8, sampleRate, FOUR_FOUR, bpm, volume * 500);
 
     size_t bufferSize = song->totalMeasures * song->timeSignature * song->samplesPerBeat;
     int16_t *buffer = createBuffer(bufferSize);
@@ -57,6 +57,17 @@ int main(int argc, const char *argv[])
         writeNoteToBuffer(waveformName, la, meausreIndex, 1, song, buffer);
         writeNoteToBuffer(waveformName, ti, meausreIndex, 2, song, buffer);
         writeNoteToBuffer(waveformName, highDoh, meausreIndex, 3, song, buffer);
+        meausreIndex++;
+
+        writeNoteToBuffer(waveformName, ti, meausreIndex, 0, song, buffer);
+        writeNoteToBuffer(waveformName, la, meausreIndex, 1, song, buffer);
+        writeNoteToBuffer(waveformName, so, meausreIndex, 2, song, buffer);
+        writeNoteToBuffer(waveformName, fah, meausreIndex, 3, song, buffer);
+        meausreIndex++;
+
+        writeNoteToBuffer(waveformName, mi, meausreIndex, 0, song, buffer);
+        writeNoteToBuffer(waveformName, ray, meausreIndex, 1, song, buffer);
+        writeNoteToBuffer(waveformName, doh, meausreIndex, 2, song, buffer);
         meausreIndex++;
     }
 
