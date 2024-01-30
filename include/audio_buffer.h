@@ -91,4 +91,22 @@ void Bm1st(const char *waveformName, float noteValue, int meaureIndex, float bea
 */
 void GM2nd(const char *waveformName, float noteValue, int meaureIndex, float beatIndex, Song *song, int16_t *buffer);
 
+/**
+ * @brief Writes a whole tone scale to an audio buffer, excluding the melodic minor.
+ * @param waveformName String of waveform to write.
+ * @param scale Array of Note structs comprings the notes of the scale.
+ * @param song Pointer to structure containg the song's time information. 
+ * @param buffer The buffer into which the note will be written.
+*/
+void writeWholeToneScaleToBuffer(const char *waveformName, Note *scale, Song *song, int16_t *buffer);
+
+/**
+ * @brief Writes a whole tone scale to an audio buffer, excluding the melodic minor.
+ * @param waveformName String of waveform to write.
+ * @param Tonic Float representing the root note of the melodic minor scale.
+ * @param song Pointer to structure containg the song's time information. 
+ * @param buffer The buffer into which the note will be written.
+*/
+void writeMelodicMinorScaleToBuffer(const char *waveformName, float tonic, Song *song, int16_t *buffer);
+
 #endif

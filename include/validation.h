@@ -150,4 +150,44 @@ void checkFileOpening(FILE *output, const char *fileName);
 */
 void checkBpm(int bpm);
 
+/**
+ * @brief Determine if the string matches the name of the major scale.
+ * @param scaleName String to be checked.
+ * @returns 1 if valid, otherwise 0.
+*/
+int isMajor(const char *scaleName);
+
+/**
+ * @brief Determine if the string matches the name of the natural minor scale.
+ * @param scaleName String to be checked.
+ * @returns 1 if valid, otherwise 0.
+*/
+int isMinor(const char *scaleName);
+
+/**
+ * @brief Determine if the string matches the name of the harmonic minor scale.
+ * @param scaleName String to be checked.
+ * @returns 1 if valid, otherwise 0.
+*/
+int isHarmonicMinor(const char *scaleName);
+
+/**
+ * @brief Determine if the string matches the name of the melodic minor scale.
+ * @param scaleName String to be checked.
+ * @returns 1 if valid, otherwise 0.
+*/
+int isMelodicMinor(const char *scaleName);
+
+/**
+ * @brief Exit program if scaleName is invalid.
+ * @param scaleName String to be checked.
+*/
+void checkScaleName(const char* scaleName);
+
+/**
+ * @brief Determine if the scale is a whole tone (excluding the melodic minor);
+ * @returns 1 if true, else 0; 
+*/
+int isWholeToneScale(const char *scaleName);
+
 #endif // VALIDATION_H

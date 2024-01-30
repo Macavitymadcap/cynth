@@ -26,6 +26,7 @@ int main(int argc, const char *argv[])
     const float tonic = getFrequencyFromName(noteName);
 
     const char *scaleName = argv[3];
+    checkScaleName(scaleName);
 
     int bpm = atoi(argv[4]);
     checkBpm(bpm);
@@ -42,36 +43,29 @@ int main(int argc, const char *argv[])
 
     WavHeader *wavHeader = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate, bufferSize);
 
-    Note *scale = createScaleArray(C4, NATURAL_MINOR_INTERVALS, WHOLE_TONE_SCALE_LENGTH);
-
-    int measureIndex = 0;
-    while (measureIndex < song->totalMeasures)
+    if (isMelodicMinor(scaleName))
     {
-        writeNoteToBuffer(waveformName, &scale[0], measureIndex, 0, song, buffer);
-        writeNoteToBuffer(waveformName, &scale[1], measureIndex, 1, song, buffer);
-        writeNoteToBuffer(waveformName, &scale[2], measureIndex, 2, song, buffer);
-        writeNoteToBuffer(waveformName, &scale[4], measureIndex, 3, song, buffer);
-        measureIndex++;
-
-        writeNoteToBuffer(waveformName, &scale[5], measureIndex, 0, song, buffer);
-        writeNoteToBuffer(waveformName, &scale[6], measureIndex, 1, song, buffer);
-        writeNoteToBuffer(waveformName, &scale[7], measureIndex, 2, song, buffer);
-        writeNoteToBuffer(waveformName, &scale[6], measureIndex, 3, song, buffer);
-        measureIndex++;
-
-        writeNoteToBuffer(waveformName, &scale[5], measureIndex, 0, song, buffer);
-        writeNoteToBuffer(waveformName, &scale[4], measureIndex, 1, song, buffer);
-        writeNoteToBuffer(waveformName, &scale[3], measureIndex, 2, song, buffer);
-        writeNoteToBuffer(waveformName, &scale[2], measureIndex, 3, song, buffer);
-        measureIndex++;
-
-        writeNoteToBuffer(waveformName, &scale[1], measureIndex, 0, song, buffer);
-        writeNoteToBuffer(waveformName, &scale[0], measureIndex, 1, song, buffer);
-        measureIndex++;
+        writeMelodicMinorScaleToBuffer(waveformName, tonic, song, buffer);
     }
+    else if (isWholeToneScale(scaleName))
+    {
+        Note *wholeToneScale = getScale(scaleName, tonic);
+        writeWholeToneScaleToBuffer(waveformName, wholeToneScale, song, buffer);
+        free(wholeToneScale);
+    }
+    
 
-    FILE *outfile = fopen("scale.wav", "wb");
-    checkFileOpening(outfile, "scale.wav");
+    char fileName[40];
+    memset(fileName, 0, 40);
+    strcat(fileName, waveformName);
+    strcat(fileName, "-");
+    strcat(fileName, noteName);
+    strcat(fileName, "-");
+    strcat(fileName, scaleName);
+    strcat(fileName, ".wav");
+
+    FILE *outfile = fopen(fileName, "wb");
+    checkFileOpening(outfile, fileName);
     fwrite(wavHeader, WAVE_HEADER_SIZE, 1, outfile);
     fwrite(buffer, bufferSize, 1, outfile);
 
@@ -79,7 +73,6 @@ int main(int argc, const char *argv[])
     free(song);
     free(wavHeader);
     free(buffer);
-    free(scale);
 
     exit(EXIT_SUCCESS);
 }

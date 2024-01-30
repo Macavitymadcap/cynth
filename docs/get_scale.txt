@@ -13,5 +13,5 @@ Arguments:
   bpm:      Desired tempo in beats per minute, in range 1-300.
   volume:   Loudness of generated waveform, from 1-11.
 
-The name of the generated wav file is determined by the tonic and scale.
-For example 'c4-major.wav'
+The name of the generated wav file is determined by the waveform, tonic and
+scale. For example 'sine-c4-major.wav'

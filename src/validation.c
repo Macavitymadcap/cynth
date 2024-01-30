@@ -6,6 +6,7 @@
 #include "validation.h"
 #include "waveforms.h"
 #include "wav.h"
+#include "scales.h"
 
 void printFile(const char* filePath)
 {
@@ -50,9 +51,9 @@ void checkFourChordsUsage(int argc, const char *programName)
 
 void checkGetScaleUsage(int argc, const char *programName)
 {
-    if (argc != 5)
+    if (argc != 6)
     {
-        fprintf(stderr, "Usage: %s outfile waveform bpm volume\n", programName);
+        fprintf(stderr, "Usage: %s waveform tonic scale bpm volume\n", programName);
         printFile("docs/get_scale.txt");
         exit(EXIT_FAILURE);
     }
@@ -232,4 +233,38 @@ void checkBpm(int bpm)
         fprintf(stderr, "Invalid bpm: %i. Must be number in range 1-300\n", bpm);
         exit(EXIT_FAILURE);
     }
+}
+
+int isMajor(const char *scaleName)
+{
+    return strcmp(scaleName, MAJOR) == 0;
+}
+
+int isMinor(const char *scaleName)
+{
+    return strcmp(scaleName, MINOR) == 0;
+}
+
+int isHarmonicMinor(const char *scaleName)
+{
+    return strcmp(scaleName, HARMONIC_MINOR) == 0;
+}
+
+int isMelodicMinor(const char *scaleName)
+{
+    return strcmp(scaleName, MELODIC_MINOR) == 0;
+}
+
+void checkScaleName(const char* scaleName)
+{
+    if (!isMajor(scaleName) && !isMinor(scaleName) && ! isHarmonicMinor(scaleName) && !isMelodicMinor(scaleName))
+    {
+        fprintf(stderr, "Invalid scale name: %s. Use one of:\n", scaleName);
+        printf("\t- %s\n\t- %s\n\t- %s\n\t- %s\n", MAJOR, MINOR, HARMONIC_MINOR, MELODIC_MINOR);
+    }
+}
+
+int isWholeToneScale(const char *scaleName)
+{
+    return isMajor(scaleName) || isHarmonicMinor(scaleName) || isMinor(scaleName);
 }

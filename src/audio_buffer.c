@@ -8,21 +8,22 @@
 #include "duration.h"
 #include "song.h"
 #include "audio_buffer.h"
+#include "scales.h"
 
 int16_t *createBuffer(int size)
 {
-    size_t dataSize = sizeof(int16_t);
+  size_t dataSize = sizeof(int16_t);
 
-    int16_t*buffer = malloc(size * dataSize);
-    if (buffer == NULL)
-    {
-        fprintf(stderr, "Error allocating audio buffer\n");
-        exit(EXIT_FAILURE);
-    }
+  int16_t *buffer = malloc(size * dataSize);
+  if (buffer == NULL)
+  {
+    fprintf(stderr, "Error allocating audio buffer\n");
+    exit(EXIT_FAILURE);
+  }
 
-    memset(buffer, 0, size * dataSize);
+  memset(buffer, 0, size * dataSize);
 
-    return buffer;
+  return buffer;
 }
 
 float getAmplitudeMultiplier(int bufferIndex, int beatStartIndex, int beatEndIndex)
@@ -77,7 +78,7 @@ void DM(const char *waveformName, float noteValue, int measureIndex, float beatI
   free(a);
 }
 
-void AM1st(const char*waveformName, float noteValue, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
+void AM1st(const char *waveformName, float noteValue, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
 {
   Note *db = createNote(Db4, noteValue);
   Note *e = createNote(E4, noteValue);
@@ -92,7 +93,7 @@ void AM1st(const char*waveformName, float noteValue, int measureIndex, float bea
   free(a);
 }
 
-void Bm1st(const char*waveformName, float noteValue, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
+void Bm1st(const char *waveformName, float noteValue, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
 {
   Note *d = createNote(D4, noteValue);
   Note *gb = createNote(Gb4, noteValue);
@@ -120,4 +121,68 @@ void GM2nd(const char *waveformName, float noteValue, int measureIndex, float be
   free(d);
   free(g);
   free(b);
+}
+
+void writeWholeToneScaleToBuffer(const char *waveformName, Note *scale, Song *song, int16_t *buffer)
+{
+  int measureIndex = 0;
+  while (measureIndex < song->totalMeasures)
+  {
+    writeNoteToBuffer(waveformName, &scale[0], measureIndex, 0, song, buffer);
+    writeNoteToBuffer(waveformName, &scale[1], measureIndex, 1, song, buffer);
+    writeNoteToBuffer(waveformName, &scale[2], measureIndex, 2, song, buffer);
+    writeNoteToBuffer(waveformName, &scale[4], measureIndex, 3, song, buffer);
+    measureIndex++;
+
+    writeNoteToBuffer(waveformName, &scale[5], measureIndex, 0, song, buffer);
+    writeNoteToBuffer(waveformName, &scale[6], measureIndex, 1, song, buffer);
+    writeNoteToBuffer(waveformName, &scale[7], measureIndex, 2, song, buffer);
+    writeNoteToBuffer(waveformName, &scale[6], measureIndex, 3, song, buffer);
+    measureIndex++;
+
+    writeNoteToBuffer(waveformName, &scale[5], measureIndex, 0, song, buffer);
+    writeNoteToBuffer(waveformName, &scale[4], measureIndex, 1, song, buffer);
+    writeNoteToBuffer(waveformName, &scale[3], measureIndex, 2, song, buffer);
+    writeNoteToBuffer(waveformName, &scale[2], measureIndex, 3, song, buffer);
+    measureIndex++;
+
+    writeNoteToBuffer(waveformName, &scale[1], measureIndex, 0, song, buffer);
+    writeNoteToBuffer(waveformName, &scale[0], measureIndex, 1, song, buffer);
+    measureIndex++;
+  }
+}
+
+void writeMelodicMinorScaleToBuffer(const char *waveformName, float tonic, Song *song, int16_t *buffer)
+{
+  Note *ascending = createScaleArray(tonic, ASCENDING_MELODIC_MINOR_INTERVALS, WHOLE_TONE_LENGTH);
+  Note *descending = createScaleArray(tonic, DESCENDING_MELODIC_MINOR_INTERVALS, WHOLE_TONE_LENGTH);
+
+  int measureIndex = 0;
+  while (measureIndex < song->totalMeasures)
+  {
+    writeNoteToBuffer(waveformName, &ascending[0], measureIndex, 0, song, buffer);
+    writeNoteToBuffer(waveformName, &ascending[1], measureIndex, 1, song, buffer);
+    writeNoteToBuffer(waveformName, &ascending[2], measureIndex, 2, song, buffer);
+    writeNoteToBuffer(waveformName, &ascending[4], measureIndex, 3, song, buffer);
+    measureIndex++;
+
+    writeNoteToBuffer(waveformName, &ascending[5], measureIndex, 0, song, buffer);
+    writeNoteToBuffer(waveformName, &ascending[6], measureIndex, 1, song, buffer);
+    writeNoteToBuffer(waveformName, &ascending[7], measureIndex, 2, song, buffer);
+    writeNoteToBuffer(waveformName, &descending[1], measureIndex, 3, song, buffer);
+    measureIndex++;
+
+    writeNoteToBuffer(waveformName, &descending[2], measureIndex, 0, song, buffer);
+    writeNoteToBuffer(waveformName, &descending[3], measureIndex, 1, song, buffer);
+    writeNoteToBuffer(waveformName, &descending[4], measureIndex, 2, song, buffer);
+    writeNoteToBuffer(waveformName, &descending[5], measureIndex, 3, song, buffer);
+    measureIndex++;
+
+    writeNoteToBuffer(waveformName, &descending[6], measureIndex, 0, song, buffer);
+    writeNoteToBuffer(waveformName, &descending[7], measureIndex, 1, song, buffer);
+    measureIndex++;
+  }
+
+  free(ascending);
+  free(descending);
 }
