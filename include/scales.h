@@ -11,17 +11,32 @@
 /**
  * @brief The intervals of the major scale in semitones.
 */
-extern const int MAJOR_SCALE_INTERVALS[];
+extern const int MAJOR_INTERVALS[];
 
 /**
  * @brief The intervals of the natural minor scale in semitones.
 */
-extern const int NATURAL_MINOR_SCALE_INTERVALS[];
+extern const int NATURAL_MINOR_INTERVALS[];
 
 /**
- * @brief The number of notes in the major and natural minor scales (including octave).
+ * @brief The intervals of the harmonic minor scale in semitones.
 */
-extern const int MAJOR_MINOR_SCALE_LENGTH;
+extern const int HARMONIC_MINOR_INTERVALS[];
+
+/**
+ * @brief The intervals of the melodic minor scale in semitones when ascending.
+*/
+extern const int ASCENDING_MELODIC_MINOR_INTERVALS[];
+
+/**
+ * @brief The intervals of the melodic minor scale in semitones when descending.
+*/
+extern const int DESCENDING_MELODIC_MINOR_INTERVALS[];
+
+/**
+ * @brief The number of notes whole tone scales (including octave) e.g major, natural minor.
+*/
+extern const int WHOLE_TONE_SCALE_LENGTH;
 
 
 /**
@@ -32,7 +47,7 @@ extern const int MAJOR_MINOR_SCALE_LENGTH;
  * The length of each Note is set to a crotchet (1/8th).
  * 
  * @param tonic The base frequency of the scale.
- * @param intervals Array of int conatining the intervals of the scale.
+ * @param intervals Array of int containing the intervals of the scale.
  * @param scaleLength The number of notes in the scale
  * @returns An array of Note structs of the desired scale.
 */

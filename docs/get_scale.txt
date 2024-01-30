@@ -2,8 +2,16 @@
 Generate a wav file that plays an ascending and descending scale.
 
 Arguments:
-  outfile:  Name of file to be written, must be .wav.
   waveform: Type of waveform to generate, one of
             pulse; sawtooth; sine; square; or triangle.
+  tonic:    The scale's root note. Lowercase from c0 to b8, use 'b' for flats.
+  scale:    The scale to be played, can be one of:
+              - major
+              - natural-minor
+              - harmonic-minor
+              - melodic-minor
   bpm:      Desired tempo in beats per minute, in range 1-300.
   volume:   Loudness of generated waveform, from 1-11.
+
+The name of the generated wav file is determined by the tonic and scale.
+For example 'c4-major.wav'

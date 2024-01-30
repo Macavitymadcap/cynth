@@ -17,16 +17,20 @@ int main(int argc, const char *argv[])
 {
     checkGetScaleUsage(argc, argv[0]);
 
-    const char *fileName = argv[1];
-    checkFileName(fileName);
-
-    const char *waveformName = argv[2];
+    const char *waveformName = argv[1];
     checkWaveformName(waveformName);
 
-    int bpm = atoi(argv[3]);
+    const char *noteName = argv[2];
+    checkNoteName(noteName);
+
+    const float tonic = getFrequencyFromName(noteName);
+
+    const char *scaleName = argv[3];
+
+    int bpm = atoi(argv[4]);
     checkBpm(bpm);
 
-    int volume = atoi(argv[4]);
+    int volume = atoi(argv[5]);
     checkVolume(volume);
 
     const int sampleRate = 16000;
@@ -38,7 +42,7 @@ int main(int argc, const char *argv[])
 
     WavHeader *wavHeader = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate, bufferSize);
 
-    Note *scale = createScaleArray(C4, NATURAL_MINOR_SCALE_INTERVALS, MAJOR_MINOR_SCALE_LENGTH);
+    Note *scale = createScaleArray(C4, NATURAL_MINOR_INTERVALS, WHOLE_TONE_SCALE_LENGTH);
 
     int measureIndex = 0;
     while (measureIndex < song->totalMeasures)
@@ -66,8 +70,8 @@ int main(int argc, const char *argv[])
         measureIndex++;
     }
 
-    FILE *outfile = fopen(fileName, "wb");
-    checkFileOpening(outfile, fileName);
+    FILE *outfile = fopen("scale.wav", "wb");
+    checkFileOpening(outfile, "scale.wav");
     fwrite(wavHeader, WAVE_HEADER_SIZE, 1, outfile);
     fwrite(buffer, bufferSize, 1, outfile);
 
