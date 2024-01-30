@@ -22,4 +22,4 @@ Another refactoring of the work of kaizen, this time [4-chords](https://kaizen.p
 ### get_scale
 Create a wav file that plays a given scale ascending then descending using variable waveform, bpm and volume.
 
-Having got to grips with kaizen's work,this one is my own creation to prove out that melodies can be written to wav.
+Having got to grips with kaizen's work, this one is my own creation to prove out that melodies can be written to wav.

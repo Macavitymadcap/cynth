@@ -47,6 +47,18 @@ float getAmplitudeMultiplier(int bufferIndex, int beatStartIndex, int beatEndInd
 void writeNoteToBuffer(const char *waveformName, Note *note, int meaureIndex, float beatIndex, Song *song, int16_t *buffer);
 
 /**
+ * @brief Write a chord to the buffer based on arguments.
+ * @param waveformName String of waveform to write.
+ * @param chord Array of Note structs comprising the chord.
+ * @param chordSize Number of notes in the chord.
+ * @param meaureIndex The current measure in which the note is written.
+ * @param beatIndex The index of the current beat in the measure.
+ * @param song Pointer to structure containg the song's time information. 
+ * @param buffer The buffer into which the note will be written.
+*/
+void writeChordToBuffer(const char *waveformName, Note *chord, int chordSize, int measureIndex, float beatIndex, Song *song, int16_t *buffer);
+
+/**
  * @brief Write a D major chord to the buffer based on arguments.
  * @param waveformName String of waveform to write.
  * @param noteValue Length in beats of note.

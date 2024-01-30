@@ -63,6 +63,14 @@ void writeNoteToBuffer(const char *waveformName, Note *note, int measureIndex, f
   }
 }
 
+void writeChordToBuffer(const char *waveformName, Note *chord, int chordSize, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
+{
+  for (int i = 0; i < chordSize; i++)
+  {
+    writeNoteToBuffer(waveformName, &chord[i], measureIndex, beatIndex, song, buffer);
+  }
+}
+
 void DM(const char *waveformName, float noteValue, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
 {
   Note *d = createNote(D4, noteValue);

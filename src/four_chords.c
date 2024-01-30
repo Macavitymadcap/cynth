@@ -47,6 +47,16 @@ int main(int argc, char *argv[])
   Note *gBassLow = createNote(G2, SEMIBREVE);
   Note *gBassHigh = createNote(G3, SEMIBREVE);
 
+  Note *dBass = {createNote(D2, SEMIBREVE),  createNote(D3, SEMIBREVE)};
+  Note *dMajor = {createNote(D4, CROTCHET), createNote(Gb4, CROTCHET), createNote(A4, CROTCHET)};
+
+  Note *aBass = {createNote(A2, SEMIBREVE), createNote(A3, SEMIBREVE)};
+  Note *aMajor1st = {createNote(Db4, CROTCHET), createNote(E4, CROTCHET), createNote(A4, CROTCHET)};
+
+  Note *bBass = {createNote(B2, SEMIBREVE), createNote(B3, SEMIBREVE)};
+
+  Note *gBass = {createNote(G2, SEMIBREVE), createNote(G3, SEMIBREVE)};
+
   int measureIndex = 0;
   while (measureIndex < song->totalMeasures)
   {
