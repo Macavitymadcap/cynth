@@ -8,10 +8,12 @@
 
 #include <stdint.h>
 
+#ifndef M_PI
 /**
  * @brief The value of Pi, included to avoid compilation issues.
  */
 #define M_PI (3.14159265358979323846264338327950288)
+#endif
 
 extern const char *SINE;
 extern const char *SAWTOOTH;

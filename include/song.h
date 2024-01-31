@@ -50,7 +50,7 @@ int getSamplesBerBeat(int sampleRate, int millisecondsPerBeat);
  * @param inputVolume The volume passed by the user (1-11).
  * @returns Calculated volume (inputVolume * 500).
 */
-int getVolume(in inputVolume);
+int getVolume(int inputVolume);
 
 /**
  * @brief Create a Song struct, exiting the program if memory allocation fails.
