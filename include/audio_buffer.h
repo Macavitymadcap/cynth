@@ -56,52 +56,7 @@ void writeNoteToBuffer(const char *waveformName, Note *note, int meaureIndex, fl
  * @param song Pointer to structure containg the song's time information. 
  * @param buffer The buffer into which the note will be written.
 */
-void writeChordToBuffer(const char *waveformName, Note *chord, int chordSize, int measureIndex, float beatIndex, Song *song, int16_t *buffer);
-
-/**
- * @brief Write a D major chord to the buffer based on arguments.
- * @param waveformName String of waveform to write.
- * @param noteValue Length in beats of note.
- * @param meaureIndex The current measure in which the note is written.
- * @param beatIndex The index of the current beat in the measure.
- * @param song Pointer to structure containg the song's time information. 
- * @param buffer The buffer into which the note will be written.
-*/
-void DM(const char *waveformName, float noteValue, int meaureIndex, float beatIndex, Song *song, int16_t *buffer);
-
-/**
- * @brief Write an A major 1st inversion chord to the buffer based on arguments.
- * @param waveformName String of waveform to write.
- * @param noteValue Length in beats of note.
- * @param meaureIndex The current measure in which the note is written.
- * @param beatIndex The index of the current beat in the measure.
- * @param song Pointer to structure containg the song's time information. 
- * @param buffer The buffer into which the note will be written.
-*/
-void AM1st(const char *waveformName, float noteValue, int meaureIndex, float beatIndex, Song *song, int16_t *buffer);
-
-
-/**
- * @brief Write a B minor 1st inversion to the buffer based on arguments.
- * @param waveformName String of waveform to write.
- * @param noteValue Length in beats of note.
- * @param meaureIndex The current measure in which the note is written.
- * @param beatIndex The index of the current beat in the measure.
- * @param song Pointer to structure containg the song's time information. 
- * @param buffer The buffer into which the note will be written.
-*/
-void Bm1st(const char *waveformName, float noteValue, int meaureIndex, float beatIndex, Song *song, int16_t *buffer);
-
-/**
- * @brief Write a G major 2nd inversion to the buffer based on arguments.
- * @param waveformName String of waveform to write.
- * @param noteValue Length in beats of note.
- * @param meaureIndex The current measure in which the note is written.
- * @param beatIndex The index of the current beat in the measure.
- * @param song Pointer to structure containg the song's time information. 
- * @param buffer The buffer into which the note will be written.
-*/
-void GM2nd(const char *waveformName, float noteValue, int meaureIndex, float beatIndex, Song *song, int16_t *buffer);
+void writeChordToBuffer(const char *waveformName, int chordSize, Note *chord[chordSize], int measureIndex, float beatIndex, Song *song, int16_t *buffer);
 
 /**
  * @brief Writes a whole tone scale to an audio buffer, excluding the melodic minor.

@@ -63,72 +63,12 @@ void writeNoteToBuffer(const char *waveformName, Note *note, int measureIndex, f
   }
 }
 
-void writeChordToBuffer(const char *waveformName, Note *chord, int chordSize, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
+void writeChordToBuffer(const char *waveformName, int chordSize, Note *chord[chordSize], int measureIndex, float beatIndex, Song *song, int16_t *buffer)
 {
   for (int i = 0; i < chordSize; i++)
   {
-    writeNoteToBuffer(waveformName, &chord[i], measureIndex, beatIndex, song, buffer);
+    writeNoteToBuffer(waveformName, chord[i], measureIndex, beatIndex, song, buffer);
   }
-}
-
-void DM(const char *waveformName, float noteValue, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
-{
-  Note *d = createNote(D4, noteValue);
-  Note *gb = createNote(Gb4, noteValue);
-  Note *a = createNote(A4, noteValue);
-
-  writeNoteToBuffer(waveformName, d, measureIndex, beatIndex, song, buffer);
-  writeNoteToBuffer(waveformName, gb, measureIndex, beatIndex, song, buffer);
-  writeNoteToBuffer(waveformName, a, measureIndex, beatIndex, song, buffer);
-
-  free(d);
-  free(gb);
-  free(a);
-}
-
-void AM1st(const char *waveformName, float noteValue, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
-{
-  Note *db = createNote(Db4, noteValue);
-  Note *e = createNote(E4, noteValue);
-  Note *a = createNote(A4, noteValue);
-
-  writeNoteToBuffer(waveformName, db, measureIndex, beatIndex, song, buffer);
-  writeNoteToBuffer(waveformName, e, measureIndex, beatIndex, song, buffer);
-  writeNoteToBuffer(waveformName, a, measureIndex, beatIndex, song, buffer);
-
-  free(db);
-  free(e);
-  free(a);
-}
-
-void Bm1st(const char *waveformName, float noteValue, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
-{
-  Note *d = createNote(D4, noteValue);
-  Note *gb = createNote(Gb4, noteValue);
-  Note *b = createNote(B4, noteValue);
-
-  writeNoteToBuffer(waveformName, d, measureIndex, beatIndex, song, buffer);
-  writeNoteToBuffer(waveformName, gb, measureIndex, beatIndex, song, buffer);
-  writeNoteToBuffer(waveformName, b, measureIndex, beatIndex, song, buffer);
-
-  free(d);
-  free(gb);
-  free(b);
-}
-
-void GM2nd(const char *waveformName, float noteValue, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
-{
-  Note *d = createNote(D4, noteValue);
-  Note *g = createNote(G4, noteValue);
-  Note *b = createNote(B4, noteValue);
-
-  writeNoteToBuffer(waveformName, d, measureIndex, beatIndex, song, buffer);
-  writeNoteToBuffer(waveformName, g, measureIndex, beatIndex, song, buffer);
-  writeNoteToBuffer(waveformName, b, measureIndex, beatIndex, song, buffer);
-
-  free(d);
-  free(g);
-  free(b);
 }
 
 void writeWholeToneScaleToBuffer(const char *waveformName, Note *scale, Song *song, int16_t *buffer)
