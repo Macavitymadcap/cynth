@@ -8,7 +8,7 @@
 #include "wav.h"
 #include "scales.h"
 
-void printFile(const char* filePath)
+void printFile(const char *filePath)
 {
     FILE *filePointer;
     char character;
@@ -20,7 +20,7 @@ void printFile(const char* filePath)
         exit(EXIT_FAILURE);
     }
 
-    while((character = fgetc(filePointer)) != EOF)
+    while ((character = fgetc(filePointer)) != EOF)
     {
         putchar(character);
     }
@@ -130,7 +130,7 @@ void checkWaveformName(const char *waveformName)
 
 int isValidNote(char note)
 {
-    return note >= 'c' && note <= 'g';
+    return note >= 'a' && note <= 'g';
 }
 
 int isValidFlat(char note)
@@ -195,7 +195,7 @@ void checkNoteName(const char *noteName)
 
 int outOfBounds(int value, int min, int max)
 {
-    return value < min || value > max; 
+    return value < min || value > max;
 }
 
 void checkSeconds(int seconds)
@@ -228,43 +228,147 @@ void checkVolume(int volume)
 
 void checkBpm(int bpm)
 {
-    if(outOfBounds(bpm, 1, 300))
+    if (outOfBounds(bpm, 1, 300))
     {
         fprintf(stderr, "Invalid bpm: %i. Must be number in range 1-300\n", bpm);
         exit(EXIT_FAILURE);
     }
 }
 
-int isMajor(const char *scaleName)
+int isChromaticName(const char *scaleName)
+{
+    return strcmp(scaleName, CHROMATIC) == 0;
+}
+
+int isMixoBluesName(const char *scaleName)
+{
+    return strcmp(scaleName, MIXO_BLUES) == 0;
+}
+
+int isDiminishedHalfWholeName(const char *scaleName)
+{
+    return strcmp(scaleName, DIMINISHED_HALF_WHOLE) == 0;
+}
+
+int isDiminishedWholeHalfName(const char *scaleName)
+{
+    return strcmp(scaleName, DIMINISHED_WHOLE_HALF) == 0;
+}
+
+int isMajorName(const char *scaleName)
 {
     return strcmp(scaleName, MAJOR) == 0;
 }
 
-int isMinor(const char *scaleName)
+int isMinorName(const char *scaleName)
 {
     return strcmp(scaleName, MINOR) == 0;
 }
 
-int isHarmonicMinor(const char *scaleName)
+int isHarmonicMinorName(const char *scaleName)
 {
     return strcmp(scaleName, HARMONIC_MINOR) == 0;
 }
 
-int isMelodicMinor(const char *scaleName)
+int isMelodicMinorName(const char *scaleName)
 {
     return strcmp(scaleName, MELODIC_MINOR) == 0;
 }
 
-void checkScaleName(const char* scaleName)
+int isMixolydianName(const char *scaleName)
 {
-    if (!isMajor(scaleName) && !isMinor(scaleName) && ! isHarmonicMinor(scaleName) && !isMelodicMinor(scaleName))
+    return strcmp(scaleName, MIXOLYDIAN) == 0;
+}
+
+int isDorianName(const char *scaleName)
+{
+    return strcmp(scaleName, DORIAN) == 0;
+}
+
+int isPhrygianName(const char *scaleName)
+{
+    return strcmp(scaleName, PHRYGIAN) == 0;
+}
+
+int isLocrianName(const char *scaleName)
+{
+    return strcmp(scaleName, LOCRIAN) == 0;
+}
+
+int isLydianName(const char *scaleName)
+{
+    return strcmp(scaleName, LYDIAN) == 0;
+}
+
+int isBluesName(const char *scaleName)
+{
+    return strcmp(scaleName, BLUES) == 0;
+}
+
+int isWholeToneName(const char *scaleName)
+{
+    return strcmp(scaleName, WHOLE_TONE) == 0;
+}
+
+int isMajorPentatonicName(const char *scaleName)
+{
+    return strcmp(scaleName, MAJOR_PENTATONIC) == 0;
+}
+
+int isMinorPentatonicName(const char *scaleName)
+{
+    return strcmp(scaleName, MINOR_PENTATONIC) == 0;
+}
+
+void checkScaleName(const char *scaleName)
+{
+    if (!isChromaticName(scaleName) && 
+        !isMixoBluesName(scaleName) && 
+        !isDiminishedHalfWholeName(scaleName) && 
+        !isDiminishedWholeHalfName(scaleName) && 
+        !isMajorName(scaleName) && 
+        !isMinorName(scaleName) && 
+        !isHarmonicMinorName(scaleName) && 
+        !isMelodicMinorName(scaleName) &&
+        !isMixolydianName(scaleName) &&
+        !isDorianName(scaleName) &&
+        !isPhrygianName(scaleName) &&
+        !isLocrianName(scaleName) &&
+        !isLydianName(scaleName) &&
+        !isBluesName(scaleName) &&
+        !isWholeToneName(scaleName) &&
+        !isMajorPentatonicName(scaleName) &&
+        !isMinorPentatonicName(scaleName))
     {
         fprintf(stderr, "Invalid scale name: %s. Use one of:\n", scaleName);
-        printf("\t- %s\n\t- %s\n\t- %s\n\t- %s\n", MAJOR, MINOR, HARMONIC_MINOR, MELODIC_MINOR);
+        printf("\t- %s\n\t- %s\n\t- %s\n\t- %s\n\t- %s\n\t- %s\n\t- %s\n\t- %s\n", CHROMATIC, MIXO_BLUES, DIMINISHED_HALF_WHOLE, DIMINISHED_WHOLE_HALF, MAJOR, MINOR, HARMONIC_MINOR, MELODIC_MINOR);
+        printf("\t- %s\n\t- %s\n\t- %s\n\t- %s\n\t- %s\n\t- %s\n\t- %s\n\t- %s\n\t- %s\n", MIXOLYDIAN, DORIAN, PHRYGIAN, LOCRIAN, LYDIAN, BLUES, WHOLE_TONE, MAJOR_PENTATONIC, MINOR_PENTATONIC);
     }
 }
 
-int isWholeToneScale(const char *scaleName)
+int isDiminishedLengthScale(const char *scaleName)
 {
-    return isMajor(scaleName) || isHarmonicMinor(scaleName) || isMinor(scaleName);
+    return isDiminishedHalfWholeName(scaleName) || isDiminishedWholeHalfName(scaleName);
+}
+
+int isStandardLengthScale(const char *scaleName)
+{
+    return (isMajorName(scaleName) || 
+            isHarmonicMinorName(scaleName) || 
+            isMinorName(scaleName) || 
+            isMixolydianName(scaleName) || 
+            isDorianName(scaleName) ||
+            isPhrygianName(scaleName)) ||
+            isLocrianName(scaleName) ||
+            isLydianName(scaleName);
+}
+
+int isBluesLengthScale(const char *scaleName)
+{
+    return isBluesName(scaleName) || isWholeToneName(scaleName);
+}
+
+int isPentatonicLengthScale(const char *scaleName)
+{
+    return isMajorPentatonicName(scaleName) || isMinorPentatonicName(scaleName);
 }

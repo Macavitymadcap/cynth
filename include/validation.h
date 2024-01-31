@@ -49,7 +49,6 @@ void checkFileName(const char *fileName);
 */
 int isSine(const char *waveform);
 
-
 /**
  * @brief Determine whether the waveform matches the name of the sawtooth wave.
  * @param waveform String of waveform to be checked.
@@ -64,14 +63,12 @@ int isSawtooth(const char *waveform);
 */
 int isSquare(const char *waveform);
 
-
 /**
  * @brief Determine whether the waveform matches the name of the triangle wave.
  * @param waveform String of waveform to be checked.
  * @returns 1 if the string matches, otherwise 0.
 */
 int isTriangle(const char *waveform);
-
 
 /**
  * @brief Determine whether the waveform matches the name of the pulse wave.
@@ -114,7 +111,6 @@ int isValidPitch(int pitch);
 */
 void checkNoteName(const char *noteName);
 
-
 /**
  * @brief Determine whether a value is outside of a given range
  * @param value Number to be checked.
@@ -151,32 +147,123 @@ void checkFileOpening(FILE *output, const char *fileName);
 void checkBpm(int bpm);
 
 /**
+ * @brief Determine if the string matches the name of the chromatic scale.
+ * @param scaleName String to be checked.
+ * @returns 1 if valid, otherwise 0.
+*/
+int isChromaticName(const char *scaleName);
+
+/**
+ * @brief Determine if the string matches the name of the mixo-blues scale.
+ * @param scaleName String to be checked.
+ * @returns 1 if valid, otherwise 0.
+*/
+int isMixoBluesName(const char *scaleName);
+
+/**
+ * @brief Determine if the string matches the name of the diminished (half-whole) scale.
+ * @param scaleName String to be checked.
+ * @returns 1 if valid, otherwise 0.
+*/
+int isDiminishedHalfWholeName(const char *scaleName);
+
+/**
+ * @brief Determine if the string matches the name of the diminished (whole-half) scale.
+ * @param scaleName String to be checked.
+ * @returns 1 if valid, otherwise 0.
+*/
+int isDiminishedWholeHalfName(const char *scaleName);
+
+/**
  * @brief Determine if the string matches the name of the major scale.
  * @param scaleName String to be checked.
  * @returns 1 if valid, otherwise 0.
 */
-int isMajor(const char *scaleName);
+int isMajorName(const char *scaleName);
 
 /**
  * @brief Determine if the string matches the name of the natural minor scale.
  * @param scaleName String to be checked.
  * @returns 1 if valid, otherwise 0.
 */
-int isMinor(const char *scaleName);
+int isMinorName(const char *scaleName);
 
 /**
  * @brief Determine if the string matches the name of the harmonic minor scale.
  * @param scaleName String to be checked.
  * @returns 1 if valid, otherwise 0.
 */
-int isHarmonicMinor(const char *scaleName);
+int isHarmonicMinorName(const char *scaleName);
 
 /**
  * @brief Determine if the string matches the name of the melodic minor scale.
  * @param scaleName String to be checked.
  * @returns 1 if valid, otherwise 0.
 */
-int isMelodicMinor(const char *scaleName);
+int isMelodicMinorName(const char *scaleName);
+
+/**
+ * @brief Determine if the string matches the name of the mixolydian scale.
+ * @param scaleName String to be checked.
+ * @returns 1 if valid, otherwise 0.
+*/
+int isMixolydianName(const char *scaleName);
+
+/**
+ * @brief Determine if the string matches the name of the dorian scale.
+ * @param scaleName String to be checked.
+ * @returns 1 if valid, otherwise 0.
+*/
+int isDorianName(const char *scaleName);
+
+/**
+ * @brief Determine if the string matches the name of the phrygian scale.
+ * @param scaleName String to be checked.
+ * @returns 1 if valid, otherwise 0.
+*/
+int isPhrygianName(const char *scaleName);
+
+/**
+ * @brief Determine if the string matches the name of the locrian scale.
+ * @param scaleName String to be checked.
+ * @returns 1 if valid, otherwise 0.
+*/
+int isLocrianName(const char *scaleName);
+
+/**
+ * @brief Determine if the string matches the name of the lydian scale.
+ * @param scaleName String to be checked.
+ * @returns 1 if valid, otherwise 0.
+*/
+int isLydianName(const char *scaleName);
+
+/**
+ * @brief Determine if the string matches the name of the blues scale.
+ * @param scaleName String to be checked.
+ * @returns 1 if valid, otherwise 0.
+*/
+int isBluesName(const char *scaleName);
+
+/**
+ * @brief Determine if the string matches the name of the whole tone scale.
+ * @param scaleName String to be checked.
+ * @returns 1 if valid, otherwise 0.
+*/
+int isWholeToneName(const char *scaleName);
+
+/**
+ * @brief Determine if the string matches the name of the major pentatonic scale.
+ * @param scaleName String to be checked.
+ * @returns 1 if valid, otherwise 0.
+*/
+int isMajorPentatonicName(const char *scaleName);
+
+/**
+ * @brief Determine if the string matches the name of the minor pentatonic scale.
+ * @param scaleName String to be checked.
+ * @returns 1 if valid, otherwise 0.
+*/
+int isMinorPentatonicName(const char *scaleName);
 
 /**
  * @brief Exit program if scaleName is invalid.
@@ -185,9 +272,27 @@ int isMelodicMinor(const char *scaleName);
 void checkScaleName(const char* scaleName);
 
 /**
- * @brief Determine if the scale is a whole tone (excluding the melodic minor);
+ * @brief Determine if the scale is of diminished length (9).
  * @returns 1 if true, else 0; 
 */
-int isWholeToneScale(const char *scaleName);
+int isDiminishedLengthScale(const char *scaleName);
+
+/**
+ * @brief Determine if the scale is of standard length (8 -excluding the melodic minor).
+ * @returns 1 if true, else 0; 
+*/
+int isStandardLengthScale(const char *scaleName);
+
+/**
+ * @brief Determine if the scale is of blues length (7).
+ * @returns 1 if true, else 0; 
+*/
+int isBluesLengthScale(const char *scaleName);
+
+/**
+ * @brief Determine if the scale is of pentatonic length (6).
+ * @returns 1 if true, else 0; 
+*/
+int isPentatonicLengthScale(const char *scaleName);
 
 #endif // VALIDATION_H

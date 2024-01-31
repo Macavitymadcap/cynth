@@ -3,8 +3,12 @@ Generate a single note waveform.
 
 Arguments
   outfile:  Name of file to be written, must be .wav.
-  waveform: Type of waveform to generate, one of
-            pulse; sawtooth; sine; square; or triangle.
+  waveform: Type of waveform to generate, one of:
+              - pulse
+              - sawtooth
+              - sine
+              - square
+              - triangle
   note:     Note in lowercase, from c0 to b8, use 'b' for flats.
   seconds:  Length of generated waveform, from 1-60.
   volume:   Loudness of generated waveform, from 1-11.

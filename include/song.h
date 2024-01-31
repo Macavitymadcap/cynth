@@ -19,6 +19,7 @@ typedef struct
     int millisecondsPerBeat;    /** Durtion of each beat in milliseconds. */
     int samplesPerBeat;         /** Rate at which each beat is sampled. */
     int volume;                 /** The average volume of notes in the song. */
+    const char *waveformName;   /** The name of the waveform used to write the song. */
 } __attribute__((__packed__)) Song;
 
 /**
@@ -61,6 +62,6 @@ int getVolume(int inputVolume);
  * @param volume The average volume of notes in the song.
  * @returns Pointer to the new Song struct.
 */
-Song *createSong(int totalMeasures, int sampleRate, float timeSignature, int beatsPerMinute, int volume);
+Song *createSong(int totalMeasures, int sampleRate, float timeSignature, int beatsPerMinute, int volume, const char *waveformName);
 
 #endif

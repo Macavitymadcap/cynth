@@ -34,27 +34,18 @@ int main(int argc, const char *argv[])
     int volume = atoi(argv[5]);
     checkVolume(volume);
 
+    const int totalMeasures = getTotalMeasuresForScale(scaleName);
     const int sampleRate = 16000;
 
-    Song *song = createSong(8, sampleRate, FOUR_FOUR, bpm, volume);
+    Song *song = createSong(totalMeasures, sampleRate, FOUR_FOUR, bpm, volume, waveformName);
 
     size_t bufferSize = song->totalMeasures * song->timeSignature * song->samplesPerBeat;
     int16_t *buffer = createBuffer(bufferSize);
 
     WavHeader *wavHeader = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate, bufferSize);
 
-    if (isMelodicMinor(scaleName))
-    {
-        writeMelodicMinorScaleToBuffer(waveformName, tonic, song, buffer);
-    }
-    else if (isWholeToneScale(scaleName))
-    {
-        Note *wholeToneScale = getScale(scaleName, tonic);
-        writeWholeToneScaleToBuffer(waveformName, wholeToneScale, song, buffer);
-        free(wholeToneScale);
-    }
+    writeScaleToBuffer(scaleName, tonic, song, buffer);
     
-
     char fileName[40];
     memset(fileName, 0, 40);
     strcat(fileName, waveformName);

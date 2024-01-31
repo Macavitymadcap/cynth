@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 
   const int sampleRate = 16000;
 
-  Song *song = createSong(16, sampleRate, FOUR_FOUR, bpm, volume);
+  Song *song = createSong(16, sampleRate, FOUR_FOUR, bpm, volume, waveformName);
 
   size_t bufferSize = song->totalMeasures * song->timeSignature * song->samplesPerBeat;
   int16_t *buffer = createBuffer(bufferSize);
@@ -58,31 +58,31 @@ int main(int argc, char *argv[])
   int measureIndex = 0;
   while (measureIndex < song->totalMeasures)
   {
-    writeChordToBuffer(waveformName, BASS_SIZE, dBass, measureIndex, FIRST_BEAT, song, buffer);
-    for (int i = 0; i < (int)FOUR_FOUR; i++)
+    writeChordToBuffer(BASS_SIZE, dBass, measureIndex, FIRST_BEAT, song, buffer);
+    for (int i = 0; i < (int)song->timeSignature; i++)
     {
-      writeChordToBuffer(waveformName, CHORD_SIZE, dMajor, measureIndex, i, song, buffer);
+      writeChordToBuffer(CHORD_SIZE, dMajor, measureIndex, i, song, buffer);
     }
     measureIndex++;
 
-    writeChordToBuffer(waveformName, BASS_SIZE, aBass, measureIndex, FIRST_BEAT, song, buffer);
-    for (int i = 0; i < (int)FOUR_FOUR; i++)
+    writeChordToBuffer(BASS_SIZE, aBass, measureIndex, FIRST_BEAT, song, buffer);
+    for (int i = 0; i < (int)song->timeSignature; i++)
     {
-      writeChordToBuffer(waveformName, CHORD_SIZE, aMajor1st, measureIndex, i, song, buffer);
+      writeChordToBuffer(CHORD_SIZE, aMajor1st, measureIndex, i, song, buffer);
     }
     measureIndex++;
 
-    writeChordToBuffer(waveformName, BASS_SIZE, bBass, measureIndex, FIRST_BEAT, song, buffer);
-    for (int i = 0; i < (int)FOUR_FOUR; i++)
+    writeChordToBuffer(BASS_SIZE, bBass, measureIndex, FIRST_BEAT, song, buffer);
+    for (int i = 0; i < (int)song->timeSignature; i++)
     {
-      writeChordToBuffer(waveformName, CHORD_SIZE, bMinor1st, measureIndex, i, song, buffer);
+      writeChordToBuffer(CHORD_SIZE, bMinor1st, measureIndex, i, song, buffer);
     }
     measureIndex++;
 
-    writeChordToBuffer(waveformName, BASS_SIZE, gBass, measureIndex, FIRST_BEAT, song, buffer);
-    for (int i = 0; i < (int)FOUR_FOUR; i++)
+    writeChordToBuffer(BASS_SIZE, gBass, measureIndex, FIRST_BEAT, song, buffer);
+    for (int i = 0; i < (int)song->timeSignature; i++)
     {
-      writeChordToBuffer(waveformName, CHORD_SIZE, gMajor2nd, measureIndex, i, song, buffer);
+      writeChordToBuffer(CHORD_SIZE, gMajor2nd, measureIndex, i, song, buffer);
     }
     measureIndex++;
   }

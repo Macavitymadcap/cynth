@@ -2,14 +2,31 @@
 Generate a wav file that plays an ascending and descending scale.
 
 Arguments:
-  waveform: Type of waveform to generate, one of
-            pulse; sawtooth; sine; square; or triangle.
+  waveform: Type of waveform to generate, one of:
+              - pulse
+              - sawtooth
+              - sine
+              - square
+              - triangle
   tonic:    The scale's root note. Lowercase from c0 to b8, use 'b' for flats.
   scale:    The scale to be played, can be one of:
+              - chromatic
+              - mixo-blues
+              - diminished-half-whole
+              - diminished-whole-half
               - major
               - natural-minor
               - harmonic-minor
               - melodic-minor
+              - mixolydian
+              - dorian
+              - phrygian
+              - locrian
+              - lydian
+              - blues
+              - whole-tone
+              - major-pentatonic
+              - minor-pentatonic
   bpm:      Desired tempo in beats per minute, in range 1-300.
   volume:   Loudness of generated waveform, from 1-11.
 

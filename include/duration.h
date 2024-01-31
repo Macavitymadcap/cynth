@@ -61,4 +61,31 @@ extern const float FOUR_FOUR;
 */
 extern const float THREE_FOUR;
 
+/**
+ * @brief Total measure required to play a chromatic scale.
+*/
+extern const int CHROMATIC_SCALE_MEASURES;
+
+/**
+ * @brief Toral measure required to play a mixo-blues scale.
+*/
+extern const int MIXO_BLUES_OR_DIMINISHED_SCALE_MEASURES;
+
+/**
+ * @brief Number of measures required to play a standard or blues length scale.
+*/
+extern const int STANDARD_OR_BLUES_SCALE_MEASURES;
+
+/**
+ * @brief Number of measures required to play a pentatonic scale.
+*/
+extern const int PENTATONIC_SCALE_MEASURES;
+
+/**
+ * @brief Get the number of measures required to play the given scale.
+ * @param scaleName String representing the name of the scale.
+ * @returns The number of measures required to play the scale.
+*/
+int getTotalMeasuresForScale(const char *scaleName);
+
 #endif // DURATION_H

@@ -22,7 +22,7 @@ int getVolume(int inputVolume)
     return inputVolume * 500;
 }
 
-Song *createSong(int totalMeasures, int sampleRate, float timeSignature, int beatsPerMinute, int volume)
+Song *createSong(int totalMeasures, int sampleRate, float timeSignature, int beatsPerMinute, int volume, const char *waveformName)
 {
     size_t songSize = sizeof(Song);
     Song *song = malloc(songSize);
@@ -37,6 +37,7 @@ Song *createSong(int totalMeasures, int sampleRate, float timeSignature, int bea
     song->sampleRate = sampleRate;
     song->timeSignature = timeSignature;
     song->beatsPerMinute = beatsPerMinute;
+    song->waveformName = waveformName;
     song->volume = getVolume(volume);
     song->millisecondsPerBeat = getMillisecondsPerBeat(beatsPerMinute);
     song->samplesPerBeat = getSamplesBerBeat(sampleRate, song->millisecondsPerBeat);
