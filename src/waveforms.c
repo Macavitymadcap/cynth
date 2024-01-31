@@ -4,6 +4,10 @@
 #include "waveforms.h"
 #include "validation.h"
 
+#ifndef M_PI
+#define M_PI (3.14159265358979323846264338327950288)
+#endif
+
 const char *SINE = "sine";
 const char *SAWTOOTH = "sawtooth";
 const char *SQUARE = "square";
