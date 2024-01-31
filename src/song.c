@@ -17,6 +17,11 @@ int getSamplesBerBeat(int sampleRate, int millisecondsPerBeat)
     return (int)(sampleRate * millisecondsPerBeat) / 1000;
 }
 
+int getVolume(int inputVolume)
+{
+    return inputVolume * 500;
+}
+
 Song *createSong(int totalMeasures, int sampleRate, float timeSignature, int beatsPerMinute, int volume)
 {
     size_t songSize = sizeof(Song);
@@ -32,7 +37,7 @@ Song *createSong(int totalMeasures, int sampleRate, float timeSignature, int bea
     song->sampleRate = sampleRate;
     song->timeSignature = timeSignature;
     song->beatsPerMinute = beatsPerMinute;
-    song->volume = volume;
+    song->volume = getVolume(volume);
     song->millisecondsPerBeat = getMillisecondsPerBeat(beatsPerMinute);
     song->samplesPerBeat = getSamplesBerBeat(sampleRate, song->millisecondsPerBeat);
 

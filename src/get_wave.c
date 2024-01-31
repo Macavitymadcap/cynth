@@ -42,7 +42,7 @@ int main(int argc, char *argv[])
 
     for (int i = 0; i < (int)bufferSize; i++)
     {
-        buffer[i] = getWaveform(waveformName, note, i, sampleRate, volume * 500);
+        buffer[i] = getWaveform(waveformName, note, i, sampleRate, volume);
     }
 
     fwrite(header, WAVE_HEADER_SIZE, 1, output);

@@ -36,7 +36,7 @@ int main(int argc, const char *argv[])
 
     const int sampleRate = 16000;
 
-    Song *song = createSong(8, sampleRate, FOUR_FOUR, bpm, volume * 500);
+    Song *song = createSong(8, sampleRate, FOUR_FOUR, bpm, volume);
 
     size_t bufferSize = song->totalMeasures * song->timeSignature * song->samplesPerBeat;
     int16_t *buffer = createBuffer(bufferSize);

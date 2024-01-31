@@ -46,6 +46,13 @@ int getMillisecondsPerBeat(int bpm);
 int getSamplesBerBeat(int sampleRate, int millisecondsPerBeat);
 
 /**
+ * @brief Convert user input volume to a vlaue usable for buffer writing.
+ * @param inputVolume The volume passed by the user (1-11).
+ * @returns Calculated volume (inputVolume * 500).
+*/
+int getVolume(in inputVolume);
+
+/**
  * @brief Create a Song struct, exiting the program if memory allocation fails.
  * @param totalMeasures Number of bars in the song.
  * @param sampleRate Rate at which notes will be sampled.
