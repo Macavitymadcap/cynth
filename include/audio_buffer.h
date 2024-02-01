@@ -120,4 +120,5 @@ void writePentatonicScaleToBuffer(Note *scale, Song *song, int16_t *buffer);
  * @param buffer The buffer into which the note will be written.
 */
 void writeScaleToBuffer(const char *scaleName, float tonic, Song *song, int16_t *buffer);
+
 #endif

@@ -131,4 +131,4 @@ int getBitsPerSample(WavHeader *header);
  */
 WavHeader *createWavHeader(uint32_t fileLength, uint16_t audioFormat, uint16_t numChannels, uint32_t sampleRate, size_t bufferSize);
 
-#endif // WAV_H
+#endif

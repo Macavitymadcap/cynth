@@ -88,4 +88,4 @@ extern const int PENTATONIC_SCALE_MEASURES;
 */
 int getTotalMeasuresForScale(const char *scaleName);
 
-#endif // DURATION_H
+#endif

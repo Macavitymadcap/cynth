@@ -122,7 +122,7 @@ void checkWaveformName(const char *waveformName)
         !isTriangle(waveformName) &&
         !isPulse(waveformName))
     {
-        fprintf(stderr, "Invalid waveformName: %s\n", waveformName);
+        fprintf(stderr, "Invalid waveformName: '%s'\n", waveformName);
         fprintf(stderr, "Available waveforms: sine, square, sawtooth, triangle, pulse\n");
         exit(EXIT_FAILURE);
     }
@@ -202,7 +202,7 @@ void checkSeconds(int seconds)
 {
     if (outOfBounds(seconds, 1, 60))
     {
-        fprintf(stderr, "Invalid seconds: %i. Must be number in range 1-60.\n", seconds);
+        fprintf(stderr, "Invalid seconds: '%i'. Must be number in range 1-60.\n", seconds);
         exit(EXIT_FAILURE);
     }
 }
@@ -221,7 +221,7 @@ void checkVolume(int volume)
 {
     if (outOfBounds(volume, 1, 11))
     {
-        fprintf(stderr, "Invalid volume: %i. Must be number in range 1-11\n", volume);
+        fprintf(stderr, "Invalid volume: '%i'. Must be number in range 1-11\n", volume);
         exit(EXIT_FAILURE);
     }
 }
@@ -230,7 +230,7 @@ void checkBpm(int bpm)
 {
     if (outOfBounds(bpm, 1, 300))
     {
-        fprintf(stderr, "Invalid bpm: %i. Must be number in range 1-300\n", bpm);
+        fprintf(stderr, "Invalid bpm: '%i'. Must be number in range 1-300\n", bpm);
         exit(EXIT_FAILURE);
     }
 }
@@ -322,13 +322,13 @@ int isMinorPentatonicName(const char *scaleName)
 
 void checkScaleName(const char *scaleName)
 {
-    if (!isChromaticName(scaleName) && 
-        !isMixoBluesName(scaleName) && 
-        !isDiminishedHalfWholeName(scaleName) && 
-        !isDiminishedWholeHalfName(scaleName) && 
-        !isMajorName(scaleName) && 
-        !isMinorName(scaleName) && 
-        !isHarmonicMinorName(scaleName) && 
+    if (!isChromaticName(scaleName) &&
+        !isMixoBluesName(scaleName) &&
+        !isDiminishedHalfWholeName(scaleName) &&
+        !isDiminishedWholeHalfName(scaleName) &&
+        !isMajorName(scaleName) &&
+        !isMinorName(scaleName) &&
+        !isHarmonicMinorName(scaleName) &&
         !isMelodicMinorName(scaleName) &&
         !isMixolydianName(scaleName) &&
         !isDorianName(scaleName) &&
@@ -340,9 +340,11 @@ void checkScaleName(const char *scaleName)
         !isMajorPentatonicName(scaleName) &&
         !isMinorPentatonicName(scaleName))
     {
-        fprintf(stderr, "Invalid scale name: %s. Use one of:\n", scaleName);
+        fprintf(stderr, "Invalid scale name: '%s'. Use one of:\n", scaleName);
         printf("\t- %s\n\t- %s\n\t- %s\n\t- %s\n\t- %s\n\t- %s\n\t- %s\n\t- %s\n", CHROMATIC, MIXO_BLUES, DIMINISHED_HALF_WHOLE, DIMINISHED_WHOLE_HALF, MAJOR, MINOR, HARMONIC_MINOR, MELODIC_MINOR);
         printf("\t- %s\n\t- %s\n\t- %s\n\t- %s\n\t- %s\n\t- %s\n\t- %s\n\t- %s\n\t- %s\n", MIXOLYDIAN, DORIAN, PHRYGIAN, LOCRIAN, LYDIAN, BLUES, WHOLE_TONE, MAJOR_PENTATONIC, MINOR_PENTATONIC);
+
+        exit(EXIT_FAILURE);
     }
 }
 
@@ -353,14 +355,14 @@ int isDiminishedLengthScale(const char *scaleName)
 
 int isStandardLengthScale(const char *scaleName)
 {
-    return (isMajorName(scaleName) || 
-            isHarmonicMinorName(scaleName) || 
-            isMinorName(scaleName) || 
-            isMixolydianName(scaleName) || 
+    return (isMajorName(scaleName) ||
+            isHarmonicMinorName(scaleName) ||
+            isMinorName(scaleName) ||
+            isMixolydianName(scaleName) ||
             isDorianName(scaleName) ||
-            isPhrygianName(scaleName)) ||
+            isPhrygianName(scaleName) ||
             isLocrianName(scaleName) ||
-            isLydianName(scaleName);
+            isLydianName(scaleName));
 }
 
 int isBluesLengthScale(const char *scaleName)

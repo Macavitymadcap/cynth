@@ -1,6 +1,6 @@
 CC = gcc
 LDLIBS = -lm
-CFLAGS = -Wall -Wextra -Werror -std=c17 -g
+CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c17 -g
 INCLUDE = -Iinclude
 SRC = src
 BUILD = build

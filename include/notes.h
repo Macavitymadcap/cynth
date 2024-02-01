@@ -146,4 +146,4 @@ extern const size_t NOTE_SIZE;
 */
 Note *createNote(float frequency, float value);
 
-#endif // NOTES_H
+#endif

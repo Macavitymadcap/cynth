@@ -76,4 +76,4 @@ int16_t getPulseWave(float frequency, int bufferIndex, int sampleRate, int volum
 */
 int16_t getWaveform(const char* waveformName, float frequency, int bufferIndex, int sampleRate, int volume);
 
-#endif // WAVEFORM_H
+#endif

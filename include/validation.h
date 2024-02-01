@@ -295,4 +295,4 @@ int isBluesLengthScale(const char *scaleName);
 */
 int isPentatonicLengthScale(const char *scaleName);
 
-#endif // VALIDATION_H
+#endif
