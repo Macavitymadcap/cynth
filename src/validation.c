@@ -143,12 +143,18 @@ int isValidPitch(int pitch)
     return pitch >= 0 && pitch <= 8;
 }
 
-int isInNoteRange(int pitch, char note)
+int isInNoteRange(int pitch, int flat, char note)
 {
-    int tooHigh = note > 'b' && pitch == 8;
-    int tooLow = note < 'c' && pitch == 0;
+    if (pitch == 8)
+    {
+        return note >= 'b';
+    }
+    if (pitch == 0)
+    {
+        return note <= 'c';
+    }
 
-    return tooHigh || tooLow;
+    return 1;
 }
 
 void checkNoteName(const char *noteName)
@@ -198,11 +204,6 @@ void checkNoteName(const char *noteName)
             fprintf(stderr, "%s '%s'. Pitch must be in range 0-8.\n", invalidNote, noteName);
             exit(EXIT_FAILURE);
         }
-    }
-    if (isInNoteRange(pitch, note) == 0)
-    {
-        fprintf(stderr, "%s '%s'. Must be in range c0 - b8\n", invalidNote, noteName);
-        exit(EXIT_FAILURE);
     }
 }
 
