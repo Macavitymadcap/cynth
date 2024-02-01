@@ -137,6 +137,8 @@ float getFrequencyFromName(const char *noteName)
         return A0;
     else if (strcmp(noteName, "bb0") == 0)
         return Bb0;
+    else if (strcmp(noteName, "b0") == 0)
+        return B0;
     else if (strcmp(noteName, "c1") == 0)
         return C1;
     else if (strcmp(noteName, "db1") == 0)
@@ -159,6 +161,8 @@ float getFrequencyFromName(const char *noteName)
         return A1;
     else if (strcmp(noteName, "bb1") == 0)
         return Bb1;
+    else if (strcmp(noteName, "b1") == 0)
+        return B1;
     else if (strcmp(noteName, "c2") == 0)
         return C2;
     else if (strcmp(noteName, "db2") == 0)
@@ -181,6 +185,8 @@ float getFrequencyFromName(const char *noteName)
         return A2;
     else if (strcmp(noteName, "bb2") == 0)
         return Bb2;
+    else if (strcmp(noteName, "b2"))
+        return B2;
     else if (strcmp(noteName, "c3") == 0)
         return C3;
     else if (strcmp(noteName, "db3") == 0)
@@ -203,6 +209,8 @@ float getFrequencyFromName(const char *noteName)
         return A3;
     else if (strcmp(noteName, "bb3") == 0)
         return Bb3;
+    else if (strcmp(noteName, "b3"))
+        return B3;
     else if (strcmp(noteName, "c4") == 0)
         return C4;
     else if (strcmp(noteName, "db4") == 0)
@@ -249,6 +257,8 @@ float getFrequencyFromName(const char *noteName)
         return A5;
     else if (strcmp(noteName, "bb5") == 0)
         return Bb5;
+    else if (strcmp(noteName, "b5"))
+        return B5;
     else if (strcmp(noteName, "c6") == 0)
         return C6;
     else if (strcmp(noteName, "db6") == 0)
@@ -271,6 +281,8 @@ float getFrequencyFromName(const char *noteName)
         return A6;
     else if (strcmp(noteName, "bb6") == 0)
         return Bb6;
+    else if (strcmp(noteName, "b6"))
+        return B6;
     else if (strcmp(noteName, "c7") == 0)
         return C7;
     else if (strcmp(noteName, "db7") == 0)
@@ -293,6 +305,8 @@ float getFrequencyFromName(const char *noteName)
         return A7;
     else if (strcmp(noteName, "bb7") == 0)
         return Bb7;
+    else if (strcmp(noteName, "b7"))
+        return B7;
     else if (strcmp(noteName, "c8") == 0)
         return C8;
     else if (strcmp(noteName, "db8") == 0)
@@ -315,6 +329,8 @@ float getFrequencyFromName(const char *noteName)
         return A8;
     else if (strcmp(noteName, "bb8") == 0)
         return Bb8;
+    else if (strcmp(noteName, "b8"))
+        return B8;
 
     return 0.0;
 }
