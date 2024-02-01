@@ -8,6 +8,7 @@
 #include "waveforms.h"
 #include "validation.h"
 #include "audio_buffer.h"
+#include "song.h"
 
 int main(int argc, char *argv[])
 {
@@ -29,6 +30,7 @@ int main(int argc, char *argv[])
 
     int volume = atoi(argv[5]);
     checkVolume(volume);
+    int outputVolume = getVolume(volume);
 
     const int sampleRate = 8000;
 
@@ -42,7 +44,7 @@ int main(int argc, char *argv[])
 
     for (int i = 0; i < (int)bufferSize; i++)
     {
-        buffer[i] = getWaveform(waveformName, note, i, sampleRate, volume);
+        buffer[i] = getWaveform(waveformName, note, i, sampleRate, outputVolume);
     }
 
     fwrite(header, WAVE_HEADER_SIZE, 1, output);
