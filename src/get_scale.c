@@ -45,16 +45,10 @@ int main(int argc, const char *argv[])
     WavHeader *wavHeader = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate, bufferSize);
 
     writeScaleToBuffer(scaleName, tonic, song, buffer);
-    
+ 
     char fileName[40];
-    memset(fileName, 0, 40);
-    strcat(fileName, waveformName);
-    strcat(fileName, "-");
-    strcat(fileName, noteName);
-    strcat(fileName, "-");
-    strcat(fileName, scaleName);
-    strcat(fileName, ".wav");
-
+    snprintf(fileName, sizeof(fileName), "%s-%s-%s.wav", waveformName, noteName, scaleName);
+    
     FILE *outfile = fopen(fileName, "wb");
     checkFileOpening(outfile, fileName);
     fwrite(wavHeader, WAVE_HEADER_SIZE, 1, outfile);

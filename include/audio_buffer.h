@@ -10,6 +10,16 @@
 #include "song.h"
 
 /**
+ * @enum ScaleDirection
+ * @brief The direction to use when writing a scale to a buffer.
+*/
+typedef enum ScaleDirection
+{
+  ASCENDING,    /** Go up the scale. */
+  DESCENDING    /** Go down the scale. */
+} ScaleDirection;
+
+/**
  * @brief Create a buffer for writing audio, exiting the program if allocation fails.
  * @param size Size of the buffer to be created.
  * @returns Pointer to the created buffer.
@@ -57,6 +67,17 @@ void writeNoteToBuffer(Note *note, int meaureIndex, float beatIndex, Song *song,
 void writeChordToBuffer(int chordSize, Note *chord[chordSize], int measureIndex, float beatIndex, Song *song, int16_t *buffer);
 
 /**
+ * @brief Write four notes of a scale to one bar of the buffer.
+ * @param measureIndex The bar to which the notes should be written
+ * @param scaleIndex The index of the scale at which to start writing.
+ * @param direction Whether to go up or go down the scale from the scaleIndex.
+ * @param scale Array of Note structs comprising the notes of the scale.
+ * @param song Pointer to structure containg the song's performance information. 
+ * @param buffer The buffer into which the note will be written.
+*/
+void writeBarOfScaleToBuffer(int measureIndex, int scaleIndex, ScaleDirection direction, Note *scale, Song *song, int16_t *buffer);
+
+/**
  * @brief Writes a chromatic scale to an audio buffer, excluding the melodic minor.
  * @param tonic Float representing the root note of the chromatic scale.
  * @param song Pointer to structure containg the song's performance information. 
@@ -82,7 +103,7 @@ void writeDiminishedScaleToBuffer(Note *scale, Song *song, int16_t *buffer);
 
 /**
  * @brief Writes a scale of standard length to an audio buffer, excluding the melodic minor.
- * @param scale Array of Note structs comprings the notes of the scale.
+ * @param scale Array of Note structs comprising the notes of the scale.
  * @param song Pointer to structure containg the song's performance information. 
  * @param buffer The buffer into which the note will be written.
 */

@@ -11,12 +11,6 @@
 #include "scales.h"
 #include "validation.h"
 
-typedef enum ScaleDirection
-{
-  ASCENDING,
-  DESCENDING
-} ScaleDirection;
-
 int16_t *createBuffer(int size)
 {
   size_t dataSize = sizeof(int16_t);
