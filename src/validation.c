@@ -31,9 +31,9 @@ void printFile(const char *filePath)
 
 void checkGetWaveUsage(int argc, const char *programName)
 {
-    if (argc != 6)
+    if (argc != 5)
     {
-        fprintf(stderr, "Usage: %s outfile waveform note seconds volume\n", programName);
+        fprintf(stderr, "Usage: %s waveform note seconds volume\n", programName);
         printFile("docs/get_wave.txt");
         exit(EXIT_FAILURE);
     }
