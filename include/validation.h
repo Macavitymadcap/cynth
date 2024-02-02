@@ -109,9 +109,10 @@ int isValidPitch(int pitch);
  * @brief Certermine if the note is within valid range.
  * @param pitch The number of the note.
  * @param note The letter of the note.
+ * @param hasFlat 1 if the note is a flat, otherwise 0
  * @returns 1 if valid, otherwise 0.
 */
-int isInNoteRange(int pitch, char note);
+int isInNoteRange(int pitch, char note, int hasFlat);
 
 /**
  * @brief Exit program if an inavlid noteName is passed as an argument.
