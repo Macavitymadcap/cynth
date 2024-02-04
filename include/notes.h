@@ -7,6 +7,8 @@
 #ifndef NOTES_H
 #define NOTES_H
 
+#include <stdlib.h>
+
 extern const float C0;
 extern const float Db0;
 extern const float D0;

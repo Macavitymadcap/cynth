@@ -1,5 +1,5 @@
 
-Generate a 16 measure loop of four chords (I, IV, V & vi) in D major.
+Generate a 16 measure loop of four chords (I, IV, vi, V) in D major.
 
 Arguments:
   outfile:  Name of file to be written, must be .wav.
