@@ -7,6 +7,7 @@
 #include "waveforms.h"
 #include "wav.h"
 #include "scales.h"
+#include "notes.h"
 
 void printFile(const char *filePath)
 {
@@ -43,7 +44,7 @@ void checkFourChordsUsage(int argc, const char *programName)
 {
     if (argc != 5)
     {
-        fprintf(stderr, "Usage: %s outfile waveform bpm volume\n", programName);
+        fprintf(stderr, "Usage: %s key waveform bpm volume\n", programName);
         printFile("docs/four_chords.txt");
         exit(EXIT_FAILURE);
     }
@@ -266,6 +267,24 @@ void checkBpm(int bpm)
     if (outOfBounds(bpm, 1, 300))
     {
         fprintf(stderr, "Invalid bpm: '%i'. Must be number in range 1-300\n", bpm);
+        exit(EXIT_FAILURE);
+    }
+}
+
+void checkKeyName(const char *keyName)
+{
+    int result = 0;
+    for (int i = 0; i < TOTAL_SEMITONES; i ++)
+    {
+        if (strcmp(keyName, NOTE_NAMES[i]) == 0)
+        {
+            result = 1;
+        }
+    }
+
+    if (result == 0)
+    {
+        fprintf(stderr, "Invalid key name: '%s'. Must be a -g, using 'b' for flats and sharps`n", keyName);
         exit(EXIT_FAILURE);
     }
 }

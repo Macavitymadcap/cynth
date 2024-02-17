@@ -217,8 +217,6 @@ extern const int MINOR_PENTATONIC_INTERVALS[];
 /**
  * @brief Generate a scale based on the provided tonic and intervals.
  * 
- * The frequency of each Note is calculated using the formula:
- * `frequency = tonic * 2^(semitones / 12)`.
  * The length of each Note is set to a crotchet (1/8th).
  * 
  * @param tonic The base frequency of the scale.

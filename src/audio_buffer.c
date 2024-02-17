@@ -64,11 +64,11 @@ void writeNoteToBuffer(Note *note, int measureIndex, float beatIndex, Song *song
   }
 }
 
-void writeChordToBuffer(int chordSize, Note *chord[chordSize], int measureIndex, float beatIndex, Song *song, int16_t *buffer)
+void writeChordToBuffer(Note *chord, int chordLength, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
 {
-  for (int i = 0; i < chordSize; i++)
+  for (int i = 0; i < chordLength; i++)
   {
-    writeNoteToBuffer(chord[i], measureIndex, beatIndex, song, buffer);
+    writeNoteToBuffer(&chord[i], measureIndex, beatIndex, song, buffer);
   }
 }
 

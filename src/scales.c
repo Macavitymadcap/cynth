@@ -1,4 +1,3 @@
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -70,7 +69,7 @@ Note *createScaleArray(float tonic, const int *intervals, const int scaleLength)
 
     for (int i = 0; i < scaleLength; i++)
     {
-        scale[i].frequency = tonic * pow(2, intervals[i] / 12.0);
+        scale[i].frequency = getFrequencyFromTonicAndInterval(tonic, intervals[i]);
         scale[i].value = CROTCHET;
     }
 

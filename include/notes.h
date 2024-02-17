@@ -2,12 +2,22 @@
  * @file notes.h
  * @brief Functions and constants pertaining to musical notes.
  * @see https://pages.mtu.edu/~suits/notefreqs.html
-*/
+ */
 
 #ifndef NOTES_H
 #define NOTES_H
 
 #include <stdlib.h>
+
+/**
+ * @brief The number of semitones in a western scale, not including the octave.
+*/
+extern const int TOTAL_SEMITONES;
+
+/**
+ * @brief Array of strings representing the names of notes.
+ */
+extern const char *NOTE_NAMES[];
 
 extern const float C0;
 extern const float Db0;
@@ -122,22 +132,34 @@ extern const float B8;
  * @brief Return the note corresponding with the passed string.
  * @param noteName A string representation of the note.
  * @returns The float that corresponds with the noteName.
-*/
+ */
 float getFrequencyFromName(const char *noteName);
+
+/**
+ * @brief Calculate a note's frequency based on a root note and scale interval.
+ *
+ *  The frequency  is calculated using the formula:
+ * `frequency = tonic * 2^(semitone / 12)`.
+ *
+ * @param tonic The root frequency of the desired note's key.
+ * @param interval The number of semitones between the root and desired note.
+ * @returns The float corresponding to the desired note
+ */
+float getFrequencyFromTonicAndInterval(float tonic, int interval);
 
 /**
  * @struct Note
  * @brief Encapsulates information about an individual note
-*/
-typedef struct 
+ */
+typedef struct
 {
-    float frequency;    /** The pitch of the note. */ 
-    float value;        /** The duration in beats of the note. */
+    float frequency; /** The pitch of the note. */
+    float value;     /** The duration in beats of the note. */
 } __attribute__((__packed__)) Note;
 
 /**
  * @brief The szie of a Note struct.
-*/
+ */
 extern const size_t NOTE_SIZE;
 
 /**
@@ -145,7 +167,7 @@ extern const size_t NOTE_SIZE;
  * @param frequency The pitch of the note.
  * @param value The duration in beats of the note.
  * @returns note Pointer to a Note struct.
-*/
+ */
 Note *createNote(float frequency, float value);
 
 #endif

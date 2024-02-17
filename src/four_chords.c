@@ -12,13 +12,14 @@
 #include "duration.h"
 #include "audio_buffer.h"
 #include "song.h"
+#include "chords.h"
 
 int main(int argc, char *argv[])
 {
   checkFourChordsUsage(argc, argv[0]);
 
-  const char *fileName = argv[1];
-  checkFileName(fileName);
+  const char *keyName = argv[1];
+  checkKeyName(keyName);
 
   const char *waveformName = argv[2];
   checkWaveformName(waveformName);
@@ -38,55 +39,56 @@ int main(int argc, char *argv[])
 
   WavHeader *wavHeader = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate, bufferSize);
 
-  const int BASS_SIZE = 2;
-  const int CHORD_SIZE = 3;
+  float *tonics = getFourChordTonics(keyName);
 
-  Note *dBass[BASS_SIZE] = {createNote(D2, SEMIBREVE), createNote(D3, SEMIBREVE)};
-  Note *dMajor[CHORD_SIZE] = {createNote(D4, CROTCHET), createNote(Gb4, CROTCHET), createNote(A4, CROTCHET)};
+  Note *IBass = createChordArray(tonics[0], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH);
+  Note *IChord = createChordArray(tonics[4], CROTCHET, MAJOR_TRIAD_INTERVALS, TRIAD_LENGTH);
 
-  Note *aBass[BASS_SIZE] = {createNote(A2, SEMIBREVE), createNote(A3, SEMIBREVE)};
-  Note *aMajor1st[CHORD_SIZE] = {createNote(Db4, CROTCHET), createNote(E4, CROTCHET), createNote(A4, CROTCHET)};
+  Note *VBass = createChordArray(tonics[1], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH); 
+  Note *VChord1st = createChordArray(tonics[5], CROTCHET, MAJOR_TRIAD_1ST_INVERSION_INTERVALS, TRIAD_LENGTH);
 
-  Note *bBass[BASS_SIZE] = {createNote(B2, SEMIBREVE), createNote(B3, SEMIBREVE)};
-  Note *bMinor1st[CHORD_SIZE] = {createNote(D4, CROTCHET), createNote(Gb4, CROTCHET), createNote(B4, CROTCHET)};
+  Note *viBass = createChordArray(tonics[2], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH);
+  Note *viChord1st = createChordArray(tonics[6], CROTCHET, MINOR_TRIAD_1ST_INVERSION_INTERVALS, TRIAD_LENGTH);
 
-  Note *gBass[BASS_SIZE] = {createNote(G2, SEMIBREVE), createNote(G3, SEMIBREVE)};
-  Note *gMajor2nd[CHORD_SIZE] = {createNote(D4, CROTCHET), createNote(G4, CROTCHET), createNote(B4, CROTCHET)};
+  Note *IVBass = createChordArray(tonics[3], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH);
+  Note *IVChord2nd = createChordArray(tonics[7], CROTCHET, MAJOR_TRIAD_2ND_INVERSION_INTERVALS, TRIAD_LENGTH);
   
   const int FIRST_BEAT = 0;
 
   int measureIndex = 0;
   while (measureIndex < song->totalMeasures)
   {
-    writeChordToBuffer(BASS_SIZE, dBass, measureIndex, FIRST_BEAT, song, buffer);
+    writeChordToBuffer(IBass, BASS_PEDAL_LENGTH, measureIndex, FIRST_BEAT, song, buffer);
     for (int i = 0; i < (int)song->timeSignature; i++)
     {
-      writeChordToBuffer(CHORD_SIZE, dMajor, measureIndex, i, song, buffer);
+      writeChordToBuffer(IChord, TRIAD_LENGTH, measureIndex, i, song, buffer);
     }
     measureIndex++;
 
-    writeChordToBuffer(BASS_SIZE, aBass, measureIndex, FIRST_BEAT, song, buffer);
+    writeChordToBuffer(VBass, BASS_PEDAL_LENGTH, measureIndex, FIRST_BEAT, song, buffer);
     for (int i = 0; i < (int)song->timeSignature; i++)
     {
-      writeChordToBuffer(CHORD_SIZE, aMajor1st, measureIndex, i, song, buffer);
+      writeChordToBuffer(VChord1st, TRIAD_LENGTH, measureIndex, i, song, buffer);
     }
     measureIndex++;
 
-    writeChordToBuffer(BASS_SIZE, bBass, measureIndex, FIRST_BEAT, song, buffer);
+    writeChordToBuffer(viBass, TRIAD_LENGTH, measureIndex, FIRST_BEAT, song, buffer);
     for (int i = 0; i < (int)song->timeSignature; i++)
     {
-      writeChordToBuffer(CHORD_SIZE, bMinor1st, measureIndex, i, song, buffer);
+      writeChordToBuffer(viChord1st, TRIAD_LENGTH, measureIndex, i, song, buffer);
     }
     measureIndex++;
 
-    writeChordToBuffer(BASS_SIZE, gBass, measureIndex, FIRST_BEAT, song, buffer);
+    writeChordToBuffer(IVBass, BASS_PEDAL_LENGTH, measureIndex, FIRST_BEAT, song, buffer);
     for (int i = 0; i < (int)song->timeSignature; i++)
     {
-      writeChordToBuffer(CHORD_SIZE, gMajor2nd, measureIndex, i, song, buffer);
+      writeChordToBuffer(IVChord2nd, TRIAD_LENGTH, measureIndex, i, song, buffer);
     }
     measureIndex++;
   }
 
+  char fileName[40];
+  snprintf(fileName, sizeof(fileName), "%s-%s-four-chords.wav", waveformName, keyName);
   FILE *outfile = fopen(fileName, "wb");
   checkFileOpening(outfile, fileName);
   fwrite(wavHeader, WAVE_HEADER_SIZE, 1, outfile);
@@ -96,22 +98,18 @@ int main(int argc, char *argv[])
   free(song);
   free(wavHeader);
   free(buffer);
+  
+  free(tonics);
 
-  for (int i = 0; i < BASS_SIZE; i++)
-  {
-    free(dBass[i]);
-    free(aBass[i]);
-    free(bBass[i]);
-    free(gBass[i]);
-  }
+  free(IBass);
+  free(VBass);
+  free(viBass);
+  free(IVBass);
 
-  for (int i = 0; i < CHORD_SIZE; i++)
-  {
-    free(dMajor[i]);
-    free(aMajor1st[i]);
-    free(bMinor1st[i]);
-    free(gMajor2nd[i]);
-  }
+  free(IChord);
+  free(VChord1st);
+  free(viChord1st);
+  free(IVChord2nd);
 
   exit(EXIT_SUCCESS);
 }
