@@ -242,24 +242,50 @@ float *getFourChordTonics(const char *keyName)
 
 Chord *getFourChords(const char *keyName)
 {
+    const int totalChords = 8;
     float *tonics = getFourChordTonics(keyName);
 
-    Chord *chords = malloc(CHORD_SIZE * 8);
+    Chord *chords = malloc(CHORD_SIZE * totalChords);
     if (chords == NULL)
     {
         fprintf(stderr, "Error allocating chords\n");
         exit(EXIT_FAILURE);
     }
-    memset(chords, 0, 8);
-    
-    chords[0] = *createChord(tonics[0], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH);
-    chords[1] = *createChord(tonics[4], CROTCHET, MAJOR_TRIAD_INTERVALS, TRIAD_LENGTH);
-    chords[2] = *createChord(tonics[1], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH);
-    chords[3] = *createChord(tonics[5], CROTCHET, MAJOR_TRIAD_1ST_INVERSION_INTERVALS, TRIAD_LENGTH);
-    chords[4] = *createChord(tonics[2], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH);
-    chords[5] = *createChord(tonics[6], CROTCHET, MINOR_TRIAD_1ST_INVERSION_INTERVALS, TRIAD_LENGTH);
-    chords[6] = *createChord(tonics[3], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH);
-    chords[7] = *createChord(tonics[7], CROTCHET, MAJOR_TRIAD_2ND_INVERSION_INTERVALS, TRIAD_LENGTH);
+    memset(chords, 0, totalChords);
+
+    Chord *bassI = createChord(tonics[0], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH);
+    chords[0] = *bassI;
+    free(bassI);
+
+    Chord *I = createChord(tonics[4], CROTCHET, MAJOR_TRIAD_INTERVALS, TRIAD_LENGTH);
+    chords[1] = *I;
+    free(I);
+
+    Chord *bassIV = createChord(tonics[1], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH);
+    chords[2] = *bassIV;
+    free(bassIV);
+
+    Chord *IV = createChord(tonics[5], CROTCHET, MAJOR_TRIAD_1ST_INVERSION_INTERVALS, TRIAD_LENGTH);
+    chords[3] = *IV;
+    free(IV);
+
+    Chord *viBass = createChord(tonics[2], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH);
+    chords[4] = *viBass;
+    free(viBass);
+
+    Chord *vi = createChord(tonics[6], CROTCHET, MINOR_TRIAD_1ST_INVERSION_INTERVALS, TRIAD_LENGTH);
+    chords[5] = *vi;
+    free(vi);
+
+    Chord *VIBass = createChord(tonics[3], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH);
+    chords[6] = *VIBass;
+    free(VIBass);
+
+    Chord *VI =createChord(tonics[7], CROTCHET, MAJOR_TRIAD_2ND_INVERSION_INTERVALS, TRIAD_LENGTH);
+    chords[7] = *VI;
+    free(VI);
+
+    free(tonics);
 
     return chords;
 }

@@ -52,7 +52,11 @@ int main(int argc, char *argv[])
   free(song);
   free(wavHeader);
   free(buffer);
-  
+
+  for (int i = 0; i < 8; i++)
+  {
+    free(chords[i].notes);
+  } 
   free(chords);
 
   exit(EXIT_SUCCESS);
