@@ -17,7 +17,7 @@ Essentially a refactoring of kaizen's [middle-c](https://kaizen.place/music-tail
 ### four_chords
 Create a wav file playing the 'four chords' progression using variable wavforms, bpm and volume.
 
-Another refactoring of the work of kaizen, this time [4-chords](https://kaizen.place/music-tails/writing-wav-files-in-c-630150ea1b3ccbc86a636770). More modularisation, memory safety and options as with he above.
+Another refactoring of the work of kaizen, this time [4-chords](https://kaizen.place/music-tails/writing-wav-files-in-c-630150ea1b3ccbc86a636770). More modularisation, memory safety and options.
 
 ### get_scale
 Create a wav file that plays a given scale ascending then descending using variable waveform, bpm and volume.
