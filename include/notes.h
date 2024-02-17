@@ -151,14 +151,14 @@ float getFrequencyFromTonicAndInterval(float tonic, int interval);
  * @struct Note
  * @brief Encapsulates information about an individual note
  */
-typedef struct
+typedef struct Note
 {
     float frequency; /** The pitch of the note. */
     float value;     /** The duration in beats of the note. */
 } __attribute__((__packed__)) Note;
 
 /**
- * @brief The szie of a Note struct.
+ * @brief The size of a Note struct.
  */
 extern const size_t NOTE_SIZE;
 

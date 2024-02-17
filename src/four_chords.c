@@ -1,15 +1,13 @@
 #include <string.h>
 #include <stdio.h>
-#include <math.h>
 #include <stdlib.h>
 #include <stdint.h>
 
 #include "wav.h"
-#include "notes.h"
 #include "audio_buffer.h"
 #include "waveforms.h"
-#include "validation.h"
 #include "duration.h"
+#include "validation.h"
 #include "audio_buffer.h"
 #include "song.h"
 #include "chords.h"
@@ -39,53 +37,9 @@ int main(int argc, char *argv[])
 
   WavHeader *wavHeader = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate, bufferSize);
 
-  float *tonics = getFourChordTonics(keyName);
+  Chord *chords = getFourChords(keyName);
 
-  Note *IBass = createChordArray(tonics[0], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH);
-  Note *IChord = createChordArray(tonics[4], CROTCHET, MAJOR_TRIAD_INTERVALS, TRIAD_LENGTH);
-
-  Note *VBass = createChordArray(tonics[1], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH); 
-  Note *VChord1st = createChordArray(tonics[5], CROTCHET, MAJOR_TRIAD_1ST_INVERSION_INTERVALS, TRIAD_LENGTH);
-
-  Note *viBass = createChordArray(tonics[2], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH);
-  Note *viChord1st = createChordArray(tonics[6], CROTCHET, MINOR_TRIAD_1ST_INVERSION_INTERVALS, TRIAD_LENGTH);
-
-  Note *IVBass = createChordArray(tonics[3], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH);
-  Note *IVChord2nd = createChordArray(tonics[7], CROTCHET, MAJOR_TRIAD_2ND_INVERSION_INTERVALS, TRIAD_LENGTH);
-  
-  const int FIRST_BEAT = 0;
-
-  int measureIndex = 0;
-  while (measureIndex < song->totalMeasures)
-  {
-    writeChordToBuffer(IBass, BASS_PEDAL_LENGTH, measureIndex, FIRST_BEAT, song, buffer);
-    for (int i = 0; i < (int)song->timeSignature; i++)
-    {
-      writeChordToBuffer(IChord, TRIAD_LENGTH, measureIndex, i, song, buffer);
-    }
-    measureIndex++;
-
-    writeChordToBuffer(VBass, BASS_PEDAL_LENGTH, measureIndex, FIRST_BEAT, song, buffer);
-    for (int i = 0; i < (int)song->timeSignature; i++)
-    {
-      writeChordToBuffer(VChord1st, TRIAD_LENGTH, measureIndex, i, song, buffer);
-    }
-    measureIndex++;
-
-    writeChordToBuffer(viBass, TRIAD_LENGTH, measureIndex, FIRST_BEAT, song, buffer);
-    for (int i = 0; i < (int)song->timeSignature; i++)
-    {
-      writeChordToBuffer(viChord1st, TRIAD_LENGTH, measureIndex, i, song, buffer);
-    }
-    measureIndex++;
-
-    writeChordToBuffer(IVBass, BASS_PEDAL_LENGTH, measureIndex, FIRST_BEAT, song, buffer);
-    for (int i = 0; i < (int)song->timeSignature; i++)
-    {
-      writeChordToBuffer(IVChord2nd, TRIAD_LENGTH, measureIndex, i, song, buffer);
-    }
-    measureIndex++;
-  }
+  writeFourChordsToBuffer(chords, song, buffer);
 
   char fileName[40];
   snprintf(fileName, sizeof(fileName), "%s-%s-four-chords.wav", waveformName, keyName);
@@ -99,17 +53,7 @@ int main(int argc, char *argv[])
   free(wavHeader);
   free(buffer);
   
-  free(tonics);
-
-  free(IBass);
-  free(VBass);
-  free(viBass);
-  free(IVBass);
-
-  free(IChord);
-  free(VChord1st);
-  free(viChord1st);
-  free(IVChord2nd);
+  free(chords);
 
   exit(EXIT_SUCCESS);
 }

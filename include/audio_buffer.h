@@ -8,6 +8,7 @@
 
 #include "stdint.h"
 #include "song.h"
+#include "chords.h"
 
 /**
  * @enum ScaleDirection
@@ -57,14 +58,21 @@ void writeNoteToBuffer(Note *note, int meaureIndex, float beatIndex, Song *song,
 
 /**
  * @brief Write a chord to the buffer based on arguments.
- * @param chord Array of Note structs comprising the chord.
- * @param chordLength Number of notes in the chord.
+ * @param chord Chord struct representing the chord.
  * @param meaureIndex The current measure in which the note is written.
  * @param beatIndex The index of the current beat in the measure.
  * @param song Pointer to structure containg the song's performance information. 
  * @param buffer The buffer into which the note will be written.
 */
-void writeChordToBuffer(Note *chord, int chordLength, int measureIndex, float beatIndex, Song *song, int16_t *buffer);
+void writeChordToBuffer(Chord *chord, int measureIndex, float beatIndex, Song *song, int16_t *buffer);
+
+/**
+ * @brief Write the Four Chord progression to the buffer.
+ * @param chords Array of chords for the progresion.
+ * @param song Pointer to structure containg the song's performance information. 
+ * @param buffer The buffer into which the note will be written.
+*/
+void writeFourChordsToBuffer(Chord *chords, Song *song, int16_t *buffer);
 
 /**
  * @brief Write four notes of a scale to one bar of the buffer.

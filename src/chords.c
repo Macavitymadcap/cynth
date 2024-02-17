@@ -6,6 +6,7 @@
 #include "chords.h"
 #include "notes.h"
 #include "validation.h"
+#include "duration.h"
 
 const int BASS_PEDAL_LENGTH = 2;
 const int BASS_PEDAL_INTERVALS[] = {0, 12};
@@ -14,27 +15,79 @@ const int TRIAD_LENGTH = 3;
 const int MAJOR_TRIAD_INTERVALS[] = {0, 4, 7};
 const int MAJOR_TRIAD_1ST_INVERSION_INTERVALS[] = {-8, -5, 0};
 const int MAJOR_TRIAD_2ND_INVERSION_INTERVALS[] = {-5, 0, 4};
+
 const int MINOR_TRIAD_INTERVALS[] = {0, 3, 7};
 const int MINOR_TRIAD_1ST_INVERSION_INTERVALS[] = {-9, -5, 0};
 const int MINOR_TRIAD_2ND_INVERSION_INTERVALS[] = {-5, 0, 3};
 
+const int DIMINISHED_TRIAD_INTERVALS[] = {0, 3, 6};
+const int DIMINISHED_TRIAD_1ST_INVERSION_INTERVALS[] = {-9, -6, 0};
+const int DIMINISHED_TRIAD_2ND_INVERSION_INTERVALS[] = {-6, 0, 3};
+
+const int AUGMENTED_TRIAD_INTERVALS[] = {0, 4, 8};
+const int AUGMENTED_TRIAD_1ST_INVERSION_INTERVALS[] = {-8, -4, 0};
+const int AUGMENTED_TRIAD_2ND_INVERSION_INTERVALS[] = {-4, 0, 4};
+
+const int SEVENTH_LENGTH = 4;
+const int DOMINANT_SEVENTH_CHORD_INTERVALS[] = {0, 4, 7, 10};
+const int DOMINANT_SEVENTH_CHORD_1ST_INVERSION_INTERVALS[] = {-8, -5, -1, 0};
+const int DOMINANT_SEVENTH_CHORD_2ND_INVERSION_INTERVALS[] = {-5, -1, 0, 4};
+const int DOMINANT_SEVENTH_CHORD_3RD_INVERSION_INTERVALS[] = {-1, 0, 4, 7};
+
+const int MAJOR_SEVENTH_CHORD_INTERVALS[] = {0, 4, 7, 11};
+const int MAJOR_SEVENTH_CHORD_1ST_INVERSION_INTERVALS[] = {-8, -3, 0, 4};
+const int MAJOR_SEVENTH_CHORD_2ND_INVERSION_INTERVALS[] = {-3, 0, 4, 7};
+const int MAJOR_SEVENTH_CHORD_3RD_INVERSION_INTERVALS[] = {0, 4, 7, 11};
+
+const int MINOR_SEVENTH_CHORD_INTERVALS[] = {0, 3, 7, 10};
+const int MINOR_SEVENTH_CHORD_1ST_INVERSION_INTERVALS[] = {-9, -5, 0, 3};
+const int MINOR_SEVENTH_CHORD_2ND_INVERSION_INTERVALS[] = {-5, 0, 3, 7};
+const int MINOR_SEVENTH_CHORD_3RD_INVERSION_INTERVALS[] = {0, 3, 7, 10};
+
+const int DIMINISHED_SEVENTH_CHORD_INTERVALS[] = {0, 3, 6, 9};
+const int DIMINISHED_SEVENTH_CHORD_1ST_INVERSION_INTERVALS[] = {-9, -6, -3, 0};
+const int DIMINISHED_SEVENTH_CHORD_2ND_INVERSION_INTERVALS[] = {-6, -3, 0, 3};
+const int DIMINISHED_SEVENTH_CHORD_3RD_INVERSION_INTERVALS[] = {-3, 0, 3, 6};
+
+const int AUGMENTED_SEVENTH_CHORD_INTERVALS[] = {0, 4, 8, 10};
+const int AUGMENTED_SEVENTH_CHORD_1ST_INVERSION_INTERVALS[] = {-8, -4, 0, 6};
+const int AUGMENTED_SEVENTH_CHORD_2ND_INVERSION_INTERVALS[] = {-4, 0, 6, 10};
+const int AUGMENTED_SEVENTH_CHORD_3RD_INVERSION_INTERVALS[] = {0, 6, 10, 16};
+
 Note *createChordArray(float tonic, float value, const int *chordIntervals, const int chordLength)
 {
     size_t chordSize = chordLength * NOTE_SIZE;
-    Note *chord = malloc(chordSize);
-    if (chord == NULL)
+    Note *chordArray = malloc(chordSize);
+    if (chordArray == NULL)
     {
-        fprintf(stderr, "Error allocating chord.\n");
+        fprintf(stderr, "Error allocating chordArray.\n");
         exit(EXIT_FAILURE);
     }
 
-    memset(chord, 0, chordSize);
+    memset(chordArray, 0, chordSize);
 
     for (int i = 0; i < chordLength; i++)
     {
-        chord[i].frequency = getFrequencyFromTonicAndInterval(tonic, chordIntervals[i]);
-        chord[i].value = value;
+        chordArray[i].frequency = getFrequencyFromTonicAndInterval(tonic, chordIntervals[i]);
+        chordArray[i].value = value;
     }
+
+    return chordArray;
+}
+
+const size_t CHORD_SIZE = sizeof(Chord);
+
+Chord *createChord(float tonic, float value, const int *intervals, const int chordLength)
+{
+    Chord *chord = malloc(CHORD_SIZE);
+    if (chord == NULL)
+    {
+        fprintf(stderr, "Error allocating Chord\n");
+        exit(EXIT_FAILURE);
+    }
+
+    chord->length = chordLength;
+    chord->notes = createChordArray(tonic, value, intervals, chordLength);
 
     return chord;
 }
@@ -185,4 +238,28 @@ float *getFourChordTonics(const char *keyName)
     }
 
     return tonics;
+}
+
+Chord *getFourChords(const char *keyName)
+{
+    float *tonics = getFourChordTonics(keyName);
+
+    Chord *chords = malloc(CHORD_SIZE * 8);
+    if (chords == NULL)
+    {
+        fprintf(stderr, "Error allocating chords\n");
+        exit(EXIT_FAILURE);
+    }
+    memset(chords, 0, 8);
+    
+    chords[0] = *createChord(tonics[0], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH);
+    chords[1] = *createChord(tonics[4], CROTCHET, MAJOR_TRIAD_INTERVALS, TRIAD_LENGTH);
+    chords[2] = *createChord(tonics[1], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH);
+    chords[3] = *createChord(tonics[5], CROTCHET, MAJOR_TRIAD_1ST_INVERSION_INTERVALS, TRIAD_LENGTH);
+    chords[4] = *createChord(tonics[2], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH);
+    chords[5] = *createChord(tonics[6], CROTCHET, MINOR_TRIAD_1ST_INVERSION_INTERVALS, TRIAD_LENGTH);
+    chords[6] = *createChord(tonics[3], SEMIBREVE, BASS_PEDAL_INTERVALS, BASS_PEDAL_LENGTH);
+    chords[7] = *createChord(tonics[7], CROTCHET, MAJOR_TRIAD_2ND_INVERSION_INTERVALS, TRIAD_LENGTH);
+
+    return chords;
 }
