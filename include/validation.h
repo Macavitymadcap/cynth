@@ -156,6 +156,12 @@ void checkFileOpening(FILE *output, const char *fileName);
 void checkBpm(int bpm);
 
 /**
+ * @brief Exit program if keyName is invalid.
+ * @param keyName String representing the desired key.
+*/
+void checkKeyName(const char *keyName);
+
+/**
  * @brief Determine if the string matches the name of the chromatic scale.
  * @param scaleName String to be checked.
  * @returns 1 if valid, otherwise 0.

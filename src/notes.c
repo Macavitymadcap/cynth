@@ -1,8 +1,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <math.h>
 
 #include "notes.h"
+
+const int TOTAL_SEMITONES = 12;
+
+const char *NOTE_NAMES[] = {"c", "db", "d", "eb", "e", "f", "gb", "g", "ab", "a", "bb", "b"};
 
 const float C0 = 16.35;
 const float Db0 = 17.32;
@@ -333,6 +338,11 @@ float getFrequencyFromName(const char *noteName)
         return B8;
 
     return 0.0;
+}
+
+float getFrequencyFromTonicAndInterval(float tonic, int interval)
+{
+    return tonic * pow(2, interval / 12.0);
 }
 
 const size_t NOTE_SIZE = sizeof(Note);

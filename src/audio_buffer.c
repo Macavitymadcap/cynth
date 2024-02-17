@@ -10,6 +10,7 @@
 #include "audio_buffer.h"
 #include "scales.h"
 #include "validation.h"
+#include "chords.h"
 
 int16_t *createBuffer(int size)
 {
@@ -64,11 +65,48 @@ void writeNoteToBuffer(Note *note, int measureIndex, float beatIndex, Song *song
   }
 }
 
-void writeChordToBuffer(int chordSize, Note *chord[chordSize], int measureIndex, float beatIndex, Song *song, int16_t *buffer)
+void writeChordToBuffer(Chord *chord, int measureIndex, float beatIndex, Song *song, int16_t *buffer)
 {
-  for (int i = 0; i < chordSize; i++)
+  for (int i = 0; i < chord->length; i++)
   {
-    writeNoteToBuffer(chord[i], measureIndex, beatIndex, song, buffer);
+    writeNoteToBuffer(&chord->notes[i], measureIndex, beatIndex, song, buffer);
+  }
+}
+
+void writeFourChordsToBuffer(Chord *chords, Song *song, int16_t *buffer)
+{
+  const int FIRST_BEAT = 0;
+  int measureIndex = 0;
+  
+  while (measureIndex < song->totalMeasures)
+  {
+    writeChordToBuffer(&chords[0], measureIndex, FIRST_BEAT, song, buffer);
+    for (int i = 0; i < (int)song->timeSignature; i++)
+    {
+      writeChordToBuffer(&chords[1], measureIndex, i, song, buffer);
+    }
+    measureIndex++;
+
+    writeChordToBuffer(&chords[2], measureIndex, FIRST_BEAT, song, buffer);
+    for (int i = 0; i < (int)song->timeSignature; i++)
+    {
+      writeChordToBuffer(&chords[3], measureIndex, i, song, buffer);
+    }
+    measureIndex++;
+
+    writeChordToBuffer(&chords[4], measureIndex, FIRST_BEAT, song, buffer);
+    for (int i = 0; i < (int)song->timeSignature; i++)
+    {
+      writeChordToBuffer(&chords[5], measureIndex, i, song, buffer);
+    }
+    measureIndex++;
+
+    writeChordToBuffer(&chords[6], measureIndex, FIRST_BEAT, song, buffer);
+    for (int i = 0; i < (int)song->timeSignature; i++)
+    {
+      writeChordToBuffer(&chords[7], measureIndex, i, song, buffer);
+    }
+    measureIndex++;
   }
 }
 
@@ -89,7 +127,7 @@ void writeChromaticScaleToBuffer(float tonic, Song *song, int16_t *buffer)
   {
     writeBarOfScaleToBuffer(measureIndex, 0, ASCENDING, chromaticScale, song, buffer);
     measureIndex++;
-    
+
     writeBarOfScaleToBuffer(measureIndex, 4, ASCENDING, chromaticScale, song, buffer);
     measureIndex++;
 

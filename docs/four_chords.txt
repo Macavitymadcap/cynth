@@ -1,8 +1,8 @@
 
-Generate a 16 measure loop of four chords (I, IV, vi, V) in D major.
+Generate a 16 measure loop of four chords (I, IV, vi, V) in given key.
 
 Arguments:
-  outfile:  Name of file to be written, must be .wav.
+  key:      Root note of the desired key, a-g using 'b' for flats or sharps.
   waveform: Type of waveform to generate, one of:
               - pulse
               - sawtooth
@@ -11,3 +11,6 @@ Arguments:
               - triangle
   bpm:      Desired tempo in beats per minute, in range 1-300.
   volume:   Loudness of generated waveform, from 1-11.
+
+The name of the generated wav file is determined by the waveform and key. 
+For example 'pulse-eb-four-chords.wav'

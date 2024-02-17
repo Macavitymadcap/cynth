@@ -9,13 +9,13 @@ GET_WAVE = get_wave
 FOUR_CHORDS = four_chords
 GET_SCALE = get_scale
 
-GET_WAVE_SRC = $(filter-out $(SRC)/$(FOUR_CHORDS).c $(SRC)/$(GET_SCALE).c, $(wildcard $(SRC)/*.c))
+GET_WAVE_SRC = $(filter-out $(SRC)/$(FOUR_CHORDS).c $(SRC)/$(GET_SCALE).c $(SRC)/chords.c, $(wildcard $(SRC)/*.c))
 GET_WAVE_OBJ = $(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(GET_WAVE_SRC))
 
 FOUR_CHORDS_SRC = $(filter-out $(SRC)/$(GET_WAVE).c $(SRC)/$(GET_SCALE).c, $(wildcard $(SRC)/*.c))
 FOUR_CHORDS_OBJ = $(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(FOUR_CHORDS_SRC))
 
-GET_SCALE_SRC = $(filter-out $(SRC)/$(FOUR_CHORDS).c $(SRC)/$(GET_WAVE).c, $(wildcard $(SRC)/*.c))
+GET_SCALE_SRC = $(filter-out $(SRC)/$(FOUR_CHORDS).c $(SRC)/$(GET_WAVE).c $(SRC)/chords.c, $(wildcard $(SRC)/*.c))
 GET_SCALE_OBJ = $(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(GET_SCALE_SRC))
 
 $(shell mkdir -p $(BUILD))
