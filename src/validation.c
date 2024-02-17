@@ -40,12 +40,12 @@ void checkGetWaveUsage(int argc, const char *programName)
     }
 }
 
-void checkFourChordsUsage(int argc, const char *programName)
+void checkGetFourChordsUsage(int argc, const char *programName)
 {
     if (argc != 5)
     {
         fprintf(stderr, "Usage: %s key waveform bpm volume\n", programName);
-        printFile("docs/four_chords.txt");
+        printFile("docs/get_four_chords.txt");
         exit(EXIT_FAILURE);
     }
 }

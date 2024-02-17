@@ -14,7 +14,7 @@
 
 int main(int argc, char *argv[])
 {
-  checkFourChordsUsage(argc, argv[0]);
+  checkGetFourChordsUsage(argc, argv[0]);
 
   const char *keyName = argv[1];
   checkKeyName(keyName);
