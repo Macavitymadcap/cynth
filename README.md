@@ -20,6 +20,6 @@ Create a wav file playing the 'four chords' progression using variable key, wave
 Another refactoring of the work of kaizen, this time [4-chords](https://kaizen.place/music-tails/writing-wav-files-in-c-630150ea1b3ccbc86a636770). More modularisation, memory safety and options.
 
 ### get_scale
-Create a wav file that plays a given scale ascending then descending using variable waveform, bpm and volume.
+Create a wav file that plays a given scale ascending then descending using variable tonic, waveform, bpm and volume.
 
 Having got to grips with kaizen's work, this one is my own creation to prove out that melodies can be written to wav.
