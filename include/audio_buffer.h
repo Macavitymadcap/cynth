@@ -21,6 +21,18 @@ typedef enum ScaleDirection
 } ScaleDirection;
 
 /**
+ * @brief Usual sample rate for programs (16,000).
+*/
+extern const int STANDARD_SAMPLE_RATE;
+
+/**
+ * @brief Get the size of based on song parameters.
+ * Calculation is totalMeasures * timeSignature * samplesPerBeat.
+ * @returns The size of the buffer
+*/
+size_t calculateBufferSize(Song *song);
+
+/**
  * @brief Create a buffer for writing audio, exiting the program if allocation fails.
  * @param size Size of the buffer to be created.
  * @returns Pointer to the created buffer.

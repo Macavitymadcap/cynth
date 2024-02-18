@@ -35,14 +35,13 @@ int main(int argc, const char *argv[])
     checkVolume(volume);
 
     const int totalMeasures = getTotalMeasuresForScale(scaleName);
-    const int sampleRate = 16000;
 
-    Song *song = createSong(totalMeasures, sampleRate, FOUR_FOUR, bpm, volume, waveformName);
+    Song *song = createSong(totalMeasures, STANDARD_SAMPLE_RATE, FOUR_FOUR, bpm, volume, waveformName);
 
-    size_t bufferSize = song->totalMeasures * song->timeSignature * song->samplesPerBeat;
+    size_t bufferSize = calculateBufferSize(song);
     int16_t *buffer = createBuffer(bufferSize);
 
-    WavHeader *wavHeader = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate, bufferSize);
+    WavHeader *wavHeader = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, STANDARD_SAMPLE_RATE, bufferSize);
 
     writeScaleToBuffer(scaleName, tonic, song, buffer);
  

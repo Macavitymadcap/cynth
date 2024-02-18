@@ -12,6 +12,13 @@
 #include "validation.h"
 #include "chords.h"
 
+const int STANDARD_SAMPLE_RATE = 16000;
+
+size_t calculateBufferSize(Song *song)
+{
+  return song->totalMeasures * song->timeSignature * song->samplesPerBeat;
+}
+
 int16_t *createBuffer(int size)
 {
   size_t dataSize = sizeof(int16_t);

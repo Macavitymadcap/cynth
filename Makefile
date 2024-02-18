@@ -8,15 +8,19 @@ BUILD = build
 GET_WAVE = get_wave
 GET_FOUR_CHORDS = get_four_chords
 GET_SCALE = get_scale
+GET_WURFELSPIEL = get_wurfelspiel
 
-GET_WAVE_SRC = $(filter-out $(SRC)/$(GET_FOUR_CHORDS).c $(SRC)/$(GET_SCALE).c $(SRC)/chords.c, $(wildcard $(SRC)/*.c))
+GET_WAVE_SRC = $(filter-out $(SRC)/$(GET_FOUR_CHORDS).c $(SRC)/$(GET_SCALE).c $(SRC)/$(GET_WURFELSPIEL).c $(SRC)/chords.c $(SRC)/choices.c, $(wildcard $(SRC)/*.c))
 GET_WAVE_OBJ = $(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(GET_WAVE_SRC))
 
-GET_FOUR_CHORDS_SRC = $(filter-out $(SRC)/$(GET_WAVE).c $(SRC)/$(GET_SCALE).c, $(wildcard $(SRC)/*.c))
+GET_FOUR_CHORDS_SRC = $(filter-out $(SRC)/$(GET_WAVE).c $(SRC)/$(GET_SCALE).c $(SRC)/$(GET_WURFELSPIEL).c $(SRC)/choices.c, $(wildcard $(SRC)/*.c))
 GET_FOUR_CHORDS_OBJ = $(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(GET_FOUR_CHORDS_SRC))
 
-GET_SCALE_SRC = $(filter-out $(SRC)/$(GET_FOUR_CHORDS).c $(SRC)/$(GET_WAVE).c $(SRC)/chords.c, $(wildcard $(SRC)/*.c))
+GET_SCALE_SRC = $(filter-out $(SRC)/$(GET_FOUR_CHORDS).c $(SRC)/$(GET_WAVE).c $(SRC)/$(GET_WURFELSPIEL).c $(SRC)/chords.c $(SRC)/choices.c, $(wildcard $(SRC)/*.c))
 GET_SCALE_OBJ = $(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(GET_SCALE_SRC))
+
+GET_WURFELSPIEL_SRC = $(filter-out $(SRC)/$(GET_FOUR_CHORDS).c $(SRC)/$(GET_WAVE).c $(SRC)/$(GET_SCALE).c, $(wildcard $(SRC)/*.c))
+GET_WURFELSPIEL_OBJ = $(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(GET_WURFELSPIEL_SRC))
 
 $(shell mkdir -p $(BUILD))
 
@@ -30,6 +34,9 @@ $(GET_FOUR_CHORDS): $(GET_FOUR_CHORDS_OBJ)
 
 $(GET_SCALE): $(GET_SCALE_OBJ)
 	$(CC) $(CFLAGS) -o $(GET_SCALE) $(GET_SCALE_OBJ) $(LDLIBS)
+
+$(GET_WURFELSPIEL): $(GET_WURFELSPIEL_OBJ)
+	$(CC) $(CLFAGS) -o $(GET_WURFELSPIEL) $(GET_WURFELSPIEL_OBJ) $(LDLIBS)
 
 $(BUILD)/%.o: $(SRC)/%.c
 	$(CC) $(CFLAGS) $(INCLUDE) -c -o $@ $<
