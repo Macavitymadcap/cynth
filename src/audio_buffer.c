@@ -11,6 +11,7 @@
 #include "scales.h"
 #include "validation.h"
 #include "chords.h"
+#include "choices.h"
 
 const int STANDARD_SAMPLE_RATE = 16000;
 
@@ -125,197 +126,194 @@ void writeBarOfScaleToBuffer(int measureIndex, int scaleIndex, ScaleDirection di
   }
 }
 
-void writeChromaticScaleToBuffer(float tonic, Song *song, int16_t *buffer)
+void writeChromaticScaleToBuffer(Note *scaleArray, Song *song, int16_t *buffer)
 {
-  Note *chromaticScale = createScaleArray(tonic, CHROMATIC_INTERVALS, CHROMATIC_LENGTH);
 
   int measureIndex = 0;
   while (measureIndex < song->totalMeasures)
   {
-    writeBarOfScaleToBuffer(measureIndex, 0, ASCENDING, chromaticScale, song, buffer);
+    writeBarOfScaleToBuffer(measureIndex, 0, ASCENDING, scaleArray, song, buffer);
     measureIndex++;
 
-    writeBarOfScaleToBuffer(measureIndex, 4, ASCENDING, chromaticScale, song, buffer);
+    writeBarOfScaleToBuffer(measureIndex, 4, ASCENDING, scaleArray, song, buffer);
     measureIndex++;
 
-    writeBarOfScaleToBuffer(measureIndex, 8, ASCENDING, chromaticScale, song, buffer);
+    writeBarOfScaleToBuffer(measureIndex, 8, ASCENDING, scaleArray, song, buffer);
     measureIndex++;
 
-    writeBarOfScaleToBuffer(measureIndex, 12, DESCENDING, chromaticScale, song, buffer);
+    writeBarOfScaleToBuffer(measureIndex, 12, DESCENDING, scaleArray, song, buffer);
     measureIndex++;
 
-    writeBarOfScaleToBuffer(measureIndex, 8, DESCENDING, chromaticScale, song, buffer);
+    writeBarOfScaleToBuffer(measureIndex, 8, DESCENDING, scaleArray, song, buffer);
     measureIndex++;
 
-    writeBarOfScaleToBuffer(measureIndex, 4, DESCENDING, chromaticScale, song, buffer);
+    writeBarOfScaleToBuffer(measureIndex, 4, DESCENDING, scaleArray, song, buffer);
     measureIndex++;
 
-    writeNoteToBuffer(&chromaticScale[0], measureIndex, 0, song, buffer);
-    measureIndex++;
-  }
-
-  free(chromaticScale);
-}
-
-void writeMixoBluesScaleToBuffer(float tonic, Song *song, int16_t *buffer)
-{
-  Note *mixoBluesScale = createScaleArray(tonic, MIXO_BLUES_INTERVALS, MIXO_BLUES_LENGTH);
-
-  int measureIndex = 0;
-  while (measureIndex < song->totalMeasures)
-  {
-    writeBarOfScaleToBuffer(measureIndex, 0, ASCENDING, mixoBluesScale, song, buffer);
-    measureIndex++;
-
-    writeBarOfScaleToBuffer(measureIndex, 4, ASCENDING, mixoBluesScale, song, buffer);
-    measureIndex++;
-
-    writeNoteToBuffer(&mixoBluesScale[8], measureIndex, 0, song, buffer);
-    writeNoteToBuffer(&mixoBluesScale[9], measureIndex, 1, song, buffer);
-    writeNoteToBuffer(&mixoBluesScale[8], measureIndex, 2, song, buffer);
-    writeNoteToBuffer(&mixoBluesScale[7], measureIndex, 3, song, buffer);
-    measureIndex++;
-
-    writeBarOfScaleToBuffer(measureIndex, 6, DESCENDING, mixoBluesScale, song, buffer);
-    measureIndex++;
-
-    writeNoteToBuffer(&mixoBluesScale[2], measureIndex, 0, song, buffer);
-    writeNoteToBuffer(&mixoBluesScale[1], measureIndex, 1, song, buffer);
-    writeNoteToBuffer(&mixoBluesScale[0], measureIndex, 2, song, buffer);
-    measureIndex++;
-  }
-
-  free(mixoBluesScale);
-}
-
-void writeDiminishedScaleToBuffer(Note *scale, Song *song, int16_t *buffer)
-{
-  int measureIndex = 0;
-  while (measureIndex < song->totalMeasures)
-  {
-    writeBarOfScaleToBuffer(measureIndex, 0, ASCENDING, scale, song, buffer);
-    measureIndex++;
-
-    writeBarOfScaleToBuffer(measureIndex, 4, ASCENDING, scale, song, buffer);
-    measureIndex++;
-
-    writeBarOfScaleToBuffer(measureIndex, 8, DESCENDING, scale, song, buffer);
-    measureIndex++;
-
-    writeBarOfScaleToBuffer(measureIndex, 4, DESCENDING, scale, song, buffer);
-    measureIndex++;
-
-    writeNoteToBuffer(&scale[0], measureIndex, 0, song, buffer);
+    writeNoteToBuffer(&scaleArray[0], measureIndex, 0, song, buffer);
     measureIndex++;
   }
 }
 
-void writeStandardLengthScaleToBuffer(Note *scale, Song *song, int16_t *buffer)
+void writeMixoBluesScaleToBuffer(Note *scaleArray, Song *song, int16_t *buffer)
 {
   int measureIndex = 0;
   while (measureIndex < song->totalMeasures)
   {
-    writeBarOfScaleToBuffer(measureIndex, 0, ASCENDING, scale, song, buffer);
+    writeBarOfScaleToBuffer(measureIndex, 0, ASCENDING, scaleArray, song, buffer);
     measureIndex++;
 
-    writeBarOfScaleToBuffer(measureIndex, 4, ASCENDING, scale, song, buffer);
+    writeBarOfScaleToBuffer(measureIndex, 4, ASCENDING, scaleArray, song, buffer);
     measureIndex++;
 
-    writeBarOfScaleToBuffer(measureIndex, 6, DESCENDING, scale, song, buffer);
+    writeNoteToBuffer(&scaleArray[8], measureIndex, 0, song, buffer);
+    writeNoteToBuffer(&scaleArray[9], measureIndex, 1, song, buffer);
+    writeNoteToBuffer(&scaleArray[8], measureIndex, 2, song, buffer);
+    writeNoteToBuffer(&scaleArray[7], measureIndex, 3, song, buffer);
     measureIndex++;
 
-    writeNoteToBuffer(&scale[2], measureIndex, 0, song, buffer);
-    writeNoteToBuffer(&scale[1], measureIndex, 1, song, buffer);
-    writeNoteToBuffer(&scale[0], measureIndex, 2, song, buffer);
+    writeBarOfScaleToBuffer(measureIndex, 6, DESCENDING, scaleArray, song, buffer);
+    measureIndex++;
+
+    writeNoteToBuffer(&scaleArray[2], measureIndex, 0, song, buffer);
+    writeNoteToBuffer(&scaleArray[1], measureIndex, 1, song, buffer);
+    writeNoteToBuffer(&scaleArray[0], measureIndex, 2, song, buffer);
+    measureIndex++;
+  }
+}
+
+void writeDiminishedScaleToBuffer(Note *scaleArray, Song *song, int16_t *buffer)
+{
+  int measureIndex = 0;
+  while (measureIndex < song->totalMeasures)
+  {
+    writeBarOfScaleToBuffer(measureIndex, 0, ASCENDING, scaleArray, song, buffer);
+    measureIndex++;
+
+    writeBarOfScaleToBuffer(measureIndex, 4, ASCENDING, scaleArray, song, buffer);
+    measureIndex++;
+
+    writeBarOfScaleToBuffer(measureIndex, 8, DESCENDING, scaleArray, song, buffer);
+    measureIndex++;
+
+    writeBarOfScaleToBuffer(measureIndex, 4, DESCENDING, scaleArray, song, buffer);
+    measureIndex++;
+
+    writeNoteToBuffer(&scaleArray[0], measureIndex, 0, song, buffer);
+    measureIndex++;
+  }
+}
+
+void writeStandardLengthScaleToBuffer(Note *scaleArray, Song *song, int16_t *buffer)
+{
+  int measureIndex = 0;
+  while (measureIndex < song->totalMeasures)
+  {
+    writeBarOfScaleToBuffer(measureIndex, 0, ASCENDING, scaleArray, song, buffer);
+    measureIndex++;
+
+    writeBarOfScaleToBuffer(measureIndex, 4, ASCENDING, scaleArray, song, buffer);
+    measureIndex++;
+
+    writeBarOfScaleToBuffer(measureIndex, 6, DESCENDING, scaleArray, song, buffer);
+    measureIndex++;
+
+    writeNoteToBuffer(&scaleArray[2], measureIndex, 0, song, buffer);
+    writeNoteToBuffer(&scaleArray[1], measureIndex, 1, song, buffer);
+    writeNoteToBuffer(&scaleArray[0], measureIndex, 2, song, buffer);
     measureIndex++;
   }
 }
 
 void writeMelodicMinorScaleToBuffer(float tonic, Song *song, int16_t *buffer)
 {
-  Note *ascendingScale = createScaleArray(tonic, ASCENDING_MELODIC_MINOR_INTERVALS, STANDARD_LENGTH);
-  Note *descendingScale = createScaleArray(tonic, DESCENDING_MELODIC_MINOR_INTERVALS, STANDARD_LENGTH);
+  Scale *ascendingScale = createScale(STANDARD_LENGTH, ASCENDING_MELODIC_MINOR_INTERVALS);
+  Note *ascendingArray = createScaleArray(tonic, ascendingScale);
+  Scale *descendingScale = createScale(STANDARD_LENGTH, DESCENDING_MELODIC_MINOR_INTERVALS);
+  Note * descendingArray = createScaleArray(tonic, descendingScale);
 
   int measureIndex = 0;
   while (measureIndex < song->totalMeasures)
   {
-    writeBarOfScaleToBuffer(measureIndex, 0, ASCENDING, ascendingScale, song, buffer);
+    writeBarOfScaleToBuffer(measureIndex, 0, ASCENDING, ascendingArray, song, buffer);
     measureIndex++;
 
-    writeBarOfScaleToBuffer(measureIndex, 4, ASCENDING, ascendingScale, song, buffer);
+    writeBarOfScaleToBuffer(measureIndex, 4, ASCENDING, ascendingArray, song, buffer);
     measureIndex++;
 
-    writeBarOfScaleToBuffer(measureIndex, 1, ASCENDING, descendingScale, song, buffer);
+    writeBarOfScaleToBuffer(measureIndex, 1, ASCENDING, descendingArray, song, buffer);
     measureIndex++;
 
-    writeNoteToBuffer(&descendingScale[5], measureIndex, 0, song, buffer);
-    writeNoteToBuffer(&descendingScale[6], measureIndex, 1, song, buffer);
-    writeNoteToBuffer(&descendingScale[7], measureIndex, 2, song, buffer);
+    writeNoteToBuffer(&descendingArray[5], measureIndex, 0, song, buffer);
+    writeNoteToBuffer(&descendingArray[6], measureIndex, 1, song, buffer);
+    writeNoteToBuffer(&descendingArray[7], measureIndex, 2, song, buffer);
     measureIndex++;
   }
 
   free(ascendingScale);
+  free(ascendingArray);
   free(descendingScale);
+  free(descendingArray);
 }
 
-void writeBluesLengthScaleToBuffer(Note *scale, Song *song, int16_t *buffer)
+void writeBluesLengthScaleToBuffer(Note *scaleArray, Song *song, int16_t *buffer)
 {
   int measureIndex = 0;
   while (measureIndex < song->totalMeasures)
   {
-    writeBarOfScaleToBuffer(measureIndex, 0, ASCENDING, scale, song, buffer);
+    writeBarOfScaleToBuffer(measureIndex, 0, ASCENDING, scaleArray, song, buffer);
     measureIndex++;
 
-    writeNoteToBuffer(&scale[4], measureIndex, 0, song, buffer);
-    writeNoteToBuffer(&scale[5], measureIndex, 1, song, buffer);
-    writeNoteToBuffer(&scale[6], measureIndex, 2, song, buffer);
-    writeNoteToBuffer(&scale[5], measureIndex, 3, song, buffer);
+    writeNoteToBuffer(&scaleArray[4], measureIndex, 0, song, buffer);
+    writeNoteToBuffer(&scaleArray[5], measureIndex, 1, song, buffer);
+    writeNoteToBuffer(&scaleArray[6], measureIndex, 2, song, buffer);
+    writeNoteToBuffer(&scaleArray[5], measureIndex, 3, song, buffer);
     measureIndex++;
 
-    writeBarOfScaleToBuffer(measureIndex, 4, DESCENDING, scale, song, buffer);
+    writeBarOfScaleToBuffer(measureIndex, 4, DESCENDING, scaleArray, song, buffer);
     measureIndex++;
 
-    writeNoteToBuffer(&scale[0], measureIndex, 0, song, buffer);
+    writeNoteToBuffer(&scaleArray[0], measureIndex, 0, song, buffer);
     measureIndex++;
   }
 }
 
-void writePentatonicScaleToBuffer(Note *scale, Song *song, int16_t *buffer)
+void writePentatonicScaleToBuffer(Note *scaleArray, Song *song, int16_t *buffer)
 {
   int measureIndex = 0;
   while (measureIndex < song->totalMeasures)
   {
-    writeBarOfScaleToBuffer(measureIndex, 0, ASCENDING, scale, song, buffer);
+    writeBarOfScaleToBuffer(measureIndex, 0, ASCENDING, scaleArray, song, buffer);
     measureIndex++;
 
-    writeNoteToBuffer(&scale[4], measureIndex, 0, song, buffer);
-    writeNoteToBuffer(&scale[5], measureIndex, 1, song, buffer);
-    writeNoteToBuffer(&scale[4], measureIndex, 2, song, buffer);
-    writeNoteToBuffer(&scale[3], measureIndex, 3, song, buffer);
+    writeNoteToBuffer(&scaleArray[4], measureIndex, 0, song, buffer);
+    writeNoteToBuffer(&scaleArray[5], measureIndex, 1, song, buffer);
+    writeNoteToBuffer(&scaleArray[4], measureIndex, 2, song, buffer);
+    writeNoteToBuffer(&scaleArray[3], measureIndex, 3, song, buffer);
     measureIndex++;
 
-    writeNoteToBuffer(&scale[2], measureIndex, 0, song, buffer);
-    writeNoteToBuffer(&scale[1], measureIndex, 1, song, buffer);
-    writeNoteToBuffer(&scale[0], measureIndex, 2, song, buffer);
+    writeNoteToBuffer(&scaleArray[2], measureIndex, 0, song, buffer);
+    writeNoteToBuffer(&scaleArray[1], measureIndex, 1, song, buffer);
+    writeNoteToBuffer(&scaleArray[0], measureIndex, 2, song, buffer);
     measureIndex++;
   }
 }
 
 void writeScaleToBuffer(const char *scaleName, float tonic, Song *song, int16_t *buffer)
 {
+  Note *scaleArray = getScaleArray(scaleName, tonic);
+
   if (isChromaticName(scaleName))
   {
-    writeChromaticScaleToBuffer(tonic, song, buffer);
+    writeChromaticScaleToBuffer(scaleArray, song, buffer);
   }
   else if (isMixoBluesName(scaleName))
   {
-    writeMixoBluesScaleToBuffer(tonic, song, buffer);
+    writeMixoBluesScaleToBuffer(scaleArray, song, buffer);
   }
   else if (isDiminishedLengthScale(scaleName))
   {
-    Note *diminishedScale = getScaleArray(scaleName, tonic);
-    writeDiminishedScaleToBuffer(diminishedScale, song, buffer);
-    free(diminishedScale);
+    writeDiminishedScaleToBuffer(scaleArray, song, buffer);
   }
   else if (isMelodicMinorName(scaleName))
   {
@@ -323,20 +321,30 @@ void writeScaleToBuffer(const char *scaleName, float tonic, Song *song, int16_t 
   }
   else if (isStandardLengthScale(scaleName))
   {
-    Note *standardLengthScale = getScaleArray(scaleName, tonic);
-    writeStandardLengthScaleToBuffer(standardLengthScale, song, buffer);
-    free(standardLengthScale);
+    writeStandardLengthScaleToBuffer(scaleArray, song, buffer);
   }
   else if (isBluesLengthScale(scaleName))
   {
-    Note *bluesLengthScale = getScaleArray(scaleName, tonic);
-    writeBluesLengthScaleToBuffer(bluesLengthScale, song, buffer);
-    free(bluesLengthScale);
+    writeBluesLengthScaleToBuffer(scaleArray, song, buffer);
   }
   else if (isPentatonicLengthScale(scaleName))
   {
-    Note *pentatonicScale = getScaleArray(scaleName, tonic);
-    writePentatonicScaleToBuffer(pentatonicScale, song, buffer);
-    free(pentatonicScale);
+    writePentatonicScaleToBuffer(scaleArray, song, buffer);
   }
+
+  free(scaleArray);
+}
+
+void writeRandomBarOfScaleToBuffer(Scale *scale, float tonic, int measureIndex, Song *song, int16_t *buffer)
+{
+  float barCompletion = 0.0;
+  while (barCompletion < 1.0)
+  {
+    float value = getRandomNoteValue(barCompletion);
+    float frequency = getFrequencyFromTonicAndInterval(tonic, scale->intervals[getRandomInt(scale->length)]);
+    Note *note =createNote(frequency, value);
+    writeNoteToBuffer(note, measureIndex, barCompletion, song, buffer);
+    barCompletion += note->value * 2;
+    free(note);
+  } 
 }

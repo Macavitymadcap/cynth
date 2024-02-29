@@ -9,6 +9,7 @@
 #include "stdint.h"
 #include "song.h"
 #include "chords.h"
+#include "scales.h"
 
 /**
  * @enum ScaleDirection
@@ -99,35 +100,35 @@ void writeBarOfScaleToBuffer(int measureIndex, int scaleIndex, ScaleDirection di
 
 /**
  * @brief Writes a chromatic scale to an audio buffer, excluding the melodic minor.
- * @param tonic Float representing the root note of the chromatic scale.
+ * @param scaleArray Array of Note structs comprising the notes of the chromatic scale.
  * @param song Pointer to structure containg the song's performance information. 
  * @param buffer The buffer into which the note will be written.
 */
-void writeChromaticScaleToBuffer(float tonic, Song *song, int16_t *buffer);
+void writeChromaticScaleToBuffer(Note * scaleArray, Song *song, int16_t *buffer);
 
 /**
  * @brief Writes a mixo-blues scale to an audio buffer, excluding the melodic minor.
- * @param tonic Float representing the root note of the mixo-blues scale.
+ * @param scaleArray Array of Note structs comprising the notes of the mixo-blues scale.
  * @param song Pointer to structure containg the song's performance information. 
  * @param buffer The buffer into which the note will be written.
 */
-void writeMixoBluesScaleToBuffer(float tonic, Song *song, int16_t *buffer);
+void writeMixoBluesScaleToBuffer(Note *scaleArray, Song *song, int16_t *buffer);
 
 /**
  * @brief Writes a diminished scale to an audio buffer, excluding the melodic minor.
- * @param scale Array of Note structs comprings the notes of the diminished scale.
+ * @param scaleArray Array of Note structs comprings the notes of the diminished scale.
  * @param song Pointer to structure containg the song's performance information. 
  * @param buffer The buffer into which the note will be written.
 */
-void writeDiminishedScaleToBuffer(Note *scale, Song *song, int16_t *buffer);
+void writeDiminishedScaleToBuffer(Note *scaleArray, Song *song, int16_t *buffer);
 
 /**
  * @brief Writes a scale of standard length to an audio buffer, excluding the melodic minor.
- * @param scale Array of Note structs comprising the notes of the scale.
+ * @param scaleArray Array of Note structs comprising the notes of the scale.
  * @param song Pointer to structure containg the song's performance information. 
  * @param buffer The buffer into which the note will be written.
 */
-void writeStandardLengthScaleToBuffer(Note *scale, Song *song, int16_t *buffer);
+void writeStandardLengthScaleToBuffer(Note *scaleArray, Song *song, int16_t *buffer);
 
 /**
  * @brief Writes a whole tone scale to an audio buffer, excluding the melodic minor.
@@ -139,19 +140,19 @@ void writeMelodicMinorScaleToBuffer(float tonic, Song *song, int16_t *buffer);
 
 /**
  * @brief Writes a blues length scale to an audio buffer, excluding the melodic minor.
- * @param scale Array of Note structs of a blues scale length (blues or whole tone).
+ * @param scaleArray Array of Note structs of a blues scale length (blues or whole tone).
  * @param song Pointer to structure containg the song's performance information. 
  * @param buffer The buffer into which the note will be written.
 */
-void writeBluesLengthScaleToBuffer(Note *scale, Song *song, int16_t *buffer);
+void writeBluesLengthScaleToBuffer(Note *scaleArray, Song *song, int16_t *buffer);
 
 /**
  * @brief Writes a pentatonic scale to an audio buffer, excluding the melodic minor.
- * @param scale Array of Note structs of a comprising a pentatonic scale..
+ * @param scaleArray Array of Note structs of a comprising a pentatonic scale..
  * @param song Pointer to structure containg the song's perfomance information. 
  * @param buffer The buffer into which the note will be written.
 */
-void writePentatonicScaleToBuffer(Note *scale, Song *song, int16_t *buffer);
+void writePentatonicScaleToBuffer(Note *scaleArray, Song *song, int16_t *buffer);
 
 /**
  * @brief Writes a scale to an audio buffer.
@@ -161,5 +162,15 @@ void writePentatonicScaleToBuffer(Note *scale, Song *song, int16_t *buffer);
  * @param buffer The buffer into which the note will be written.
 */
 void writeScaleToBuffer(const char *scaleName, float tonic, Song *song, int16_t *buffer);
+
+/**
+ * @brief Write a random selection of notes from a scale to the given buffer.
+ * @param scale Pointer to a Scale struct.
+ * @param tonic Frequency of the scale's root note.
+ * @param measureIndex The current measure of the piece to which to write.
+ * @param song Pointer to a song struct.
+ * @param buffer Pointer to the buffer to which to write the bar. 
+*/
+void writeRandomBarOfScaleToBuffer(Scale *scale, float tonic, int measureIndex, Song *song, int16_t *buffer);
 
 #endif

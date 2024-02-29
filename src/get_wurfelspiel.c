@@ -8,6 +8,7 @@
 #include "choices.h"
 #include "duration.h"
 #include "notes.h"
+#include "scales.h"
 #include "song.h"
 #include "validation.h"
 #include "wav.h"
@@ -23,7 +24,7 @@ int main(int argc, char const *argv[])
     int volume = atoi(argv[2]);
     checkVolume(volume);
 
-    srand(time(NULL));
+    // srandom(time(NULL));
 
     const char *waveformName = getRandomWaveformName();
 
@@ -43,33 +44,45 @@ int main(int argc, char const *argv[])
     Note *gbBass = createNote(Gb2, SEMIBREVE);
     Note *gBass = createNote(G2, SEMIBREVE);
 
+    Scale *major = createScale(STANDARD_LENGTH, MAJOR_INTERVALS);
+    Scale *minor = createScale(STANDARD_LENGTH, NATURAL_MINOR_INTERVALS);
+
     const int FIRST_BEAT = 0;
     int measureIndex = 0;
 
     while (measureIndex < song->totalMeasures)
     {
+
         writeNoteToBuffer(dBass, measureIndex, FIRST_BEAT, song, buffer);
+        writeRandomBarOfScaleToBuffer(major, D4, measureIndex, song, buffer);
         measureIndex++;
 
         writeNoteToBuffer(aBass, measureIndex, FIRST_BEAT, song, buffer);
+        writeRandomBarOfScaleToBuffer(major, A4, measureIndex, song, buffer);
         measureIndex++;
 
         writeNoteToBuffer(bBass, measureIndex, FIRST_BEAT, song, buffer);
+        writeRandomBarOfScaleToBuffer(minor, B4, measureIndex, song, buffer);
         measureIndex++;
 
         writeNoteToBuffer(gbBass, measureIndex, FIRST_BEAT, song, buffer);
+        writeRandomBarOfScaleToBuffer(major, Gb4, measureIndex, song, buffer);
         measureIndex++;
 
         writeNoteToBuffer(gBass, measureIndex, FIRST_BEAT, song, buffer);
+        writeRandomBarOfScaleToBuffer(major, G4, measureIndex, song, buffer);
         measureIndex++;
 
         writeNoteToBuffer(dBass, measureIndex, FIRST_BEAT, song, buffer);
+        writeRandomBarOfScaleToBuffer(major, D4, measureIndex, song, buffer);
         measureIndex++;
 
         writeNoteToBuffer(gBass, measureIndex, FIRST_BEAT, song, buffer);
+        writeRandomBarOfScaleToBuffer(major, G4, measureIndex, song, buffer);
         measureIndex++;
 
         writeNoteToBuffer(aBass, measureIndex, FIRST_BEAT, song, buffer);
+        writeRandomBarOfScaleToBuffer(major, A4, measureIndex, song, buffer);
         measureIndex++;
     }
 
@@ -88,6 +101,9 @@ int main(int argc, char const *argv[])
     free(aBass);
     free(bBass);
     free(gBass);
+    free(gbBass);
+    free(major);
+    free(minor);
 
     return 0;
 }

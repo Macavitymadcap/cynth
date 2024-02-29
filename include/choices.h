@@ -20,4 +20,18 @@ int getRandomInt(int maximum);
 */
 const char *getRandomWaveformName(void);
 
+/**
+ * @brief Returns a randomly selected float from an array.
+ * @param array Floats from which to select.
+ * @param size Number of floats in the array.
+ * @returns A float from the given array.
+*/
+float getRandomFloatFromArray(float *array, int size);
+
+/**
+ * @brief Return a randomly selected duration, excluding breve.
+ * @returns a float representing a note's duration.
+*/
+float getRandomNoteValue(float barCompletion);
+
 #endif
