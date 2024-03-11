@@ -32,19 +32,17 @@ int main(int argc, char *argv[])
     char fileName[20];
     snprintf(fileName, sizeof(fileName), "%s-%s.wav", noteName, waveformName);
 
-    const int sampleRate = 8000;
-
-    size_t bufferSize = sampleRate * (seconds * 2);
+    size_t bufferSize = STANDARD_SAMPLE_RATE * (seconds * 2);
     int16_t *buffer = createBuffer(bufferSize);
 
-    WavHeader *header = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate, bufferSize);
+    WavHeader *header = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, STANDARD_SAMPLE_RATE, bufferSize);
 
     FILE *output = fopen(fileName, "wb");
     checkFileOpening(output, fileName);
 
     for (int i = 0; i < (int)bufferSize; i++)
     {
-        buffer[i] = getWaveform(waveformName, note, i, sampleRate, outputVolume);
+        buffer[i] = getWaveform(waveformName, note, i, STANDARD_SAMPLE_RATE, outputVolume);
     }
 
     fwrite(header, WAVE_HEADER_SIZE, 1, output);

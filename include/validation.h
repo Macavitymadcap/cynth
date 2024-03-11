@@ -16,21 +16,21 @@
 void printFile(const char* filePath);
 
 /**
- * @brief Exit the program if wrong number of args provided and print usage.
+ * @brief Exit getWave if wrong number of args provided and print usage.
  * @param argc Number of arguments passed to the program.
  * @param programName The name of the program.
 */
 void checkGetWaveUsage(int argc, const char *programName);
 
 /**
- * @brief Exit the program if wrong number of args provided and print usage.
+ * @brief Exit getFourChords if wrong number of args provided and print usage.
  * @param argc Number of arguments passed to the program.
  * @param programName The name of the program.
 */
 void checkGetFourChordsUsage(int argc, const char *programName);
 
 /**
- * @brief Exit the program if wrong number of args provided and print usage.
+ * @brief Exit getScale if wrong number of args provided and print usage.
  * @param argc Number of arguments passed to the program.
  * @param programName The name of the program.
 */

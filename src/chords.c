@@ -190,7 +190,7 @@ float *getFourChordTonics(const char *keyName)
         tonics[4] = G4;
         tonics[5] = D5;
         tonics[6] = E5;
-        tonics[7] = C4;
+        tonics[7] = C5;
     }
     else if (strcmp(NOTE_NAMES[8], keyName) == 0)
     {

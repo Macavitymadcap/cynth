@@ -55,85 +55,130 @@ const int PENTATONIC_LENGTH = 6;
 const int MAJOR_PENTATONIC_INTERVALS[] = {0, 2, 5, 7, 10, 12};
 const int MINOR_PENTATONIC_INTERVALS[] = {0, 3, 5, 7, 10, 12};
 
-Note *createScaleArray(float tonic, const int *intervals, const int scaleLength)
+Scale *createScale(int scaleLength, const int *intervals)
 {
-    size_t scaleSize = scaleLength * NOTE_SIZE;
-    Note *scale = malloc(scaleSize);
+    size_t scaleSize = sizeof(Scale);
+    Scale *scale = malloc(scaleSize);
     if (scale == NULL)
     {
         fprintf(stderr, "Error allocating scale\n");
         exit(EXIT_FAILURE);
     }
 
-    memset(scale, 0, scaleSize);
+    scale->intervals = intervals;
+    scale->length = scaleLength;
+    
+    return scale;
+}
 
-    for (int i = 0; i < scaleLength; i++)
+Note *createScaleArray(float tonic, Scale *scale)
+{
+    size_t scaleArraySize = scale->length * NOTE_SIZE;
+    Note *scaleArray = malloc(scaleArraySize);
+    if (scaleArray == NULL)
     {
-        scale[i].frequency = getFrequencyFromTonicAndInterval(tonic, intervals[i]);
-        scale[i].value = CROTCHET;
+        fprintf(stderr, "Error allocating scale array\n");
+        exit(EXIT_FAILURE);
     }
 
-    return scale;
+    memset(scaleArray, 0, scaleArraySize);
+
+    for (int i = 0; i < scale->length; i++)
+    {
+        scaleArray[i].frequency = getFrequencyFromTonicAndInterval(tonic, scale->intervals[i]);
+        scaleArray[i].value = CROTCHET;
+    }
+
+    return scaleArray;
 }
 
 Note *getScaleArray(const char *scaleName, float tonic)
 {
-    if (isDiminishedHalfWholeName(scaleName))
+    Scale *scale = NULL;
+    Note *scaleArray = NULL;
+
+    if (isChromaticName(scaleName))
     {
-        return createScaleArray(tonic, DIMINISHED_HALF_WHOLE_INTERVALS, DIMINISHED_LENGTH);
+        scale = createScale(CHROMATIC_LENGTH, CHROMATIC_INTERVALS);
+        scaleArray = createScaleArray(tonic, scale);
+    }
+    else if (isMixoBluesName(scaleName))
+    {
+        scale = createScale(MIXO_BLUES_LENGTH, MIXO_BLUES_INTERVALS);
+        scaleArray = createScaleArray(tonic, scale);
+    }
+    else if (isDiminishedHalfWholeName(scaleName))
+    {   
+        scale = createScale(DIMINISHED_LENGTH, DIMINISHED_HALF_WHOLE_INTERVALS);
+        scaleArray = createScaleArray(tonic, scale);
     }
     else if (isDiminishedWholeHalfName(scaleName))
     {
-        return createScaleArray(tonic, DIMINISHED_WHOLE_HALF_INTERVALS, DIMINISHED_LENGTH);
+        scale = createScale(DIMINISHED_LENGTH, DIMINISHED_WHOLE_HALF_INTERVALS);
+        scaleArray = createScaleArray(tonic, scale);
     }
     else if (isMajorName(scaleName))
     {
-        return createScaleArray(tonic, MAJOR_INTERVALS, STANDARD_LENGTH);
+        scale = createScale(STANDARD_LENGTH, MAJOR_INTERVALS);
+        scaleArray = createScaleArray(tonic, scale); 
     }
     else if (isMinorName(scaleName))
     {
-        return createScaleArray(tonic, NATURAL_MINOR_INTERVALS, STANDARD_LENGTH);
+        scale = createScale(STANDARD_LENGTH, NATURAL_MINOR_INTERVALS);
+        scaleArray = createScaleArray(tonic, scale);
     }
     else if (isHarmonicMinorName(scaleName))
     {
-        return createScaleArray(tonic, HARMONIC_MINOR_INTERVALS, STANDARD_LENGTH);
+        scale = createScale(STANDARD_LENGTH, HARMONIC_MINOR_INTERVALS);
+        scaleArray = createScaleArray(tonic, scale);
     }
     else if (isMixolydianName(scaleName))
     {
-        return createScaleArray(tonic, MIXOLYDIAN_INTERVALS, STANDARD_LENGTH);
+        scale = createScale(STANDARD_LENGTH, MIXOLYDIAN_INTERVALS);
+        scaleArray = createScaleArray(tonic, scale);
     }
     else if (isDorianName(scaleName))
     {
-        return createScaleArray(tonic, DORIAN_INTERVALS, STANDARD_LENGTH);
+        scale = createScale(STANDARD_LENGTH, DORIAN_INTERVALS);
+        scaleArray = createScaleArray(tonic, scale);
     }
     else if (isPhrygianName(scaleName))
     {
-        return createScaleArray(tonic, PHRYGIAN_INTERVALS, STANDARD_LENGTH);
+        scale = createScale(STANDARD_LENGTH, PHRYGIAN_INTERVALS);
+        scaleArray = createScaleArray(tonic, scale);
     }
     else if (isLocrianName(scaleName))
     {
-        return createScaleArray(tonic, LOCRIAN_INTERVALS, STANDARD_LENGTH);
+        scale = createScale(STANDARD_LENGTH, LOCRIAN_INTERVALS);
+        scaleArray = createScaleArray(tonic, scale);
     }
     else if (isLydianName(scaleName))
     {
-        return createScaleArray(tonic, LYDIAN_INTERVALS, STANDARD_LENGTH);
+        scale = createScale(STANDARD_LENGTH, LYDIAN_INTERVALS);
+        scaleArray = createScaleArray(tonic, scale);
     }
     else if (isBluesName(scaleName))
     {
-        return createScaleArray(tonic, BLUES_INTERVALS, BLUES_LENGTH);
+        scale = createScale(BLUES_LENGTH, BLUES_INTERVALS);
+        scaleArray = createScaleArray(tonic, scale);
     }
     else if (isWholeToneName(scaleName))
     {
-        return createScaleArray(tonic, WHOLE_TONE_INTERVALS, BLUES_LENGTH);
+        scale = createScale(BLUES_LENGTH, WHOLE_TONE_INTERVALS);
+        scaleArray = createScaleArray(tonic, scale);
     }
     else if (isMajorPentatonicName(scaleName))
     {
-        return createScaleArray(tonic, MAJOR_PENTATONIC_INTERVALS, PENTATONIC_LENGTH);
+        scale = createScale(PENTATONIC_LENGTH, MAJOR_PENTATONIC_INTERVALS);
+        scaleArray = createScaleArray(tonic, scale);
     }
     else if (isMinorPentatonicName(scaleName))
     {
-        return createScaleArray(tonic, MINOR_PENTATONIC_INTERVALS, PENTATONIC_LENGTH);
+        scale = createScale(PENTATONIC_LENGTH, MINOR_PENTATONIC_INTERVALS);
+        scaleArray = createScaleArray(tonic, scale);
     }
 
-    return NULL;
+    free(scale);
+
+    return scaleArray;
 }

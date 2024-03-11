@@ -28,14 +28,12 @@ int main(int argc, char *argv[])
   int volume = atoi(argv[4]);
   checkVolume(volume);
 
-  const int sampleRate = 16000;
+  Song *song = createSong(16, STANDARD_SAMPLE_RATE, FOUR_FOUR, bpm, volume, waveformName);
 
-  Song *song = createSong(16, sampleRate, FOUR_FOUR, bpm, volume, waveformName);
-
-  size_t bufferSize = song->totalMeasures * song->timeSignature * song->samplesPerBeat;
+  size_t bufferSize = calculateBufferSize(song);
   int16_t *buffer = createBuffer(bufferSize);
 
-  WavHeader *wavHeader = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, sampleRate, bufferSize);
+  WavHeader *wavHeader = createWavHeader(STANDARD_CHUNK_SIZE, PCM, MONO, STANDARD_SAMPLE_RATE, bufferSize);
 
   Chord *chords = getFourChords(keyName);
 

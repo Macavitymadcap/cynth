@@ -8,6 +8,11 @@
 
 #include "notes.h"
 
+typedef struct Scale {
+    int length;     /** Number of notes in the scale. */
+    const int* intervals; /** Semitone intervals from tonic to last note of scale. */
+} __attribute__((__packed__)) Scale;
+
 /**
  * @brief String representing the name of the chromatic scale.
 */
@@ -214,17 +219,25 @@ extern const int MAJOR_PENTATONIC_INTERVALS[];
 */
 extern const int MINOR_PENTATONIC_INTERVALS[];
 
+
+/**
+ * @brief Generate a Scale struct for he given intervals.
+ * @param scaleLength Number of notes in the scale.
+ * @param intervals Array of integers representing the semitones of the scale.
+ * @returns A Scale sctruct encapsulating the given information.
+*/
+Scale *createScale(int scaleLength, const int *intervals);
+
 /**
  * @brief Generate a scale based on the provided tonic and intervals.
  * 
  * The length of each Note is set to a crotchet (1/8th).
  * 
  * @param tonic The base frequency of the scale.
- * @param intervals Array of int containing the intervals of the scale.
- * @param scaleLength The number of notes in the scale
+ * @param scale Struct conntaing the intervals and length of the scale.
  * @returns An array of Note structs of the desired scale.
 */
-Note *createScaleArray(float tonic, const int *intervals, const int scaleLength);
+Note *createScaleArray(float tonic, Scale *scale);
 
 /**
  * @brief Create a scale based on the name and tonic, excling the melodic minor.
