@@ -1,4 +1,4 @@
-CC = gcc 
+CC = gcc
 LDLIBS = -lm
 CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c17 -g
 INCLUDE = -Iinclude

@@ -5,7 +5,6 @@ four_chords
 get_wave
 get_four_chords
 get_scale
-get_wurfelspiel
 
 .clangd
 .vscode

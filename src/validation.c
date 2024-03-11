@@ -60,16 +60,6 @@ void checkGetScaleUsage(int argc, const char *programName)
     }
 }
 
-void checkGetWurfelspiel(int argc, const char *programName)
-{
-    if (argc != 3)
-    {
-        fprintf(stderr, "Usage: %s bpm volume\n", programName);
-        printFile("docs/get_wurfelspiel.txt");
-        exit(EXIT_FAILURE);
-    }
-}
-
 void checkFileName(const char *fileName)
 {
     regex_t regex;

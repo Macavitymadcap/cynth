@@ -37,13 +37,6 @@ void checkGetFourChordsUsage(int argc, const char *programName);
 void checkGetScaleUsage(int argc, const char *programName);
 
 /**
- * @brief Exit get_wurfelspiel if wrong number of args provided and print usage.
- * @param argc Number of arguments passed to the program.
- * @param programName The name of the program.
-*/
-void checkGetWurfelspiel(int argc, const char *programName);
-
-/**
  * @brief Exit the program if the filename is invalid.
  * @param fileName The name of the file to be checked.
 */
