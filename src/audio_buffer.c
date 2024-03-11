@@ -11,7 +11,6 @@
 #include "scales.h"
 #include "validation.h"
 #include "chords.h"
-#include "choices.h"
 
 const int STANDARD_SAMPLE_RATE = 16000;
 
@@ -335,16 +334,3 @@ void writeScaleToBuffer(const char *scaleName, float tonic, Song *song, int16_t 
   free(scaleArray);
 }
 
-void writeRandomBarOfScaleToBuffer(Scale *scale, float tonic, int measureIndex, Song *song, int16_t *buffer)
-{
-  float barCompletion = 0.0;
-  while (barCompletion < 1.0)
-  {
-    float value = getRandomNoteValue(barCompletion);
-    float frequency = getFrequencyFromTonicAndInterval(tonic, scale->intervals[getRandomInt(scale->length)]);
-    Note *note =createNote(frequency, value);
-    writeNoteToBuffer(note, measureIndex, barCompletion, song, buffer);
-    barCompletion += note->value * 2;
-    free(note);
-  } 
-}

@@ -163,14 +163,4 @@ void writePentatonicScaleToBuffer(Note *scaleArray, Song *song, int16_t *buffer)
 */
 void writeScaleToBuffer(const char *scaleName, float tonic, Song *song, int16_t *buffer);
 
-/**
- * @brief Write a random selection of notes from a scale to the given buffer.
- * @param scale Pointer to a Scale struct.
- * @param tonic Frequency of the scale's root note.
- * @param measureIndex The current measure of the piece to which to write.
- * @param song Pointer to a song struct.
- * @param buffer Pointer to the buffer to which to write the bar. 
-*/
-void writeRandomBarOfScaleToBuffer(Scale *scale, float tonic, int measureIndex, Song *song, int16_t *buffer);
-
 #endif
