@@ -8,3 +8,4 @@ get_scale
 
 .clangd
 .vscode
+.DS_Store
